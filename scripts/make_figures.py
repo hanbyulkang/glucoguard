@@ -55,6 +55,49 @@ def _clean(ax) -> None:
     ax.tick_params(labelsize=9, length=3)
 
 
+def _place_labels(ax, xs, ys, names, fontsize: float = 9) -> None:
+    """Annotate points, nudging each label to the first spot that is free.
+
+    Several of these models land almost on top of each other — that proximity
+    is itself part of the finding — so fixed offsets produce an unreadable pile.
+    Candidate positions are tried in order of preference and the first one that
+    collides with neither a placed label nor a data point wins.
+    """
+    fig = ax.figure
+    fig.canvas.draw()                      # need a renderer for display coords
+    px = ax.transData.transform(list(zip(xs, ys)))
+
+    char_w, line_h = fontsize * 0.70, fontsize * 1.7
+    candidates = [(13, 4), (13, -12), (-13, 4), (-13, -12),
+                  (13, 16), (-13, 16), (13, -24), (-13, -24),
+                  (0, 20), (0, -28)]
+
+    placed: list[tuple[float, float, float, float]] = []
+    point_boxes = [(x - 7, y - 7, x + 7, y + 7) for x, y in px]
+
+    def overlaps(box, others) -> bool:
+        return any(not (box[2] < o[0] or box[0] > o[2]
+                        or box[3] < o[1] or box[1] > o[3]) for o in others)
+
+    order = sorted(range(len(names)), key=lambda i: -px[i][1])
+    for i in order:
+        x, y = px[i]
+        w, h = len(names[i]) * char_w + 6, line_h
+        for dx, dy in candidates:
+            left = x + dx if dx >= 0 else x + dx - w
+            box = (left, y + dy - h * 0.25, left + w, y + dy + h * 0.75)
+            if not overlaps(box, placed + point_boxes):
+                placed.append(box)
+                ax.annotate(names[i], (xs[i], ys[i]), textcoords="offset points",
+                            xytext=(dx, dy), fontsize=fontsize,
+                            color=INK_SECONDARY,
+                            ha="left" if dx >= 0 else "right")
+                break
+        else:
+            ax.annotate(names[i], (xs[i], ys[i]), textcoords="offset points",
+                        xytext=(13, 4), fontsize=fontsize, color=INK_SECONDARY)
+
+
 def figure_tradeoff(sweep: dict) -> None:
     """RMSE against low-glucose recall, one dot per model."""
     rows = [r for r in sweep["results"] if not r["name"].startswith("ensemble")]
@@ -63,28 +106,27 @@ def figure_tradeoff(sweep: dict) -> None:
     names = [r["name"] for r in rows]
     learned = [not n.startswith(("persistence", "linear", "ridge")) for n in names]
 
-    fig, ax = plt.subplots(figsize=(7.6, 4.8), dpi=200)
-    for xi, yi, name, is_learned in zip(x, y, names, learned):
-        colour = BLUE if is_learned else MUTED
-        ax.scatter(xi, yi, s=110, color=colour, zorder=3,
-                   edgecolor=SURFACE, linewidth=2)
-        ax.annotate(name, (xi, yi), textcoords="offset points", xytext=(9, 4),
-                    fontsize=9, color=INK_SECONDARY)
+    fig, ax = plt.subplots(figsize=(8.2, 5.2), dpi=200)
+    ax.scatter(x, y, s=115, zorder=3, edgecolor=SURFACE, linewidth=2,
+               color=[BLUE if L else MUTED for L in learned])
 
-    ax.set_xlabel("RMSE (mg/dL) — lower is better →", fontsize=10)
-    ax.set_ylabel("Low-glucose recall (%) — higher is better ↑", fontsize=10)
-    ax.set_title(
+    ax.set_xlabel("RMSE (mg/dL), lower is better", fontsize=10)
+    ax.set_ylabel("Low-glucose recall (%), higher is better", fontsize=10)
+    ax.set_xlim(min(x) - 2.0, max(x) + 2.4)
+    ax.set_ylim(min(y) - 8, max(y) + 9)
+    _place_labels(ax, x, y, names)
+
+    fig.suptitle(
         "Every gain in accuracy cost sensitivity to lows",
-        fontsize=12.5, color=INK, pad=12, loc="left", fontweight="semibold",
+        fontsize=13, color=INK, fontweight="bold", x=0.012, ha="left", y=0.985,
     )
-    ax.text(
-        0, 1.02,
-        "Each model, scored on held-out patients at a fixed 70 mg/dL alarm cutoff",
-        transform=ax.transAxes, fontsize=9, color=MUTED, va="bottom",
+    ax.set_title(
+        "Each model on held-out patients, alarm read at a fixed 70 mg/dL cutoff",
+        fontsize=9.5, color=MUTED, loc="left", pad=10,
     )
     _clean(ax)
     ax.grid(axis="x", linewidth=0.8, alpha=0.9)
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0, 1, 0.955))
     fig.savefig(ASSETS / "tradeoff.png", facecolor=SURFACE)
     plt.close(fig)
 
@@ -98,7 +140,7 @@ def figure_alarm(alarm: dict) -> None:
         list(alarm[n]["budgets"])[-1]]["recall"])
     show = keep + learned[:2]
 
-    fig, ax = plt.subplots(figsize=(7.6, 4.8), dpi=200)
+    fig, ax = plt.subplots(figsize=(8.2, 5.2), dpi=200)
     palette = {n: c for n, c in zip(show, [MUTED, "#8a8a86", "#b5b4ae", BLUE, ORANGE])}
     for name in show:
         curve = alarm[name]["pr_curve_test"]
@@ -112,20 +154,20 @@ def figure_alarm(alarm: dict) -> None:
                 linewidth=2.4 if is_learned else 1.6,
                 label=name, zorder=3 if is_learned else 2)
 
-    ax.set_xlabel("False alarms per day (lower is better) →", fontsize=10)
-    ax.set_ylabel("Low-glucose recall (%) ↑", fontsize=10)
-    ax.set_title(
+    ax.set_xlabel("False alarms per day, lower is better", fontsize=10)
+    ax.set_ylabel("Low-glucose recall (%)", fontsize=10)
+    fig.suptitle(
         "Compared at the same false-alarm budget, the trade-off dissolves",
-        fontsize=12.5, color=INK, pad=12, loc="left", fontweight="semibold",
+        fontsize=13, color=INK, fontweight="bold", x=0.012, ha="left", y=0.985,
     )
-    ax.text(
-        0, 1.02,
+    ax.set_title(
         "Alarm threshold swept across its full range, on held-out patients",
-        transform=ax.transAxes, fontsize=9, color=MUTED, va="bottom",
+        fontsize=9.5, color=MUTED, loc="left", pad=10,
     )
     ax.legend(frameon=False, fontsize=9, labelcolor=INK_SECONDARY, loc="lower right")
     _clean(ax)
-    fig.tight_layout()
+    ax.grid(axis="x", linewidth=0.8, alpha=0.9)
+    fig.tight_layout(rect=(0, 0, 1, 0.955))
     fig.savefig(ASSETS / "alarm_curve.png", facecolor=SURFACE)
     plt.close(fig)
 

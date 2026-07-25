@@ -82,14 +82,37 @@ def available_checkpoints() -> list[str]:
 
 
 def best_checkpoint() -> str | None:
-    """Whichever model the sweep selected on validation, if it is on disk."""
+    """The checkpoint the demo should open with.
+
+    Deliberately ranks by *alarm* performance when that has been measured,
+    not by RMSE. The two disagree: the lowest-RMSE model is the one most pulled
+    toward the mean, and therefore the most reluctant to call the lows this
+    product exists to catch. Choosing on RMSE would ship the wrong model.
+
+    Falls back to validation RMSE, and then to whatever is on disk.
+    """
+    names = set(available_checkpoints())
+    if not names:
+        return None
+
+    alarm = ARTIFACTS_DIR / "alarm.json"
+    if alarm.exists():
+        report = json.loads(alarm.read_text())
+        ranked = [
+            (max(b["recall"] for b in r["budgets"].values()), n)
+            for n, r in report.items() if n in names
+        ]
+        if ranked:
+            return max(ranked)[1]
+
     sweep = ARTIFACTS_DIR / "sweep.json"
-    names = available_checkpoints()
     if sweep.exists():
-        selected = json.loads(sweep.read_text()).get("selected_on_validation")
-        if selected in names:
-            return selected
-    return names[0] if names else None
+        results = json.loads(sweep.read_text())["results"]
+        on_disk = [r for r in results if r["name"] in names]
+        if on_disk:
+            return min(on_disk, key=lambda r: r["val"]["rmse"])["name"]
+
+    return sorted(names)[0]
 
 
 @lru_cache(maxsize=1)

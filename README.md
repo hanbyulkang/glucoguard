@@ -33,12 +33,30 @@ It does **not** recommend insulin doses. See [Limitations](#limitations).
 
 ## Results
 
-Full numbers, including every baseline, are in [`results.md`](results.md).
+Full numbers are in [`results.md`](results.md); the alarm comparison is in
+[`alarm.md`](alarm.md).
 
-The short version: a small dilated convolutional network beats "assume glucose
-stays where it is" by a wide margin, and — the part that actually matters — it
-catches most low-glucose episodes before they begin, with roughly half an hour
-of warning.
+A dilated convolutional network cuts RMSE from persistence's 23.2 mg/dL to
+18.9 on held-out patients. But the headline result is the one we did not expect:
+
+![Accuracy and low-glucose sensitivity move in opposite directions](assets/tradeoff.png)
+
+**Rank the models by accuracy and you almost exactly reverse their ranking by
+low-glucose recall.** The most accurate model is the least willing to call a low.
+
+This is what squared error does. It rewards a forecast that stays near the
+conditional mean, and hypoglycaemia lives in the tail — so a model that hedges
+toward the middle wins on RMSE precisely by refusing to commit to the events the
+product exists to catch. Selecting on RMSE would have shipped the worst
+available alarm.
+
+Two things follow. First, recall at a fixed 70 mg/dL cutoff compares the models'
+*biases*, not their skill: the high-recall models are not more insightful, they
+simply alarm more often (linear extrapolation reaches 74% recall by alarming
+roughly 21 times a day, which nobody would wear). The fair question is how much
+recall each buys at the *same* false-alarm budget. Second, the fix belongs in
+the objective — so the models can also carry a head trained directly on the
+low/not-low decision, and report a probability rather than a single number.
 
 Model selection was done on a validation split of patients. The test split was
 scored once, afterwards, and never used to choose anything.
