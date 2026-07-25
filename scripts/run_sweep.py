@@ -132,6 +132,13 @@ def write_results_md(payload: dict) -> None:
         f"| val | {c['val']['patients']} | {c['val']['windows']:,} |",
         f"| test | {c['test']['patients']} | {c['test']['windows']:,} |",
         "",
+        "The two splits are not equally hard, and it would be misleading to hide "
+        "that: the validation patients spend far less time low than the test "
+        "patients do. That is real between-person variation, not a bug, and it is "
+        "why validation RMSE sits well below test RMSE for every model alike. "
+        "Selection still works — the *ranking* is what selection needs — but the "
+        "validation column should not be read as a performance estimate.",
+        "",
         "## Held-out test set",
         "",
         "`RMSE_hypo` is RMSE restricted to windows whose true value is below "
@@ -139,18 +146,18 @@ def write_results_md(payload: dict) -> None:
         "alarm. `Clarke A+B` is the share of predictions in the clinically "
         "acceptable zones of the Clarke Error Grid.",
         "",
-        "| model | params | RMSE | MAE | MARD | RMSE_hypo | hypo recall | hypo precision | false alarms/day | Clarke A+B |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
+        "| model | params | val RMSE | RMSE | MAE | MARD | RMSE_hypo | hypo recall | hypo precision | false alarms/day | Clarke A+B |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for r in payload["results"]:
-        t = r["test"]
+        t, v = r["test"], r["val"]
         p = r.get("n_params", 0)
         star = " **←**" if r["name"] == payload["selected_on_validation"] else ""
         lines.append(
-            f"| {r['name']}{star} | {p:,} | {t['rmse']:.2f} | {t['mae']:.2f} | "
-            f"{t['mard']:.2f}% | {t['rmse_hypo']:.2f} | {t['hypo_recall']:.1%} | "
-            f"{t['hypo_precision']:.1%} | {t['hypo_false_alarms_per_day']:.2f} | "
-            f"{t['clarke_ab']:.2f}% |"
+            f"| {r['name']}{star} | {p:,} | {v['rmse']:.2f} | {t['rmse']:.2f} | "
+            f"{t['mae']:.2f} | {t['mard']:.2f}% | {t['rmse_hypo']:.2f} | "
+            f"{t['hypo_recall']:.1%} | {t['hypo_precision']:.1%} | "
+            f"{t['hypo_false_alarms_per_day']:.2f} | {t['clarke_ab']:.2f}% |"
         )
     lines += [
         "",
