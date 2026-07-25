@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Raw and derived data are not redistributed (OpenAPS Data Commons terms).
+data/
+artifacts/*.pt
+artifacts/smoke*
+artifacts/sweep.log
