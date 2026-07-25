@@ -20,6 +20,16 @@ from src.config import (
 from src.models.nets import build
 
 
+def _device() -> torch.device:
+    """Use the GPU when there is one. Inference over a full patient record is
+    ~100k windows, and on CPU that is slow enough to be felt in the demo."""
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    return torch.device("cpu")
+
+
 class Forecaster:
     """Thin wrapper: raw mg/dL windows in, forecast (and risk) out."""
 
@@ -37,16 +47,18 @@ class Forecaster:
             heteroscedastic=self.probabilistic, classify=self.classifies,
         )
         self.model.load_state_dict(blob["state_dict"])
-        self.model.eval()
+        self.device = _device()
+        self.model.to(self.device).eval()
 
     @torch.no_grad()
     def _raw(self, windows: np.ndarray) -> np.ndarray:
         x = torch.from_numpy(np.asarray(windows, dtype=np.float32))
         if x.ndim == 1:
             x = x.unsqueeze(0)
+        x = x.to(self.device)
         out = []
-        for i in range(0, len(x), 8192):
-            out.append(self.model(x[i : i + 8192]).numpy())
+        for i in range(0, len(x), 16384):
+            out.append(self.model(x[i : i + 16384]).float().cpu().numpy())
         return np.concatenate(out)
 
     def predict(self, windows: np.ndarray) -> np.ndarray:
@@ -113,6 +125,45 @@ def best_checkpoint() -> str | None:
             return min(on_disk, key=lambda r: r["val"]["rmse"])["name"]
 
     return sorted(names)[0]
+
+
+@lru_cache(maxsize=1)
+def load_alarm_report() -> dict:
+    path = ARTIFACTS_DIR / "alarm.json"
+    return json.loads(path.read_text()) if path.exists() else {}
+
+
+def alarm_budgets() -> list[str]:
+    """False-alarm budgets the alarm report tuned a threshold for."""
+    report = load_alarm_report()
+    for entry in report.values():
+        return list(entry.get("budgets", {}))
+    return []
+
+
+def tuned_threshold(forecaster: "Forecaster", budget: str) -> float | None:
+    """The validation-tuned alarm cutoff, in the units ``alarm_flags`` expects.
+
+    Without this the demo would fall back to an arbitrary cutoff — probability
+    0.5, or 70 mg/dL on the point forecast — and show a far worse alarm than the
+    one actually measured. The threshold is part of the system, not a detail.
+    """
+    entry = load_alarm_report().get(forecaster.name)
+    if not entry:
+        return None
+    budgets = entry.get("budgets", {})
+    chosen = budgets.get(budget) or next(iter(budgets.values()), None)
+    if chosen is None:
+        return None
+
+    threshold = float(chosen["threshold"])
+    # alarm.json stores the score the report thresholded. For a classifier that
+    # score is a raw logit, while alarm_flags compares probabilities.
+    if forecaster.classifies:
+        return 1.0 / (1.0 + np.exp(-threshold))
+    if forecaster.probabilistic:
+        return threshold                      # already P(low)
+    return HYPO_THRESHOLD - threshold         # score was (70 - prediction)
 
 
 @lru_cache(maxsize=1)

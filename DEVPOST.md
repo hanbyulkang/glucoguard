@@ -1,7 +1,6 @@
 # Devpost project page copy
 
-Paste into the matching fields. `{{braces}}` are filled from `results.md` after
-the sweep finishes.
+Paste into the matching fields. All numbers are the measured ones.
 
 ---
 
@@ -94,6 +93,11 @@ warning that arrives late is not a warning. Rewriting it to require the alert
 before onset cut the reported catch rate substantially, which is the honest
 number.
 
+**Stacking every fix at once made things worse.** The variant with a predicted
+distribution, a classification head and a reweighted loss all together scored
+below the one that just predicts a distribution. We reported that rather than
+quietly dropping it.
+
 **The two splits are not equally hard,** and we say so. Our validation patients
 spend far less time low than our test patients do. That is real between-person
 variation, and it means validation RMSE sits well below test RMSE for every
@@ -102,16 +106,29 @@ refuse to quote the validation number as performance.
 
 ## Accomplishments that we're proud of
 
-The evaluation is the accomplishment. Anyone can fit a network to CGM data; the
-work was in building a harness that cannot flatter itself — patient-level splits,
-baselines reported first, lows measured separately, episodes counted instead of
-readings, and a limitations section that names what the system cannot do.
+**We caught our own evaluation lying to us, twice, and the fix became the
+project.**
 
-One finding we like: linear extrapolation has *worse* overall RMSE than
-persistence but substantially *higher* low-glucose recall. It over-predicts the
-fall, so it catches more lows and cries wolf more often. That trade-off is the
-entire clinical problem in one row of a table, and it is invisible if you only
-report RMSE.
+First: rank our models by RMSE and you almost exactly reverse their ranking by
+low-glucose recall. Our most accurate model was the worst at catching lows —
+worse than doing nothing at all. That is what squared error does. It rewards a
+forecast that hugs the mean, and hypoglycaemia is the tail, so optimising
+accuracy taught the model to refuse to commit to the exact events we built it
+for. Had we selected on RMSE, as almost every paper in this area does, we would
+have shipped the worst available alarm.
+
+Second: the models that looked good on recall weren't better, they just alarmed
+more often. Linear extrapolation reaches 74% recall by firing 21 times a day.
+Reading every model at one fixed 70 mg/dL cutoff compares their biases, not
+their skill.
+
+So the alarm became a tunable decision instead of a side effect. Every model
+emits a risk score; the cutoff is tuned on validation to a false-alarm budget and
+applied unchanged to test. Compared that way the ranking inverts — linear
+extrapolation goes from apparently best to last — and the model that ships
+catches **74.8% of lows against the plain network's 69.9% at identical accuracy
+and an identical false-alarm budget**. Same architecture, same 18.9 mg/dL RMSE.
+Only the decision layer changed.
 
 ## What we learned
 
@@ -125,10 +142,12 @@ too kind to us.
 1. **Insulin and carbohydrate inputs.** The archive already contains them. The
    model is currently blind right after meals and corrections, which is exactly
    where it is weakest.
-2. **Predict a distribution, not a point.** A forecast that can express "I don't
-   know" is what lets a downstream safety layer decide when *not* to act.
+2. **Per-patient alarm calibration.** A threshold tuned on one group of people
+   overshoots its false-alarm budget on another, so a wearer's own first weeks
+   should set their cutoff.
 3. **Withhold predictions on bad input.** Sensor dropouts and out-of-distribution
-   traces should produce silence, not a confident wrong number.
+   traces should produce silence, not a confident wrong number. The predictive
+   spread is the hook this hangs on and it already exists.
 4. **A 60-minute horizon**, reported separately rather than quoting the easy one.
 
 Longer term, this forecast is the sensing-and-prediction layer of a wearable that

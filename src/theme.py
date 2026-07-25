@@ -39,7 +39,7 @@ def style(fig: go.Figure, height: int = 420, y_title: str = "", x_title: str = "
         paper_bgcolor=SURFACE,
         plot_bgcolor=SURFACE,
         font=dict(family=FONT, size=13, color=INK_SECONDARY),
-        margin=dict(l=8, r=8, t=8, b=8),
+        margin=dict(l=8, r=76, t=8, b=8),   # room for the threshold labels
         hovermode="x unified",
         hoverlabel=dict(
             bgcolor=SURFACE, bordercolor=BORDER, font_size=13, font_family=FONT

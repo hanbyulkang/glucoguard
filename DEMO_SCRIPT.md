@@ -1,8 +1,7 @@
 # Demo video script — 5:00 max, target 4:30
 
-Numbers in `{{braces}}` are placeholders filled from `results.md` once the sweep
-finishes. Record the screen at 1920×1080; the Streamlit app is laid out for that
-width.
+Numbers below are the measured ones from `results.md` and `alarm.md`. Record the
+screen at 1920×1080; the Streamlit app is laid out for that width.
 
 ---
 
@@ -34,8 +33,8 @@ moment it describes, using only data available at that time. So the gap between
 the two lines is the error a patient would really have experienced.
 
 The red dots are the moments the model called the low before it started. On this
-patient, it caught {{caught_share}} of separate low episodes, with a median
-warning of {{median_lead}} minutes."
+patient, it caught 27% of separate low episodes, with a median
+warning of 30 minutes."
 
 ---
 
@@ -58,49 +57,56 @@ model never sees until the very end. Everything you're looking at is from those
 
 ---
 
-## 2:20 – 3:20 · Results, including what doesn't work
+## 2:20 – 3:30 · The finding: accuracy and safety pulled apart
 
 > *(Screen: results.md table.)*
 
 "Here's every model we ran, and the baselines come first on purpose.
 
-Persistence — just assuming glucose doesn't change — gets {{persistence_rmse}}
+Persistence — just assuming glucose doesn't change — gets 23.2
 mg/dL. At a 30-minute horizon that's already decent, which is exactly why a
 paper that omits it can make a mediocre model look impressive.
 
-Our best model, {{best_model}}, gets {{best_rmse}}. That's {{improvement}}
+Our best model, tcn_prob, gets 18.9 mg/dL. That's 19%
 better.
 
-But look at this row. Linear extrapolation has *worse* overall RMSE —
-{{linear_rmse}} — and much *higher* low-glucose recall: {{linear_recall}}
-versus persistence's {{persistence_recall}}. It over-predicts the fall, so it
-catches more lows and cries wolf more often.
+But now rank these models by low-glucose recall instead, and the order almost
+exactly reverses. Our most accurate model is the *worst* at catching lows — worse
+than doing nothing.
 
-That trade-off is the whole clinical problem, and it's why we don't report a
-single accuracy number. We report RMSE restricted to lows, recall, precision,
-false alarms per day, and the Clarke Error Grid."
+That's not a bug in one model. Squared error rewards a forecast that hugs the
+mean, and hypoglycaemia is the tail. Optimising accuracy taught the model to
+refuse to commit to the exact events we built it for. Selecting on RMSE would
+have shipped the worst available alarm.
 
----
-
-## 3:20 – 4:00 · Where the accuracy comes from
-
-> *(Screen: scroll to the banded bar chart.)*
-
-"Lows are about 3% of the data. A model can post an excellent overall RMSE while
-being useless exactly where a patient needs it, because the errors on lows get
-averaged away.
-
-So we break the error down by what glucose actually did. Below 70, in range,
-above 180. This is the chart that tells you whether the model is good or just
-lucky.
-
-And we score **episodes**, not readings. One continuous low is one event a
-person experiences — counting each of its readings separately lets a single
-long low inflate the number."
+And the models that looked good on recall weren't insightful — they just alarmed
+more. Linear extrapolation hits 74% recall by firing 21 times a day. Nobody
+wears that."
 
 ---
 
-## 4:00 – 4:30 · What it doesn't do, and what's next
+## 3:30 – 4:10 · The fix, and the slider that shows it
+
+> *(Screen: back to the app. Move the false-alarm slider from 1/day to 6/day and
+> let the risk line and the tiles move.)*
+
+"So we stopped reading the alarm off the forecast. The model now predicts a
+*distribution*, and the alarm asks the right question — what's the probability
+of going below 70 — with a threshold tuned to a false-alarm budget you choose.
+
+This slider is that budget. Drag it right, catch more lows, tolerate more false
+alarms. Drag it left, the opposite. That dial doesn't exist with a fixed
+70 mg/dL rule.
+
+Compared this way — every model at the *same* false-alarm budget — linear
+extrapolation drops from apparently best to last. And the model we ship catches
+75% of lows where the plain network gets 70%, at identical accuracy and identical
+false alarms. Same architecture, same 18.9 RMSE. Only the decision layer
+changed."
+
+---
+
+## 4:10 – 4:40 · What it doesn't do, and what's next
 
 > *(Screen: the "What this does not do" expander, opened.)*
 
@@ -111,12 +117,14 @@ a dose.
 
 It has not been tested on a person — this is a retrospective replay.
 
-And it doesn't know when it doesn't know. It returns one number with no
-confidence attached.
+And it's still blind to meals and insulin, which is exactly why it's weakest
+after eating. Those records are already in the archive; that's next.
 
-That last one is next. The archive already has insulin and carbohydrate records
-we're not using yet, and a model that can say 'I'm not sure' is what lets a
-safety layer decide when *not* to act.
+One more honest number. A threshold tuned to one false alarm a day on our
+validation patients delivers several on our test patients — because they're
+different people who go low at different rates. That means a population-level
+alarm threshold doesn't transfer, and per-patient calibration isn't a
+refinement, it's a requirement.
 
 Everything's reproducible from a public repo: build the dataset, run the sweep,
 launch the app. Three commands."
@@ -128,7 +136,8 @@ launch the app. Three commands."
 - [ ] Close every other window; hide the bookmarks bar
 - [ ] Browser zoom at 100%, full screen
 - [ ] Pick the patient/day in advance — do not hunt on camera
-- [ ] Toggle "Overlay persistence baseline" once, on camera, during the results section
+- [ ] Move the false-alarm slider on camera during section 3:30 — it is the demo's best moment
+- [ ] Toggle "Overlay persistence baseline" once, on camera
 - [ ] Render under **4:45** for safety margin against the 5:00 limit
 - [ ] Upload to YouTube as **Unlisted or Public** — never Private
 - [ ] Verify the link opens in a logged-out incognito window
