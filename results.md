@@ -27,8 +27,11 @@ The two splits are not equally hard, and it would be misleading to hide that: th
 | tcn_hypo3 | 233,185 | 16.88 | 19.30 | 13.19 | 10.45% | 19.64 | 36.7% | 60.0% | 3.02 | 96.91% |
 | tcn_hypo8 | 233,185 | 17.48 | 19.84 | 13.55 | 10.60% | 19.20 | 35.3% | 60.4% | 2.86 | 96.94% |
 | ensemble(tcn+trf+lstm) | 810,467 | 16.60 | 19.27 | 13.36 | 10.82% | 21.79 | 35.9% | 59.4% | 3.03 | 96.66% |
+| tcn_prob † | 233,282 | 16.20 | 18.86 | 13.21 | 11.00% | 25.20 | 18.2% | 72.4% | 0.86 | 96.29% |
 
-Model selection was done on the validation split; **tcn** won there and its test numbers are reported above without further tuning.
+† These models carry a risk head — a predicted distribution, a trained low/not-low classifier, or both. Their recall, precision and false-alarm columns above are computed the same way as everyone else's, by asking whether the *point* forecast fell under 70, and for them that is the wrong question: their alarm is meant to read the probability instead. Judge them in [`alarm.md`](alarm.md), where every model is compared on the signal it was actually built to emit.
+
+Selection was done on the validation split; **tcn** had the lowest validation RMSE among the round-1 models and its test numbers are reported above without further tuning. Which model actually ships is decided in [`alarm.md`](alarm.md), on alarm performance — for the reason immediately below.
 
 ## Read the table sideways: accuracy and sensitivity to lows move in opposite directions
 

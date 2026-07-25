@@ -153,17 +153,35 @@ def write_results_md(payload: dict) -> None:
         t, v = r["test"], r["val"]
         p = r.get("n_params", 0)
         star = " **←**" if r["name"] == payload["selected_on_validation"] else ""
+        # Models with a risk head should not be judged by these three columns —
+        # their alarm reads a probability, not the point forecast.
+        dagger = " †" if (r.get("probabilistic") or r.get("classify")) else ""
         lines.append(
-            f"| {r['name']}{star} | {p:,} | {v['rmse']:.2f} | {t['rmse']:.2f} | "
+            f"| {r['name']}{star}{dagger} | {p:,} | {v['rmse']:.2f} | {t['rmse']:.2f} | "
             f"{t['mae']:.2f} | {t['mard']:.2f}% | {t['rmse_hypo']:.2f} | "
             f"{t['hypo_recall']:.1%} | {t['hypo_precision']:.1%} | "
             f"{t['hypo_false_alarms_per_day']:.2f} | {t['clarke_ab']:.2f}% |"
         )
+
+    if payload.get("has_risk_heads"):
+        lines += [
+            "",
+            "† These models carry a risk head — a predicted distribution, a "
+            "trained low/not-low classifier, or both. Their recall, precision and "
+            "false-alarm columns above are computed the same way as everyone "
+            "else's, by asking whether the *point* forecast fell under 70, and "
+            "for them that is the wrong question: their alarm is meant to read "
+            "the probability instead. Judge them in "
+            "[`alarm.md`](alarm.md), where every model is compared on the signal "
+            "it was actually built to emit.",
+        ]
     lines += [
         "",
-        f"Model selection was done on the validation split; "
-        f"**{payload['selected_on_validation']}** won there and its test numbers are "
-        "reported above without further tuning.",
+        f"Selection was done on the validation split; **"
+        f"{payload['selected_on_validation']}** had the lowest validation RMSE among "
+        "the round-1 models and its test numbers are reported above without further "
+        "tuning. Which model actually ships is decided in [`alarm.md`](alarm.md), on "
+        "alarm performance — for the reason immediately below.",
         "",
         "## Read the table sideways: accuracy and sensitivity to lows move in opposite directions",
         "",
