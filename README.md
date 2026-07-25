@@ -53,13 +53,34 @@ available alarm.
 Two things follow. First, recall at a fixed 70 mg/dL cutoff compares the models'
 *biases*, not their skill: the high-recall models are not more insightful, they
 simply alarm more often (linear extrapolation reaches 74% recall by alarming
-roughly 21 times a day, which nobody would wear). The fair question is how much
-recall each buys at the *same* false-alarm budget. Second, the fix belongs in
-the objective — so the models can also carry a head trained directly on the
-low/not-low decision, and report a probability rather than a single number.
+roughly 21 times a day, which nobody would wear). Second, the fix belongs in the
+objective, not the threshold.
 
-Model selection was done on a validation split of patients. The test split was
-scored once, afterwards, and never used to choose anything.
+So each model emits a **risk score** instead, and the cutoff on that score is
+tuned on validation to a false-alarm budget, then applied unchanged to test.
+Compared that way, the ranking inverts:
+
+![Recall against false alarms per day](assets/alarm_curve.png)
+
+| at ≤6 false alarms/day | low-glucose recall |
+|---|---:|
+| **tcn_prob** (predicts a distribution, alarms on P(glucose < 70)) | **74.8%** |
+| tcn_cls (head trained directly on the low/not-low label) | 74.2% |
+| tcn_hypo3 (loss upweighted toward lows) | 73.2% |
+| tcn (plain, best RMSE) | 69.9% |
+| persistence | 66.5% |
+| linear_extrapolation | 57.8% |
+
+Linear extrapolation goes from apparently best to last. And the model that ships
+— `tcn_prob` — catches **five more points of recall than the plain network at
+identical accuracy and an identical false-alarm budget**, purely by asking "what
+is the probability of going low" instead of "did my one guessed number land
+under 70". Same architecture, same 18.9 mg/dL RMSE; only the decision layer
+changed.
+
+Full numbers for every model and budget are in [`alarm.md`](alarm.md). Selection
+was done on validation patients; the test split was scored once, afterwards, and
+never used to choose anything.
 
 ---
 

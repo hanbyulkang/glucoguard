@@ -141,18 +141,27 @@ def figure_alarm(alarm: dict) -> None:
     show = keep + learned[:2]
 
     fig, ax = plt.subplots(figsize=(8.2, 5.2), dpi=200)
-    palette = {n: c for n, c in zip(show, [MUTED, "#8a8a86", "#b5b4ae", BLUE, ORANGE])}
+    # The three baselines share a colour role, so dash pattern rather than hue
+    # separates them — keeping the two coloured lines unmistakably the subject.
+    baseline_style = {
+        "persistence": ("-", INK_SECONDARY),
+        "ridge": ("--", MUTED),
+        "linear_extrapolation": (":", MUTED),
+    }
+    learned_colour = {n: c for n, c in zip(learned[:2], [BLUE, ORANGE])}
+
     for name in show:
         curve = alarm[name]["pr_curve_test"]
         fa, rec = curve["false_alarms_per_day"], [r * 100 for r in curve["recall"]]
         pairs = [(f, r) for f, r in zip(fa, rec) if f <= 24]
         if not pairs:
             continue
-        is_learned = name in learned
-        ax.plot([p[0] for p in pairs], [p[1] for p in pairs],
-                color=palette.get(name, MUTED),
-                linewidth=2.4 if is_learned else 1.6,
-                label=name, zorder=3 if is_learned else 2)
+        if name in learned_colour:
+            style_kw = dict(color=learned_colour[name], linewidth=2.6, zorder=3)
+        else:
+            dash, colour = baseline_style.get(name, ("-", MUTED))
+            style_kw = dict(color=colour, linestyle=dash, linewidth=1.7, zorder=2)
+        ax.plot([p[0] for p in pairs], [p[1] for p in pairs], label=name, **style_kw)
 
     ax.set_xlabel("False alarms per day, lower is better", fontsize=10)
     ax.set_ylabel("Low-glucose recall (%)", fontsize=10)
