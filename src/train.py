@@ -39,6 +39,7 @@ class TrainConfig:
     weight_decay: float = 1e-4
     huber_delta: float = 10.0        # mg/dL; beyond this, errors count linearly
     hypo_weight: float = 0.0         # >0 upweights windows that end in a low
+    probabilistic: bool = False      # predict a distribution, not a point
     patience: int = 3
     seed: int = 1337
     tag: str = ""
@@ -57,13 +58,29 @@ def sample_weights(y: torch.Tensor, strength: float) -> torch.Tensor | None:
     return 1.0 + strength * ramp
 
 
+def gaussian_nll(out: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+    """Negative log-likelihood of a Gaussian predictive distribution.
+
+    Optimising this rather than squared error lets the model widen its own
+    error bars where the trace is genuinely unpredictable, instead of paying
+    for that uncertainty by dragging the mean toward safety.
+    """
+    mu, sigma = out[..., 0], out[..., 1]
+    return torch.log(sigma) + 0.5 * ((y - mu) / sigma) ** 2
+
+
 @torch.no_grad()
 def predict(model: nn.Module, X: torch.Tensor, batch: int = 16384) -> np.ndarray:
+    """Returns (n,) point forecasts, or (n, 2) of [mean, sigma] if probabilistic."""
     model.eval()
     out = []
     for i in range(0, len(X), batch):
         out.append(model(X[i : i + batch]).float().cpu().numpy())
     return np.concatenate(out)
+
+
+def as_point(pred: np.ndarray) -> np.ndarray:
+    return pred[:, 0] if pred.ndim == 2 else pred
 
 
 def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
@@ -81,7 +98,8 @@ def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
     Xva = torch.from_numpy(val.X).to(device)
     Xte = torch.from_numpy(test.X).to(device)
 
-    model = build(cfg.model, mean=mean, std=std).to(device)
+    model = build(cfg.model, mean=mean, std=std,
+                  heteroscedastic=cfg.probabilistic).to(device)
     n_params = count_parameters(model)
 
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
@@ -89,7 +107,8 @@ def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
     sched = torch.optim.lr_scheduler.OneCycleLR(
         opt, max_lr=cfg.lr, total_steps=total_steps, pct_start=0.15
     )
-    loss_fn = nn.HuberLoss(delta=cfg.huber_delta, reduction="none")
+    huber = nn.HuberLoss(delta=cfg.huber_delta, reduction="none")
+    loss_fn = gaussian_nll if cfg.probabilistic else huber
 
     name = cfg.tag or cfg.model
     print(f"\n=== {name} | {n_params:,} params | device={device.type} ===", flush=True)
@@ -119,7 +138,7 @@ def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
             running += loss.item()
 
         val_pred = predict(model, Xva)
-        val_metrics = evaluate(val.y, val_pred)
+        val_metrics = evaluate(val.y, as_point(val_pred))
         history.append({"epoch": epoch, "train_loss": running / cfg.steps_per_epoch,
                         **{k: val_metrics[k] for k in ("rmse", "mae", "hypo_recall")}})
         print(
@@ -143,8 +162,9 @@ def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
     if best_state is not None:
         model.load_state_dict(best_state)
 
-    test_metrics = evaluate(test.y, predict(model, Xte))
-    val_metrics = evaluate(val.y, predict(model, Xva))
+    val_pred, test_pred = predict(model, Xva), predict(model, Xte)
+    test_metrics = evaluate(test.y, as_point(test_pred))
+    val_metrics = evaluate(val.y, as_point(val_pred))
 
     ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
     torch.save(
@@ -166,8 +186,8 @@ def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
     print(format_row(f"{name} (test)", test_metrics), flush=True)
 
     # Kept out of the JSON (too large) but handed back so a caller can ensemble.
-    result["_val_pred"] = predict(model, Xva)
-    result["_test_pred"] = predict(model, Xte)
+    result["_val_pred"] = val_pred
+    result["_test_pred"] = test_pred
     return result
 
 
@@ -179,13 +199,15 @@ def main() -> None:
     p.add_argument("--steps-per-epoch", type=int, default=1200)
     p.add_argument("--lr", type=float, default=2e-3)
     p.add_argument("--hypo-weight", type=float, default=0.0)
+    p.add_argument("--probabilistic", action="store_true")
     p.add_argument("--tag", default="")
     args = p.parse_args()
 
     run(TrainConfig(
         model=args.model, epochs=args.epochs, batch_size=args.batch_size,
         steps_per_epoch=args.steps_per_epoch, lr=args.lr,
-        hypo_weight=args.hypo_weight, tag=args.tag,
+        hypo_weight=args.hypo_weight, probabilistic=args.probabilistic,
+        tag=args.tag,
     ))
 
 

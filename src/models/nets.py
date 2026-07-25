@@ -38,21 +38,40 @@ class _GlucoseFeatures(nn.Module):
 
 
 class _DeltaHead(nn.Module):
-    """Map a pooled representation to a glucose change in mg/dL."""
+    """Map a pooled representation to a glucose change in mg/dL.
 
-    def __init__(self, in_dim: int, hidden: int, std: float, dropout: float):
+    With ``heteroscedastic=True`` the head also emits a per-sample spread, so
+    the model can report how confident it is rather than only what it expects.
+    That matters more than it sounds: a point forecast trained on squared error
+    is pulled toward the mean, which makes it systematically reluctant to
+    predict the rare extremes — exactly the lows we care about. A predicted
+    distribution lets the alarm ask "what is the probability of going below 70"
+    instead of "did the single guessed number happen to land below 70".
+    """
+
+    def __init__(
+        self, in_dim: int, hidden: int, std: float, dropout: float,
+        heteroscedastic: bool = False,
+    ):
         super().__init__()
+        self.heteroscedastic = heteroscedastic
         self.net = nn.Sequential(
             nn.Linear(in_dim, hidden),
             nn.GELU(),
             nn.Dropout(dropout),
-            nn.Linear(hidden, 1),
+            nn.Linear(hidden, 2 if heteroscedastic else 1),
         )
         self.register_buffer("std", torch.tensor(float(std)))
 
     def forward(self, h: torch.Tensor, last: torch.Tensor) -> torch.Tensor:
-        delta = self.net(h).squeeze(-1) * self.std
-        return last + delta
+        out = self.net(h)
+        mu = last + out[..., 0] * self.std
+        if not self.heteroscedastic:
+            return mu
+        # Softplus keeps the scale positive; the floor stops the NLL from
+        # running away to zero variance on easy, flat stretches of the trace.
+        sigma = nn.functional.softplus(out[..., 1]) * self.std + 1.0
+        return torch.stack([mu, sigma], dim=-1)
 
 
 class LSTMForecaster(nn.Module):
@@ -63,6 +82,7 @@ class LSTMForecaster(nn.Module):
         hidden: int = 128,
         layers: int = 2,
         dropout: float = 0.1,
+        heteroscedastic: bool = False,
     ):
         super().__init__()
         self.features = _GlucoseFeatures(mean, std)
@@ -73,7 +93,7 @@ class LSTMForecaster(nn.Module):
             batch_first=True,
             dropout=dropout if layers > 1 else 0.0,
         )
-        self.head = _DeltaHead(hidden, hidden, std, dropout)
+        self.head = _DeltaHead(hidden, hidden, std, dropout, heteroscedastic)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         out, _ = self.rnn(self.features(x))
@@ -109,6 +129,7 @@ class TCNForecaster(nn.Module):
         levels: int = 4,
         kernel: int = 3,
         dropout: float = 0.1,
+        heteroscedastic: bool = False,
     ):
         super().__init__()
         self.features = _GlucoseFeatures(mean, std)
@@ -117,7 +138,7 @@ class TCNForecaster(nn.Module):
         self.blocks = nn.Sequential(
             *[_TCNBlock(channels, 2**i, kernel, dropout) for i in range(levels)]
         )
-        self.head = _DeltaHead(channels, channels, std, dropout)
+        self.head = _DeltaHead(channels, channels, std, dropout, heteroscedastic)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         h = self.features(x).transpose(1, 2)     # (B, 2, T)
@@ -135,6 +156,7 @@ class TransformerForecaster(nn.Module):
         layers: int = 3,
         dropout: float = 0.1,
         max_len: int = 64,
+        heteroscedastic: bool = False,
     ):
         super().__init__()
         self.features = _GlucoseFeatures(mean, std)
@@ -151,7 +173,7 @@ class TransformerForecaster(nn.Module):
         )
         self.encoder = nn.TransformerEncoder(encoder, num_layers=layers)
         self.norm = nn.LayerNorm(d_model)
-        self.head = _DeltaHead(d_model, d_model * 2, std, dropout)
+        self.head = _DeltaHead(d_model, d_model * 2, std, dropout, heteroscedastic)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         h = self.proj(self.features(x))
