@@ -27,6 +27,7 @@ from src.metrics import evaluate
 from src.models.baselines import persistence
 from src.predictor import (
     Forecaster,
+    alarm_flags,
     available_checkpoints,
     best_checkpoint,
     hypo_episodes,
@@ -173,7 +174,7 @@ target_time = pd.to_datetime(day_fc["target_time"])
 # --------------------------------------------------------------------------- #
 # alert banner — what the model is saying about this day
 # --------------------------------------------------------------------------- #
-predicted_low = day_fc["predicted"] < HYPO_THRESHOLD
+predicted_low = pd.Series(alarm_flags(day_fc), index=day_fc.index)
 actual_low = day_fc["actual"] < HYPO_THRESHOLD
 caught = int((predicted_low & actual_low).sum())
 missed = int((~predicted_low & actual_low).sum())
@@ -237,6 +238,18 @@ for value, colour, text in [
         annotation_font=dict(size=11, color=INK_MUTED), layer="below",
     )
 
+# Where the model reports its own spread, draw it — a forecast that admits
+# doubt is more useful to a controller than a confident single number.
+if "sigma" in day_fc.columns:
+    fig.add_trace(go.Scatter(
+        x=pd.concat([target_time, target_time[::-1]]),
+        y=pd.concat([day_fc["predicted"] + 1.96 * day_fc["sigma"],
+                     (day_fc["predicted"] - 1.96 * day_fc["sigma"])[::-1]]),
+        fill="toself", fillcolor="rgba(235,104,52,0.13)",
+        line=dict(width=0), hoverinfo="skip",
+        name="95% predictive interval",
+    ))
+
 fig.add_trace(go.Scatter(
     x=target_time, y=day_fc["actual"], name="Actual CGM",
     mode="lines", line=dict(color=ACTUAL, width=2),
@@ -277,6 +290,31 @@ st.markdown(
     f"patient would actually have experienced.</div>",
     unsafe_allow_html=True,
 )
+
+# --------------------------------------------------------------------------- #
+# risk strip — only for models that emit one
+# --------------------------------------------------------------------------- #
+if "hypo_prob" in day_fc.columns:
+    risk = go.Figure()
+    risk.add_trace(go.Scatter(
+        x=target_time, y=day_fc["hypo_prob"] * 100,
+        mode="lines", line=dict(color=CRITICAL, width=2),
+        fill="tozeroy", fillcolor="rgba(208,59,59,0.12)",
+        name="Predicted risk of going low",
+        hovertemplate="%{y:.0f}% risk of being under 70<extra></extra>",
+    ))
+    risk.add_hline(y=50, line=dict(color=INK_MUTED, width=1, dash="dot"))
+    style(risk, height=170, y_title="P(low) %")
+    risk.update_yaxes(range=[0, 100])
+    risk.update_layout(showlegend=False)
+    st.plotly_chart(risk, use_container_width=True, config={"displayModeBar": False})
+    st.markdown(
+        '<div class="gg-caption">This model outputs a probability, not just a '
+        "number. That is what lets the alarm be a tunable decision — raise the "
+        "cutoff to cut false alarms, lower it to catch more lows — instead of "
+        "depending on whether one guessed value happened to fall under 70.</div>",
+        unsafe_allow_html=True,
+    )
 
 # --------------------------------------------------------------------------- #
 # metrics for this patient (whole record, not just the day on screen)
