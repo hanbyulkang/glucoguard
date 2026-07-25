@@ -108,6 +108,27 @@ def patient_series(patient_id: str) -> pd.DataFrame:
     return out.reset_index(drop=True)
 
 
+def forecast_cache_path(patient_id: str, model_name: str):
+    return CACHE_DIR / "forecasts" / model_name / f"{patient_id}.parquet"
+
+
+def cached_forecast(patient_id: str, forecaster: Forecaster) -> pd.DataFrame:
+    """Rolling forecast for a whole patient, memoised on disk.
+
+    A single patient is ~100k windows. Recomputing that on every interaction
+    makes the demo feel broken, and re-running the model live adds nothing a
+    viewer can see. Compute once, read thereafter.
+    """
+    path = forecast_cache_path(patient_id, forecaster.name)
+    if path.exists():
+        return pd.read_parquet(path)
+
+    frame = rolling_forecast(patient_series(patient_id), forecaster)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    frame.to_parquet(path, index=False)
+    return frame
+
+
 def rolling_forecast(
     series: pd.DataFrame, forecaster: Forecaster
 ) -> pd.DataFrame:

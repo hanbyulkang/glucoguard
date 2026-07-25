@@ -32,9 +32,9 @@ from src.predictor import (
     best_checkpoint,
     hypo_episodes,
     hypo_lead_time,
+    cached_forecast,
     load_splits,
     patient_series,
-    rolling_forecast,
 )
 from src.theme import (
     ACTUAL,
@@ -66,9 +66,9 @@ def get_series(patient_id: str) -> pd.DataFrame:
     return patient_series(patient_id)
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner="Running the model over this patient's record...")
 def get_forecast(patient_id: str, model_name: str) -> pd.DataFrame:
-    return rolling_forecast(get_series(patient_id), get_forecaster(model_name))
+    return cached_forecast(patient_id, get_forecaster(model_name))
 
 
 @st.cache_data(show_spinner=False)
