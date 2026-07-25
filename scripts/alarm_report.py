@@ -30,9 +30,24 @@ def load_model_predictions(name: str, Xva, Xte, device):
                       weights_only=False)
     cfg, norm = blob["config"], blob["norm"]
     model = build_net(cfg["model"], mean=norm["mean"], std=norm["std"],
-                      heteroscedastic=cfg.get("probabilistic", False)).to(device)
+                      heteroscedastic=cfg.get("probabilistic", False),
+                      classify=cfg.get("classify", False)).to(device)
     model.load_state_dict(blob["state_dict"])
-    return predict(model, Xva), predict(model, Xte), cfg.get("probabilistic", False)
+    return predict(model, Xva), predict(model, Xte), cfg
+
+
+def score_of(pred: np.ndarray, cfg: dict) -> np.ndarray:
+    """Pick the most informative risk signal each model is able to give.
+
+    A trained classifier head beats both alternatives when present: it was
+    optimised for this exact decision. Thresholding its raw logit is equivalent
+    to thresholding its probability, so no sigmoid is needed here.
+    """
+    if cfg.get("classify"):
+        return pred[..., -1]
+    if cfg.get("probabilistic"):
+        return risk_score(pred[..., 0], pred[..., 1])
+    return risk_score(as_point(pred))
 
 
 def main() -> None:
@@ -58,12 +73,8 @@ def main() -> None:
         name = path.stem
         if name.startswith(("smoke", "_")):
             continue
-        pv, pt, is_prob = load_model_predictions(name, Xva, Xte, device)
-        if is_prob:
-            scores[name] = (risk_score(pv[:, 0], pv[:, 1]),
-                            risk_score(pt[:, 0], pt[:, 1]))
-        else:
-            scores[name] = (risk_score(as_point(pv)), risk_score(as_point(pt)))
+        pv, pt, cfg = load_model_predictions(name, Xva, Xte, device)
+        scores[name] = (score_of(pv, cfg), score_of(pt, cfg))
         print(f"scored {name}", flush=True)
 
     # --- report --------------------------------------------------------------

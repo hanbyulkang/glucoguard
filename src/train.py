@@ -40,6 +40,8 @@ class TrainConfig:
     huber_delta: float = 10.0        # mg/dL; beyond this, errors count linearly
     hypo_weight: float = 0.0         # >0 upweights windows that end in a low
     probabilistic: bool = False      # predict a distribution, not a point
+    classify: bool = False           # add a direct "will be low" head
+    class_weight: float = 1.0        # how much the classification loss counts
     patience: int = 3
     seed: int = 1337
     tag: str = ""
@@ -80,7 +82,7 @@ def predict(model: nn.Module, X: torch.Tensor, batch: int = 16384) -> np.ndarray
 
 
 def as_point(pred: np.ndarray) -> np.ndarray:
-    return pred[:, 0] if pred.ndim == 2 else pred
+    return pred[..., 0] if pred.ndim == 2 else pred
 
 
 def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
@@ -99,7 +101,8 @@ def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
     Xte = torch.from_numpy(test.X).to(device)
 
     model = build(cfg.model, mean=mean, std=std,
-                  heteroscedastic=cfg.probabilistic).to(device)
+                  heteroscedastic=cfg.probabilistic,
+                  classify=cfg.classify).to(device)
     n_params = count_parameters(model)
 
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
@@ -108,7 +111,19 @@ def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
         opt, max_lr=cfg.lr, total_steps=total_steps, pct_start=0.15
     )
     huber = nn.HuberLoss(delta=cfg.huber_delta, reduction="none")
-    loss_fn = gaussian_nll if cfg.probabilistic else huber
+    bce = nn.BCEWithLogitsLoss(reduction="none")
+
+    def compute_loss(out: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        """Per-sample loss. Regression, optionally plus the low/not-low decision."""
+        if cfg.probabilistic:
+            total = gaussian_nll(out[..., :2], y)
+        else:
+            mu = out[..., 0] if out.ndim == 2 else out
+            total = huber(mu, y)
+        if cfg.classify:
+            label = (y < HYPO_THRESHOLD).float()
+            total = total + cfg.class_weight * bce(out[..., -1], label)
+        return total
 
     name = cfg.tag or cfg.model
     print(f"\n=== {name} | {n_params:,} params | device={device.type} ===", flush=True)
@@ -126,7 +141,7 @@ def run(cfg: TrainConfig, windows: dict[str, WindowSet] | None = None) -> dict:
             xb, yb = Xtr[idx], ytr[idx]
 
             pred = model(xb)
-            loss = loss_fn(pred, yb)
+            loss = compute_loss(pred, yb)
             w = sample_weights(yb, cfg.hypo_weight)
             loss = (loss * w).sum() / w.sum() if w is not None else loss.mean()
 
@@ -200,6 +215,8 @@ def main() -> None:
     p.add_argument("--lr", type=float, default=2e-3)
     p.add_argument("--hypo-weight", type=float, default=0.0)
     p.add_argument("--probabilistic", action="store_true")
+    p.add_argument("--classify", action="store_true")
+    p.add_argument("--class-weight", type=float, default=1.0)
     p.add_argument("--tag", default="")
     args = p.parse_args()
 
@@ -207,7 +224,7 @@ def main() -> None:
         model=args.model, epochs=args.epochs, batch_size=args.batch_size,
         steps_per_epoch=args.steps_per_epoch, lr=args.lr,
         hypo_weight=args.hypo_weight, probabilistic=args.probabilistic,
-        tag=args.tag,
+        classify=args.classify, class_weight=args.class_weight, tag=args.tag,
     ))
 
 

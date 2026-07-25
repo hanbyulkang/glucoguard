@@ -7,6 +7,7 @@ from functools import lru_cache
 import numpy as np
 import pandas as pd
 import torch
+from scipy.special import ndtr
 
 from src.config import (
     ARTIFACTS_DIR,
@@ -20,7 +21,7 @@ from src.models.nets import build
 
 
 class Forecaster:
-    """Thin wrapper: raw mg/dL windows in, mg/dL predictions out."""
+    """Thin wrapper: raw mg/dL windows in, forecast (and risk) out."""
 
     def __init__(self, checkpoint: str):
         blob = torch.load(ARTIFACTS_DIR / f"{checkpoint}.pt", map_location="cpu",
@@ -29,16 +30,51 @@ class Forecaster:
         self.name = checkpoint
         self.arch = cfg["model"]
         self.n_params = blob["n_params"]
-        self.model = build(cfg["model"], mean=norm["mean"], std=norm["std"])
+        self.probabilistic = bool(cfg.get("probabilistic", False))
+        self.classifies = bool(cfg.get("classify", False))
+        self.model = build(
+            cfg["model"], mean=norm["mean"], std=norm["std"],
+            heteroscedastic=self.probabilistic, classify=self.classifies,
+        )
         self.model.load_state_dict(blob["state_dict"])
         self.model.eval()
 
     @torch.no_grad()
-    def predict(self, windows: np.ndarray) -> np.ndarray:
+    def _raw(self, windows: np.ndarray) -> np.ndarray:
         x = torch.from_numpy(np.asarray(windows, dtype=np.float32))
         if x.ndim == 1:
             x = x.unsqueeze(0)
-        return self.model(x).numpy()
+        out = []
+        for i in range(0, len(x), 8192):
+            out.append(self.model(x[i : i + 8192]).numpy())
+        return np.concatenate(out)
+
+    def predict(self, windows: np.ndarray) -> np.ndarray:
+        """Point forecast in mg/dL, whatever heads the checkpoint carries."""
+        raw = self._raw(windows)
+        return raw[..., 0] if raw.ndim == 2 else raw
+
+    def predict_full(self, windows: np.ndarray) -> dict[str, np.ndarray | None]:
+        """Forecast plus, where the model has them, spread and low-risk.
+
+        ``hypo_prob`` prefers the trained classifier over the Gaussian tail:
+        the classifier was optimised for this exact decision, while the Gaussian
+        probability is a by-product of a model optimised to be accurate on
+        average.
+        """
+        raw = self._raw(windows)
+        if raw.ndim == 1:
+            return {"mu": raw, "sigma": None, "hypo_prob": None}
+
+        mu = raw[..., 0]
+        sigma = raw[..., 1] if self.probabilistic else None
+        if self.classifies:
+            hypo_prob = 1.0 / (1.0 + np.exp(-raw[..., -1]))
+        elif sigma is not None:
+            hypo_prob = ndtr((HYPO_THRESHOLD - mu) / np.maximum(sigma, 1e-6))
+        else:
+            hypo_prob = None
+        return {"mu": mu, "sigma": sigma, "hypo_prob": hypo_prob}
 
 
 def available_checkpoints() -> list[str]:
@@ -97,17 +133,36 @@ def rolling_forecast(
     if not valid.any():
         return pd.DataFrame(columns=["issued_at", "target_time", "predicted", "actual"])
 
-    preds = forecaster.predict(windows[valid])
-    return pd.DataFrame({
+    out = forecaster.predict_full(windows[valid])
+    frame = pd.DataFrame({
         "issued_at": times[hist_idx[valid][:, -1]],
         "target_time": times[tgt_idx[valid]],
-        "predicted": preds,
+        "predicted": out["mu"],
         "actual": values[tgt_idx[valid]],
         "current": windows[valid][:, -1],
     })
+    if out["sigma"] is not None:
+        frame["sigma"] = out["sigma"]
+    if out["hypo_prob"] is not None:
+        frame["hypo_prob"] = out["hypo_prob"]
+    return frame
 
 
-def hypo_episodes(frame: pd.DataFrame) -> pd.DataFrame:
+def alarm_flags(frame: pd.DataFrame, threshold: float | None = None) -> np.ndarray:
+    """Which rows raise a low-glucose alarm.
+
+    Prefers the model's own low-risk output over "did the point forecast dip
+    under 70". Thresholding the forecast makes the alarm a side effect of a
+    number optimised for average accuracy; the risk head is optimised for this
+    decision, and its cutoff is a tunable knob rather than a fixed constant.
+    """
+    if "hypo_prob" in frame.columns:
+        return (frame["hypo_prob"] >= (0.5 if threshold is None else threshold)).to_numpy()
+    cutoff = HYPO_THRESHOLD if threshold is None else threshold
+    return (frame["predicted"] < cutoff).to_numpy()
+
+
+def hypo_episodes(frame: pd.DataFrame, threshold: float | None = None) -> pd.DataFrame:
     """Find each contiguous run below 70 mg/dL and how early it was called.
 
     Per-reading recall overstates usefulness: one long low counts many times
@@ -124,7 +179,7 @@ def hypo_episodes(frame: pd.DataFrame) -> pd.DataFrame:
 
     onset_time = pd.to_datetime(frame["target_time"]).to_numpy()
     issued = pd.to_datetime(frame["issued_at"]).to_numpy()
-    called = (frame["predicted"] < HYPO_THRESHOLD).to_numpy()
+    called = alarm_flags(frame, threshold)
 
     # Boundaries of each run of consecutive low readings.
     edges = np.flatnonzero(np.diff(low.astype(np.int8)))
@@ -154,9 +209,11 @@ def hypo_episodes(frame: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def hypo_lead_time(frame: pd.DataFrame) -> tuple[float | None, float]:
+def hypo_lead_time(
+    frame: pd.DataFrame, threshold: float | None = None
+) -> tuple[float | None, float]:
     """Median warning in minutes, and the share of episodes caught at all."""
-    ep = hypo_episodes(frame)
+    ep = hypo_episodes(frame, threshold)
     if ep.empty:
         return None, 0.0
     caught = ep["lead_minutes"].notna()

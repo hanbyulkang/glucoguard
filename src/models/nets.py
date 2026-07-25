@@ -47,31 +47,47 @@ class _DeltaHead(nn.Module):
     predict the rare extremes — exactly the lows we care about. A predicted
     distribution lets the alarm ask "what is the probability of going below 70"
     instead of "did the single guessed number happen to land below 70".
+
+    With ``classify=True`` it additionally emits a logit for "will this person
+    be below 70 mg/dL in 30 minutes", trained directly against that label. This
+    is the more direct fix for the same problem: thresholding a regression makes
+    the alarm a side effect of a number optimised for something else, whereas a
+    classifier optimises the decision itself and is free to be confident about a
+    low without having to commit to exactly how low.
+
+    Output layout is ``[mu, sigma?, hypo_logit?]``; with none of the extras it
+    collapses to a bare ``(B,)`` of mg/dL so point models keep the simple
+    contract.
     """
 
     def __init__(
         self, in_dim: int, hidden: int, std: float, dropout: float,
-        heteroscedastic: bool = False,
+        heteroscedastic: bool = False, classify: bool = False,
     ):
         super().__init__()
         self.heteroscedastic = heteroscedastic
+        self.classify = classify
+        n_out = 1 + int(heteroscedastic) + int(classify)
         self.net = nn.Sequential(
             nn.Linear(in_dim, hidden),
             nn.GELU(),
             nn.Dropout(dropout),
-            nn.Linear(hidden, 2 if heteroscedastic else 1),
+            nn.Linear(hidden, n_out),
         )
         self.register_buffer("std", torch.tensor(float(std)))
 
     def forward(self, h: torch.Tensor, last: torch.Tensor) -> torch.Tensor:
         out = self.net(h)
-        mu = last + out[..., 0] * self.std
-        if not self.heteroscedastic:
-            return mu
-        # Softplus keeps the scale positive; the floor stops the NLL from
-        # running away to zero variance on easy, flat stretches of the trace.
-        sigma = nn.functional.softplus(out[..., 1]) * self.std + 1.0
-        return torch.stack([mu, sigma], dim=-1)
+        parts = [last + out[..., 0] * self.std]
+        idx = 1
+        if self.heteroscedastic:
+            # Softplus keeps the scale positive; the floor stops the NLL from
+            # running away to zero variance on flat stretches of the trace.
+            parts.append(nn.functional.softplus(out[..., idx]) * self.std + 1.0)
+            idx += 1
+        if self.classify:
+            parts.append(out[..., idx])       # raw logit, sigmoid applied later
+        return parts[0] if len(parts) == 1 else torch.stack(parts, dim=-1)
 
 
 class LSTMForecaster(nn.Module):
@@ -83,6 +99,7 @@ class LSTMForecaster(nn.Module):
         layers: int = 2,
         dropout: float = 0.1,
         heteroscedastic: bool = False,
+        classify: bool = False,
     ):
         super().__init__()
         self.features = _GlucoseFeatures(mean, std)
@@ -93,7 +110,7 @@ class LSTMForecaster(nn.Module):
             batch_first=True,
             dropout=dropout if layers > 1 else 0.0,
         )
-        self.head = _DeltaHead(hidden, hidden, std, dropout, heteroscedastic)
+        self.head = _DeltaHead(hidden, hidden, std, dropout, heteroscedastic, classify)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         out, _ = self.rnn(self.features(x))
@@ -130,6 +147,7 @@ class TCNForecaster(nn.Module):
         kernel: int = 3,
         dropout: float = 0.1,
         heteroscedastic: bool = False,
+        classify: bool = False,
     ):
         super().__init__()
         self.features = _GlucoseFeatures(mean, std)
@@ -138,7 +156,7 @@ class TCNForecaster(nn.Module):
         self.blocks = nn.Sequential(
             *[_TCNBlock(channels, 2**i, kernel, dropout) for i in range(levels)]
         )
-        self.head = _DeltaHead(channels, channels, std, dropout, heteroscedastic)
+        self.head = _DeltaHead(channels, channels, std, dropout, heteroscedastic, classify)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         h = self.features(x).transpose(1, 2)     # (B, 2, T)
@@ -157,6 +175,7 @@ class TransformerForecaster(nn.Module):
         dropout: float = 0.1,
         max_len: int = 64,
         heteroscedastic: bool = False,
+        classify: bool = False,
     ):
         super().__init__()
         self.features = _GlucoseFeatures(mean, std)
@@ -173,7 +192,7 @@ class TransformerForecaster(nn.Module):
         )
         self.encoder = nn.TransformerEncoder(encoder, num_layers=layers)
         self.norm = nn.LayerNorm(d_model)
-        self.head = _DeltaHead(d_model, d_model * 2, std, dropout, heteroscedastic)
+        self.head = _DeltaHead(d_model, d_model * 2, std, dropout, heteroscedastic, classify)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         h = self.proj(self.features(x))
