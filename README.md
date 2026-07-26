@@ -62,14 +62,18 @@ Compared that way, the ranking inverts:
 
 ![Recall against false alarms per day](assets/alarm_curve.png)
 
-| at ≤6 false alarms/day | low-glucose recall |
-|---|---:|
-| **tcn_prob** (predicts a distribution, alarms on P(glucose < 70)) | **74.8%** |
-| tcn_cls (head trained directly on the low/not-low label) | 74.2% |
-| tcn_hypo3 (loss upweighted toward lows) | 73.2% |
-| tcn (plain, best RMSE) | 69.9% |
-| persistence | 66.5% |
-| linear_extrapolation | 57.8% |
+Read at a matched **achieved** false-alarm rate — not at the budget a threshold
+was tuned for, which is a different and much lower number:
+
+| low-glucose recall | at 3 FA/day | at 8 FA/day | at 15 FA/day |
+|---|---:|---:|---:|
+| **tcn_prob** (predicts a distribution, alarms on P(glucose < 70)) | 36.7% | **59.5%** | **75.3%** |
+| tcn_cls (head trained directly on the low/not-low label) | 35.6% | 58.4% | 74.3% |
+| tcn_hypo3 (loss upweighted toward lows) | 36.4% | 59.3% | 74.2% |
+| tcn (plain, best RMSE) | 36.9% | 58.1% | 71.9% |
+| ridge | 27.1% | 53.7% | 71.8% |
+| persistence | 28.1% | 49.3% | 64.3% |
+| linear_extrapolation | 14.4% | 41.2% | 64.0% |
 
 Linear extrapolation goes from apparently best to last. And the model that ships
 — `tcn_prob` — catches **five more points of recall than the plain network at
@@ -104,19 +108,54 @@ The shipped model was applied unchanged, thresholds and all:
 | RMSE | 18.86 | 19.95 |
 | RMSE vs persistence | −19% | −16% |
 | Clarke A+B | 96.3% | 97.3% |
-| recall at ~10 false alarms/day | 74.8% | 69.9% |
-| persistence at the same rate | 66.5% | 57.6% |
+| recall at 8 FA/day | 59.5% | 63.4% |
+| recall at 15 FA/day | 75.3% | 77.9% |
+| persistence at 15 FA/day | 64.3% | 65.3% |
 
 **The ranking survives and the calibration does not.** At every matched
-false-alarm rate the model still beats persistence, by 6 to 12 points. But a
-threshold tuned for one false alarm a day delivers 1.8 here, and the six-a-day
-setting delivers 10.5 — the same failure that appeared going from validation to
-test, in the other direction.
+false-alarm rate the model still beats persistence, by 9 to 13 points — and the
+external numbers are, if anything, slightly better than the test ones. But the
+threshold itself does not transfer at all: a cutoff tuned for six false alarms a
+day delivers 14.7 on the test patients and 10.5 here, the same failure that
+appeared going from validation to test, in the other direction.
 
 Two independent population shifts broke the threshold and neither broke the
-ordering. That points at one design: let the model supply the ordering, and let
-a wearer's own first weeks set their cutoff. Per-patient calibration is not a
-refinement. Details, including what got worse, are in [`EXTERNAL.md`](EXTERNAL.md).
+ordering. Details, including what got worse, are in [`EXTERNAL.md`](EXTERNAL.md).
+
+## So the threshold belongs to the wearer, not the model
+
+If no single cutoff works for everyone, stop looking for one. Hold out each
+person's **first two weeks**, fit their cutoff on that, and use it thereafter — a
+CGM is worn continuously, so that data costs nothing but the beginning of
+wearing the device. Both strategies are scored on identical windows, everything
+after the warm-up.
+
+| | shared cutoff | per-wearer (14 days) |
+|---|---:|---:|
+| false alarms/day, median | 14.7 | 5.9 |
+| range across the 8 test wearers | 8.4 – 18.3 | 4.0 – 16.9 |
+| wearers within 2× of the 6/day target | 25% | **88%** |
+| same, external cohort, 28-day warm-up | 58% | **91%** |
+
+**It costs about five points of pooled recall**, measured at the same achieved
+false-alarm rate — and that price is the interesting part. A single global
+threshold earns its pooled score partly by treating people unequally: wearers
+who go low often alarm constantly, which is cheap true positives, while wearers
+who rarely go low get almost no warnings. Pooling hides that and rewards it.
+Equalising gives some back. What it buys is that the number on the dial is true
+for the person reading it. Full tables in [`CALIBRATION.md`](CALIBRATION.md).
+
+## Running it against a live feed
+
+`streamlit run live_app.py` drives the same forecast from a CGM feed rather than
+a saved file. It reads either a **Nightscout** instance — the self-hosted server
+this community already runs, and the software that produced the training
+archive — or replays a recorded trace as if it were happening now. Alerts go to
+a phone over `ntfy.sh`, which needs no account.
+
+It refuses rather than guesses: a gap longer than 15 minutes in the last two
+hours produces no forecast at all, and says why. A stale feed is reported as
+stale. Still not a medical device, and it still does not compute a dose.
 
 ---
 
