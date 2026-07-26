@@ -20,11 +20,16 @@ Rules say only two things are mandatory: a video and a link to the code.
   - [ ] Render under **4:45** so a slow encode cannot push it over
   - [ ] Verify the link opens in a logged-out incognito window
   - [ ] Script: [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md)
-- [ ] **Public source link**
-  - [ ] `git remote add origin …` and push
-  - [ ] Repository set to **Public**
-  - [ ] README renders — check the figures resolve on GitHub, not just locally
-  - [ ] Confirm `data/` and `artifacts/*.pt` stayed ignored (the archive is not ours to redistribute)
+- [x] **Public source link** — https://github.com/hanbyulkang/glucoguard
+  - [x] Repository is public
+  - [x] `data/` and `artifacts/` are ignored, and were purged from history —
+        an earlier commit had shipped four real wearers' readings
+  - [x] Wearer ids in the published results are pseudonymised (73 rewritten)
+  - [ ] Check the README figures resolve on GitHub, not just locally
+- [x] **Live demo** — https://glucoguard-oneloop.streamlit.app
+  - [x] Runs from a 4.7 MB bundle of simulated wearers
+  - [ ] Open it a few minutes before judging; the free tier sleeps and takes
+        30–60 seconds to wake
 - [ ] **Devpost project page** — copy is in [`DEVPOST.md`](DEVPOST.md)
   - [ ] Elevator pitch (139 characters, fits the ~200 limit)
   - [ ] Inspiration / What it does / How we built it / Challenges / Accomplishments / What we learned / What's next
@@ -40,7 +45,9 @@ Rules say only two things are mandatory: a video and a link to the code.
 
 | When | What |
 |---|---|
-| now | push the repo public, verify from a logged-out browser |
+| ~~done~~ | ~~push the repo public~~ — done, history purged and verified |
+| ~~done~~ | ~~deploy~~ — live at glucoguard-oneloop.streamlit.app |
+| now | verify both links from a logged-out browser |
 | now | write the Devpost page and save it as a draft |
 | 7/29 | record the screen; leave the day free for a re-take |
 | 7/30 morning | edit, render under 4:45, upload, verify the link |

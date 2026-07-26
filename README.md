@@ -2,6 +2,9 @@
 
 **Predicting low blood sugar 30 minutes before it happens.**
 
+**[Try it →](https://glucoguard-oneloop.streamlit.app)**  ·  the hosted demo runs on simulated wearers; every measured
+number below comes from real ones.
+
 A continuous glucose monitor tells someone with type 1 diabetes what their blood
 sugar is *now*. By the time it alarms, the low has already started — and if it
 starts at 3 a.m., the alarm is competing with sleep. GlucoGuard reads the last

@@ -19,6 +19,16 @@ so July 31 never actually happens.
 
 *(139 characters)*
 
+## Links
+
+- **Try it:** https://glucoguard-oneloop.streamlit.app
+- **Source:** https://github.com/hanbyulkang/glucoguard
+
+The hosted demo plays back simulated wearers. The model is the real trained
+checkpoint and every measured result is from the real cohort — the trace is
+generated because the donated recordings are not ours to republish, and the app
+says so on screen.
+
 ## Built with
 
 `python` `pytorch` `pandas` `numpy` `scikit-learn` `scipy` `streamlit` `plotly`
