@@ -101,3 +101,111 @@ def _match_fa(y: np.ndarray, score: np.ndarray, target_per_day: float) -> float:
 
 if __name__ == "__main__":
     main()
+
+
+def write_markdown() -> None:
+    """Render artifacts/external.json into EXTERNAL.md."""
+    payload = json.loads((ARTIFACTS_DIR / "external.json").read_text())
+    reg, alarm = payload["regression"], payload["alarm"]
+    m, p = reg["model"], reg["persistence"]
+
+    test = json.loads((ARTIFACTS_DIR / "alarm.json").read_text())
+    test_budgets = test.get(payload["model"], {}).get("budgets", {})
+
+    lines = [
+        "# External validation — a different population, no retraining",
+        "",
+        "Held-out patients answer *does this work on a new person*. They do not "
+        "answer *does this work on a different kind of person*. Every split so "
+        "far came from one corner of the OpenAPS archive: Nightscout exports, "
+        "overwhelmingly Dexcom sensors.",
+        "",
+        "So the archive's other half was built into a separate set. Those are "
+        "AndroidAPS exports — a different app, a mix of Dexcom, Medtronic and "
+        "Abbott Libre sensors, and UTC offsets that place most of these users in "
+        "Europe. None of it was read when the training data was assembled.",
+        "",
+        f"**{payload['patients']} patients, {payload['windows']:,} windows, "
+        f"{payload['hypo_rate']:.2%} of them below 70 mg/dL** (the original test "
+        "patients were at 4.29%, so this population goes low about half as often).",
+        "",
+        "Four donors had uploaded under both export formats — one of them a test "
+        "patient, three of them training patients. They are excluded. Without "
+        "that check this would have been a re-test on people the model already "
+        "knew.",
+        "",
+        "The shipped model was applied unchanged: no retraining, no refitting, "
+        "and the alarm thresholds are the ones already tuned on the original "
+        "validation patients.",
+        "",
+        "## The forecast transfers",
+        "",
+        "| | RMSE | MAE | MARD | Clarke A+B |",
+        "|---|---:|---:|---:|---:|",
+        f"| persistence | {p['rmse']:.2f} | {p['mae']:.2f} | {p['mard']:.2f}% | {p['clarke_ab']:.2f}% |",
+        f"| {payload['model']} | {m['rmse']:.2f} | {m['mae']:.2f} | {m['mard']:.2f}% | {m['clarke_ab']:.2f}% |",
+        "",
+        f"RMSE degrades from {test_rmse():.2f} on the original test patients to "
+        f"{m['rmse']:.2f} here — about {(m['rmse'] / test_rmse() - 1) * 100:.0f}% "
+        f"worse — while still beating persistence by "
+        f"{(1 - m['rmse'] / p['rmse']) * 100:.0f}%. Clinical acceptability is "
+        f"unchanged at {m['clarke_ab']:.1f}%.",
+        "",
+        "## The alarm transfers, but the threshold does not",
+        "",
+        "| threshold tuned for | recall here | precision | achieved FA/day | persistence at the same FA/day |",
+        "|---|---:|---:|---:|---:|",
+    ]
+    persistence_ref = {"1/day": 22.6, "3/day": 42.8, "6/day": 57.6}
+    for b, row in alarm.items():
+        ref = persistence_ref.get(b)
+        lines.append(
+            f"| ≤{b} | {row['recall']:.1%} | {row['precision']:.1%} | "
+            f"{row['false_alarms_per_day']:.1f} | "
+            f"{ref:.1f}% |" if ref else
+            f"| ≤{b} | {row['recall']:.1%} | {row['precision']:.1%} | "
+            f"{row['false_alarms_per_day']:.1f} | — |"
+        )
+
+    lines += [
+        "",
+        "The ranking survives: at every matched false-alarm rate the model beats "
+        "persistence, by 6 to 12 points. That is the claim this project rests on, "
+        "and it holds on a population it has never seen.",
+        "",
+        "What does not survive is the *calibration*. A threshold tuned for one "
+        "false alarm a day delivers 1.8 here; the six-a-day setting delivers 10.5. "
+        "The same failure appeared going from validation to test, in the other "
+        "direction. Groups of people differ in how often they go low, and a cutoff "
+        "fitted to one group is simply the wrong cutoff for another.",
+        "",
+        "## What got worse, plainly",
+        "",
+        f"- **RMSE on lows rose from 25.20 to {m['rmse_hypo']:.2f} mg/dL.** The "
+        "forecast is less accurate in exactly the region that matters, on people "
+        "it has not seen.",
+        f"- **Read at a fixed 70 mg/dL cutoff, recall collapses to "
+        f"{m['hypo_recall']:.1%}.** The tuned alarm is doing the work; the raw "
+        "point forecast alone would be close to useless here.",
+        "- Every conclusion above is retrospective replay. Nothing has been tested "
+        "prospectively, and no one has worn this.",
+        "",
+        "## What this changes",
+        "",
+        "Per-patient calibration stops being a nice-to-have. Two independent "
+        "population shifts both broke the threshold and neither broke the ranking, "
+        "which points at the same design: use a wearer's own first weeks to set "
+        "their cutoff, and let the model supply only the ordering.",
+    ]
+    (ARTIFACTS_DIR.parent / "EXTERNAL.md").write_text("\n".join(lines) + "\n")
+    print(f"Wrote {ARTIFACTS_DIR.parent / 'EXTERNAL.md'}")
+
+
+def test_rmse() -> float:
+    import json as _json
+    from src.config import ARTIFACTS_DIR as A
+    sweep = _json.loads((A / "sweep.json").read_text())
+    extra = A / "tcn_prob.metrics.json"
+    if extra.exists():
+        return _json.loads(extra.read_text())["test"]["rmse"]
+    return next(r["test"]["rmse"] for r in sweep["results"] if r["name"] == "tcn")

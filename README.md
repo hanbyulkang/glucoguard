@@ -78,9 +78,45 @@ is the probability of going low" instead of "did my one guessed number land
 under 70". Same architecture, same 18.9 mg/dL RMSE; only the decision layer
 changed.
 
-Full numbers for every model and budget are in [`alarm.md`](alarm.md). Selection
-was done on validation patients; the test split was scored once, afterwards, and
-never used to choose anything.
+Full numbers for every model and budget are in [`alarm.md`](alarm.md). Which
+model ships was decided on validation patients only — split into two folds, a
+threshold tuned on one and scored on the other — because the top three sit
+within 1.6 points of each other, and picking among near-ties by reading the test
+set turns noise into a decision.
+
+## Does it hold on people who are not like the training set?
+
+Held-out patients answer *does this work on a new person*. They do not answer
+*does this work on a different kind of person*: every split above comes from one
+corner of the archive — Nightscout exports, overwhelmingly Dexcom.
+
+So the archive's other half became a separate set: **33 patients, 3.9 million
+windows** of AndroidAPS exports, a different app with a mix of Dexcom, Medtronic
+and Abbott Libre sensors, mostly European. None of it was read when the training
+data was assembled. Four donors had uploaded under both formats — one a test
+patient, three training patients — and are excluded; without that check this
+would have been a re-test on people the model already knew.
+
+The shipped model was applied unchanged, thresholds and all:
+
+| | original test | external population |
+|---|---:|---:|
+| RMSE | 18.86 | 19.95 |
+| RMSE vs persistence | −19% | −16% |
+| Clarke A+B | 96.3% | 97.3% |
+| recall at ~10 false alarms/day | 74.8% | 69.9% |
+| persistence at the same rate | 66.5% | 57.6% |
+
+**The ranking survives and the calibration does not.** At every matched
+false-alarm rate the model still beats persistence, by 6 to 12 points. But a
+threshold tuned for one false alarm a day delivers 1.8 here, and the six-a-day
+setting delivers 10.5 — the same failure that appeared going from validation to
+test, in the other direction.
+
+Two independent population shifts broke the threshold and neither broke the
+ordering. That points at one design: let the model supply the ordering, and let
+a wearer's own first weeks set their cutoff. Per-patient calibration is not a
+refinement. Details, including what got worse, are in [`EXTERNAL.md`](EXTERNAL.md).
 
 ---
 
