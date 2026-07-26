@@ -90,7 +90,7 @@ def run(cohort: str, ws, fc: Forecaster, device) -> dict:
         # Fall back to the shared model wherever no personal one was ready.
         missing = ~np.isfinite(rolled_eval).all(axis=-1) if rolled_eval.ndim == 2 \
             else ~np.isfinite(rolled_eval)
-        rolled_eval = np.where(missing[... None] if rolled_eval.ndim == 2 else missing,
+        rolled_eval = np.where(missing[..., None] if rolled_eval.ndim == 2 else missing,
                                variants["shared"], rolled_eval)
         variants["personal_rolling"] = rolled_eval
 

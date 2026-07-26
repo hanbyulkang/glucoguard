@@ -49,19 +49,19 @@ class _GlucoseFeatures(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # x: (B, T) or (B, T, 1 + n_aux)  ->  (B, T, 2 + n_aux)
-        glucose = x if x.ndim == 2 else x[... 0]
+        glucose = x if x.ndim == 2 else x[..., 0]
         value = (glucose - self.mean) / self.std
         delta = torch.diff(value, dim=1, prepend=value[:, :1])
         channels = [value, delta]
         if self.n_aux and x.ndim == 3:
-            aux = (x[... 1:] - self.aux_mean) / torch.clamp(self.aux_std, min=1e-6)
+            aux = (x[..., 1:] - self.aux_mean) / torch.clamp(self.aux_std, min=1e-6)
             channels.extend(aux.unbind(dim=-1))
         return torch.stack(channels, dim=-1)
 
 
 def glucose_of(x: torch.Tensor) -> torch.Tensor:
     """The glucose channel, whichever shape the caller passed."""
-    return x if x.ndim == 2 else x[... 0]
+    return x if x.ndim == 2 else x[..., 0]
 
 
 class _DeltaHead(nn.Module):
@@ -105,15 +105,15 @@ class _DeltaHead(nn.Module):
 
     def forward(self, h: torch.Tensor, last: torch.Tensor) -> torch.Tensor:
         out = self.net(h)
-        parts = [last + out[... 0] * self.std]
+        parts = [last + out[..., 0] * self.std]
         idx = 1
         if self.heteroscedastic:
             # Softplus keeps the scale positive; the floor stops the NLL from
             # running away to zero variance on flat stretches of the trace.
-            parts.append(nn.functional.softplus(out[... idx]) * self.std + 1.0)
+            parts.append(nn.functional.softplus(out[..., idx]) * self.std + 1.0)
             idx += 1
         if self.classify:
-            parts.append(out[... idx])       # raw logit, sigmoid applied later
+            parts.append(out[..., idx])       # raw logit, sigmoid applied later
         return parts[0] if len(parts) == 1 else torch.stack(parts, dim=-1)
 
 

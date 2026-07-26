@@ -40,7 +40,7 @@ def train_one(name: str, windows: dict, device) -> dict:
     torch.manual_seed(SEED)
     np.random.seed(SEED)
 
-    glucose = train.X[... 0] if train.X.ndim == 3 else train.X
+    glucose = train.X[..., 0] if train.X.ndim == 3 else train.X
     mean, std = float(glucose.mean()), float(glucose.std())
     aux_mean, aux_std = aux_statistics(train)
 
@@ -66,14 +66,14 @@ def train_one(name: str, windows: dict, device) -> dict:
         model.train()
         for _ in range(STEPS):
             idx = torch.randint(0, n, (BATCH,), device=device)
-            loss = gaussian_nll(model(Xtr[idx])[... :2], ytr[idx]).mean()
+            loss = gaussian_nll(model(Xtr[idx])[..., :2], ytr[idx]).mean()
             opt.zero_grad(set_to_none=True)
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             opt.step()
             sched.step()
 
-        m = evaluate(val.y, predict(model, Xva)[... 0])
+        m = evaluate(val.y, predict(model, Xva)[..., 0])
         print(f"  epoch {epoch:2d}  val RMSE {m['rmse']:6.2f}", flush=True)
         if m["rmse"] < best - 1e-4:
             best, bad = m["rmse"], 0
@@ -87,8 +87,8 @@ def train_one(name: str, windows: dict, device) -> dict:
     if best_state:
         model.load_state_dict(best_state)
 
-    val_m = evaluate(val.y, predict(model, Xva)[... 0])
-    test_m = evaluate(test.y, predict(model, Xte)[... 0])
+    val_m = evaluate(val.y, predict(model, Xva)[..., 0])
+    test_m = evaluate(test.y, predict(model, Xte)[..., 0])
     torch.save({"state_dict": model.state_dict(),
                 "config": {"model": ARCH, "probabilistic": True, "classify": False,
                            "feature_set": name},

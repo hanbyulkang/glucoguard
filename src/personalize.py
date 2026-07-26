@@ -72,9 +72,9 @@ def _loss_of(model: nn.Module, X: torch.Tensor, y: torch.Tensor,
             xb, yb = X[i : i + BATCH_PREDICT], y[i : i + BATCH_PREDICT]
             out = model(xb)
             if probabilistic:
-                loss = gaussian_nll(out[... :2], yb)
+                loss = gaussian_nll(out[..., :2], yb)
             else:
-                mu = out[... 0] if out.ndim == 2 else out
+                mu = out[..., 0] if out.ndim == 2 else out
                 loss = huber(mu, yb)
             total += float(loss.sum())
             n += len(yb)
@@ -107,12 +107,12 @@ def fine_tune(base: nn.Module, X: np.ndarray, y: np.ndarray, device: torch.devic
         xb, yb = Xt[idx], yt[idx]
         out = model(xb)
         if probabilistic:
-            loss = gaussian_nll(out[... :2], yb)
+            loss = gaussian_nll(out[..., :2], yb)
         else:
-            mu = out[... 0] if out.ndim == 2 else out
+            mu = out[..., 0] if out.ndim == 2 else out
             loss = huber(mu, yb)
         if classify:
-            loss = loss + bce(out[... -1], (yb < HYPO_THRESHOLD).float())
+            loss = loss + bce(out[..., -1], (yb < HYPO_THRESHOLD).float())
         loss = loss.mean()
 
         opt.zero_grad(set_to_none=True)

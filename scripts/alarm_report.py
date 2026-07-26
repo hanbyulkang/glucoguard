@@ -44,9 +44,9 @@ def score_of(pred: np.ndarray, cfg: dict) -> np.ndarray:
     to thresholding its probability, so no sigmoid is needed here.
     """
     if cfg.get("classify"):
-        return pred[... -1]
+        return pred[..., -1]
     if cfg.get("probabilistic"):
-        return risk_score(pred[... 0], pred[... 1])
+        return risk_score(pred[..., 0], pred[..., 1])
     return risk_score(as_point(pred))
 
 

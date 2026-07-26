@@ -117,7 +117,7 @@ def pr_curve(y_true: np.ndarray, score: np.ndarray, n_points: int = 200) -> dict
 def recall_at_budget(
     y_val: np.ndarray, score_val: np.ndarray,
     y_test: np.ndarray, score_test: np.ndarray,
-    budgets: tuple[float...] = (1.0, 3.0, 6.0),
+    budgets: tuple[float, ...] = (1.0, 3.0, 6.0),
 ) -> dict[str, dict]:
     """Tune on validation at each budget, report on test. The headline table."""
     out = {}

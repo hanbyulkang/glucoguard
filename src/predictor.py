@@ -78,7 +78,7 @@ class Forecaster:
     def predict(self, windows: np.ndarray) -> np.ndarray:
         """Point forecast in mg/dL, whatever heads the checkpoint carries."""
         raw = self._raw(windows)
-        return raw[... 0] if raw.ndim == 2 else raw
+        return raw[..., 0] if raw.ndim == 2 else raw
 
     def predict_full(self, windows: np.ndarray) -> dict[str, np.ndarray | None]:
         """Forecast plus, where the model has them, spread and low-risk.
@@ -92,10 +92,10 @@ class Forecaster:
         if raw.ndim == 1:
             return {"mu": raw, "sigma": None, "hypo_prob": None}
 
-        mu = raw[... 0]
-        sigma = raw[... 1] if self.probabilistic else None
+        mu = raw[..., 0]
+        sigma = raw[..., 1] if self.probabilistic else None
         if self.classifies:
-            hypo_prob = 1.0 / (1.0 + np.exp(-raw[... -1]))
+            hypo_prob = 1.0 / (1.0 + np.exp(-raw[..., -1]))
         elif sigma is not None:
             hypo_prob = ndtr((HYPO_THRESHOLD - mu) / np.maximum(sigma, 1e-6))
         else:
