@@ -332,6 +332,31 @@ app.py                   Streamlit demo
 
 ---
 
+## Adding insulin and carbohydrate inputs
+
+Four variants of the same architecture, differing only in what they can see.
+The result is a compressed version of this project's whole argument:
+
+| inputs | test RMSE | recall at 8 FA/day | with a per-wearer threshold |
+|---|---:|---:|---:|
+| CGM only | 18.86 | 59.6% | 77.4% |
+| + what the wearer did | 19.30 | **61.4%** | 77.6% |
+| + what the loop computed | 18.86 | 59.3% | 77.4% |
+| + both | 18.76 | 61.0% | 77.5% |
+
+Treatment records make RMSE **worse** and the alarm **better**. We read the RMSE
+column first and concluded the extra inputs had failed — the exact mistake this
+project exists to warn about, committed on our own work, and withdrawn an hour
+later after scoring them as alarms.
+
+They are still not what ships. Once each wearer has a personal threshold the
+advantage disappears (77.6% against 77.4%), and the channel is treacherous: one
+wearer logs 71 boluses a day at a median of 0.20 U while another logs 0.5 a day
+at 3.5 U. The first is a loop micro-dosing, the second is a person eating. The
+same number in the same channel means opposite things.
+
+---
+
 ## Limitations
 
 - **It does not recommend insulin.** The output is a glucose forecast and a

@@ -24,6 +24,15 @@ ui.note(
     "<b>this compares information rather than capacity</b>."
 )
 
+ui.banner(
+    "caution", "Read the alarm table, not the RMSE table.",
+    "Adding insulin and carbohydrate records made validation RMSE better and "
+    "test RMSE worse — and at the same time made the low-glucose alarm better on "
+    "both. We drew the wrong conclusion from RMSE first. The same disagreement "
+    "between accuracy and sensitivity that this whole project is about applies "
+    "to its own input experiment.",
+)
+
 mm = rio.load("multimodal")
 if not mm:
     st.info(
@@ -58,6 +67,49 @@ else:
     ui.caption("Dotted line is the CGM-only baseline. Lower is better.")
 
 # --------------------------------------------------------------------------- #
+ui.h2("The same models, scored as alarms")
+mma = rio.load("multimodal_alarm")
+if mma:
+    import pandas as pd
+    rows = []
+    base = mma["results"].get("cgm", {}).get("matched", {})
+    for name, r in mma["results"].items():
+        row = {"Inputs": labels.get(name, name) if mm else name}
+        for rate, v in r["matched"].items():
+            delta = f" ({v - base[rate]:+.1%})" if base and name != "cgm" else ""
+            row[f"{rate} FA/day"] = f"{v:.1%}{delta}"
+        p = r["events"]["personal"]
+        row["Episodes warned (per-wearer cutoff)"] = f"{p['episode_recall']:.1%}"
+        row["FA/day"] = round(p["false_alarms_per_day"], 1)
+        rows.append(row)
+    ui.table(pd.DataFrame(rows))
+    ui.note(
+        "<b>Insulin and carbohydrate records do help the alarm</b> — 1 to 2 points "
+        "of recall at every matched false-alarm rate, despite costing 0.44 mg/dL of "
+        "RMSE. But look at the last two columns: <b>once each wearer has their own "
+        "threshold the difference disappears</b> (77.4% against 77.6%). Per-wearer "
+        "calibration and treatment inputs are two ways of solving the same problem, "
+        "and doing one absorbs most of what the other would have given."
+    )
+    ui.caption(
+        "The loop-derived channels contribute nothing and cost recall at the "
+        "tightest budget. At 20% coverage there is not enough of them to learn from."
+    )
+else:
+    st.info("Run `python -m scripts.eval_multimodal_alarm` to populate this.")
+
+ui.h2("Why the treatment channels are harder than they look")
+ui.note(
+    "One wearer records 71 boluses a day at a median of 0.20 U; another records "
+    "0.5 a day at a median of 3.5 U. That is not sloppy record-keeping — the first "
+    "is running <b>SMB</b>, where the loop delivers a micro-bolus every few minutes "
+    "instead of adjusting basal, and the second boluses only at meals. "
+    "<b>The same number in the same channel means opposite things</b>, and the "
+    "encoding here does not distinguish them. That, rather than the data being "
+    "wrong, is the most likely reason these channels transfer badly between "
+    "cohorts with different treatment habits."
+)
+
 ui.h2("What the archive actually contains")
 st.markdown(
     """

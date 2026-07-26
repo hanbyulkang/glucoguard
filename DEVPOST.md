@@ -1,6 +1,10 @@
-# Devpost project page copy
+# Devpost submission — Vitalitics 2026
 
-Paste into the matching fields. All numbers are the measured ones.
+Paste into the matching fields. Every number here is measured; nothing is
+rounded up in our favour.
+
+**Deadline: 2026-07-30 21:00 PDT** — the Devpost value is 2026-07-31 00:00 EDT,
+so July 31 never actually happens.
 
 ---
 
@@ -10,156 +14,152 @@ Paste into the matching fields. All numbers are the measured ones.
 
 ## Elevator pitch (≤200 characters)
 
-> Continuous glucose monitors tell you that you're low. GlucoGuard tells you
-> you're about to be — forecasting blood glucose 30 minutes ahead from 28,000
-> patient-days of real CGM data.
+> A continuous glucose monitor tells you that you're low. GlucoGuard tells you
+> you're about to be — and lets you set how often it's allowed to be wrong.
 
-*(198 characters)*
+*(139 characters)*
 
 ## Built with
 
-`python` `pytorch` `pandas` `numpy` `scikit-learn` `streamlit` `plotly` `pyarrow`
+`python` `pytorch` `pandas` `numpy` `scikit-learn` `scipy` `streamlit` `plotly`
+`pyarrow`
 
 ---
 
 ## Inspiration
 
 A continuous glucose monitor is a very good sensor and a very late alarm. It
-measures where blood sugar is right now, so when it warns you about
-hypoglycaemia, you are already hypoglycaemic. At 3 a.m. that alarm is also
-competing with sleep, and severe nocturnal lows are one of the outcomes people
-with type 1 diabetes fear most.
+measures where blood sugar is right now, so when it warns about hypoglycaemia
+you are already hypoglycaemic. At 3 a.m. that alarm is also competing with
+sleep, and severe nocturnal lows are among the outcomes people with type 1
+diabetes fear most.
 
 The gap is not sensing. It is anticipation. We wanted to know how much warning
-you can actually extract from the CGM signal alone — no new hardware, no extra
-inputs, just the trace the device is already producing.
+you can extract from the CGM signal alone — no new hardware, no extra inputs,
+just the trace the device is already producing.
 
 ## What it does
 
-GlucoGuard reads the last two hours of CGM history and predicts blood glucose 30
-minutes into the future. That forecast drives one decision: **is this person
-heading below 70 mg/dL?**
+GlucoGuard reads the last two hours of CGM and predicts a **distribution** over
+blood glucose 30 minutes ahead. That distribution drives one decision: *what is
+the probability this person goes below 70 mg/dL?*
 
-The demo replays real recorded days from patients the model has never seen. You
-watch the actual glucose trace and the model's forecast side by side — where
-every forecast point was produced half an hour before the moment it describes —
-plus the moments the model called a low before it started, and how much warning
-it gave.
+On eight held-out wearers it warns about **77% of low-glucose episodes before
+they begin**, at six false alarms a day, with a median of 25 minutes of warning.
 
-It does not recommend insulin doses. It is a forecast and a warning.
+The alarm threshold is not a constant. It is fitted to each wearer from their
+own first two weeks, because a single population-wide cutoff delivers wildly
+different alarm rates to different people — 3 to 26 a day across our external
+cohort.
+
+It does not recommend insulin doses.
 
 ## How we built it
 
-**Data.** The OpenAPS Data Commons is a 6.5 GB archive of Nightscout exports
-donated by people running open-source automated insulin delivery. We read the
-CGM records straight out of the zip, kept sensor glucose only, clipped to a
-plausible 20–450 mg/dL, and resampled every patient onto a regular 5-minute grid.
-That gives **40 patients, 8.1 million readings, 28,281 patient-days**.
+**Data.** The OpenAPS Data Commons: a 6.5 GB archive of Nightscout exports
+donated by people running open-source automated insulin delivery. We read CGM
+records straight out of the zip, kept sensor glucose only, clipped to a
+plausible 20–450 mg/dL, and resampled onto a regular 5-minute grid. That gives
+**40 wearers, 8.1 million readings, 28,281 patient-days**.
 
-**The split is by patient, never by row.** This is the decision the whole project
-rests on. CGM samples five minutes apart are enormously autocorrelated; split
-rows at random and the model can memorise a trace it has already seen a few steps
-earlier, which produces a beautiful test score and a system that fails on the
-first new person it meets. 26 patients train, 6 select, 8 are held out entirely.
+**The split is by patient, never by row.** This is the decision the whole
+project rests on. CGM samples five minutes apart are enormously autocorrelated;
+split rows at random and the model memorises a trace it saw a few steps earlier,
+producing a beautiful test score and a system that fails on the first new person
+it meets. 26 wearers train, 6 select, 8 are held out entirely.
 
 **Models.** Persistence and linear extrapolation as non-learned floors, ridge
-regression on the raw window, then an LSTM, a dilated TCN, and a Transformer
-encoder — all predicting the *change* in glucose rather than the level, and all
-given the rate of change as an explicit second input channel. Plus an ensemble
-and a loss-reweighting variant that pushes the model to care more about lows.
+regression on the raw window, then LSTM, dilated TCN, and Transformer — all
+predicting the *change* in glucose rather than the level, with rate of change as
+an explicit second channel. Then a probabilistic head (Gaussian NLL), a
+classification head trained directly on the low/not-low label, and loss
+re-weighting toward lows.
 
-**Metrics.** Overall RMSE is not enough. Readings below 70 mg/dL are about 3% of
-the data, so a model can look excellent on average while being useless exactly
-where a patient needs it. We report RMSE restricted to lows, the recall and
-precision of the low-glucose alarm, false alarms per day, and the Clarke Error
-Grid — the standard measure of whether a glucose error would lead to the wrong
-treatment.
+**The alarm is a separate layer.** Each model emits a risk score; the cutoff on
+that score is tuned on validation to a false-alarm budget, then applied
+unchanged to test. Alarms fire once and stay quiet for 30 minutes, and are
+scored on **episodes** rather than readings, because that is what a wearer
+experiences.
 
 ## Challenges we ran into
 
-**The archive fights you.** 6.5 GB, two incompatible export formats, one patient
-holding 1.5 GB by themselves, and CGM traces riddled with dropouts. We stream the
-relevant files out of the zip rather than extracting it, and exclude that one
-outlier patient so a single person cannot dominate training.
+**We caught our own evaluation lying to us, four times.** Each one changed the
+project more than any modelling choice did.
 
-**Deciding what a gap means.** Filling a three-hour hole with a straight line
-invents data and quietly inflates the score. We interpolate gaps up to 15 minutes
-and discard any window that spans a longer one — and a window's prediction target
-must be a genuinely observed reading, never an interpolated one.
+*Ranking by RMSE almost exactly reverses the ranking by low-glucose recall.*
+Our most accurate model was the worst at catching lows — worse than doing
+nothing. Squared error rewards a forecast that hugs the mean and hypoglycaemia
+is the tail, so optimising accuracy taught the model to refuse to commit to the
+exact events we built it for. Selecting on RMSE, as is standard in this area,
+would have shipped the worst available alarm.
 
-**Our first lead-time metric was wrong.** It counted an episode as "caught" when
-the warning was actually issued *after* glucose had already crossed 70 — a
-warning that arrives late is not a warning. Rewriting it to require the alert
-before onset cut the reported catch rate substantially, which is the honest
-number.
+*Reading every model at a fixed 70 mg/dL cutoff compares their biases, not their
+skill.* Linear extrapolation reached 74% recall by alarming 21 times a day.
+Matched to the same false-alarm budget it comes **last**.
 
-**Stacking every fix at once made things worse.** The variant with a predicted
-distribution, a classification head and a reweighted loss all together scored
-below the one that just predicts a distribution. We reported that rather than
-quietly dropping it.
+*Our first lead-time metric counted warnings issued after glucose had already
+crossed 70.* The median came out as exactly zero, which is what exposed it.
 
-**The two splits are not equally hard,** and we say so. Our validation patients
-spend far less time low than our test patients do. That is real between-person
-variation, and it means validation RMSE sits well below test RMSE for every
-model alike. Selection still works — ranking is what selection needs — but we
-refuse to quote the validation number as performance.
+*We were choosing the shipped model by reading test recall.* The top three sat
+within 1.6 points of each other — exactly where selecting on test turns noise
+into a decision. Selection moved inside validation, using two patient folds.
+
+**And the archive fights you.** Two incompatible export formats, one wearer
+holding 1.5 GB alone, traces riddled with dropouts. We stream the relevant files
+out of the zip, interpolate gaps up to 15 minutes, and discard any window
+spanning a longer one — filling a three-hour hole with a straight line invents
+data and quietly inflates the score.
 
 ## Accomplishments that we're proud of
 
-**We caught our own evaluation lying to us, twice, and the fix became the
-project.**
+**The evaluation is the accomplishment**, and its best moment was catching a
+contamination nobody would have found by accident. We built a second cohort from
+the untouched half of the archive — 33 AndroidAPS wearers, different app,
+different sensors, mostly European — and discovered that **four donors had
+uploaded under both export formats**, one of them a test wearer. Without that
+check, our "external validation" would have been a re-test on people the model
+already knew.
 
-First: rank our models by RMSE and you almost exactly reverse their ranking by
-low-glucose recall. Our most accurate model was the worst at catching lows —
-worse than doing nothing at all. That is what squared error does. It rewards a
-forecast that hugs the mean, and hypoglycaemia is the tail, so optimising
-accuracy taught the model to refuse to commit to the exact events we built it
-for. Had we selected on RMSE, as almost every paper in this area does, we would
-have shipped the worst available alarm.
-
-Second: the models that looked good on recall weren't better, they just alarmed
-more often. Linear extrapolation reaches 74% recall by firing 21 times a day.
-Reading every model at one fixed 70 mg/dL cutoff compares their biases, not
-their skill.
-
-So the alarm became a tunable decision instead of a side effect. Every model
-emits a risk score; the cutoff is tuned on validation to a false-alarm budget and
-applied unchanged to test. Compared that way the ranking inverts — linear
-extrapolation goes from apparently best to last — and the model that ships
-catches **74.8% of lows against the plain network's 69.9% at identical accuracy
-and an identical false-alarm budget**. Same architecture, same 18.9 mg/dL RMSE.
-Only the decision layer changed.
+Applied unchanged to that population, the model holds: RMSE 19.95 against
+persistence's 23.77, Clarke A+B **97.3%**, and at every matched false-alarm rate
+it still beats persistence by 9 to 13 points. **The ranking survives; the
+calibration does not** — which is precisely the evidence that sent us to
+per-wearer thresholds.
 
 ## What we learned
 
-That the hard part of medical machine learning is the measurement, not the model.
-Every meaningful decision we made was about what number to trust — and most of
-our debugging time went into finding places where our own evaluation was being
-too kind to us.
+That the hard part of medical machine learning is the measurement, not the
+model. Every meaningful decision came from finding a place where our own
+evaluation was being too kind to us.
+
+The clearest example arrived last. Adding insulin and carbohydrate records
+improved validation RMSE, made **test** RMSE worse, and improved the alarm on
+both. We concluded "the extra inputs failed" — from RMSE — and had to withdraw
+that an hour later after scoring them as alarms. It is the exact mistake this
+project exists to warn about, committed by us, on our own work.
 
 ## What's next for GlucoGuard
 
-1. **Insulin and carbohydrate inputs.** The archive already contains them. The
-   model is currently blind right after meals and corrections, which is exactly
-   where it is weakest.
-2. **Per-patient alarm calibration.** A threshold tuned on one group of people
-   overshoots its false-alarm budget on another, so a wearer's own first weeks
-   should set their cutoff.
-3. **Withhold predictions on bad input.** Sensor dropouts and out-of-distribution
-   traces should produce silence, not a confident wrong number. The predictive
-   spread is the hook this hangs on and it already exists.
-4. **A 60-minute horizon**, reported separately rather than quoting the easy one.
+1. **Separate SMB from meal boluses.** One wearer logs 71 boluses a day at a
+   median of 0.20 U; another logs 0.5 a day at 3.5 U. The first is a loop
+   micro-dosing, the second is a person eating. The same number in the same
+   channel means opposite things, and that is the likeliest reason treatment
+   inputs transfer badly between cohorts.
+2. **Withhold predictions on out-of-distribution input.** The predictive spread
+   already exists; it should gate the output, not just decorate it.
+3. **A prospective evaluation.** Everything here is retrospective replay.
+4. **Longer horizons, reported separately** rather than quoting the easy one.
 
-Longer term, this forecast is the sensing-and-prediction layer of a wearable that
+Longer term this forecast is the sensing-and-prediction layer of a wearable that
 integrates glucose sensing and insulin delivery in one housing. That work is
 outside this submission and involves no human insulin delivery.
 
 ---
 
-## Note on prior work (include this — the rules require care here)
+## Note on prior work — include this, the rules are ambiguous here
 
-The background research for this project — reading the CGM forecasting
-literature and obtaining the OpenAPS Data Commons dataset — was done before the
-hackathon, which the rules explicitly encourage. **All code in this submission
-was written during the hackathon period and the repository's commit history
-reflects that.** No pre-existing codebase was submitted.
+Background research (reading the CGM forecasting literature, obtaining the
+OpenAPS Data Commons dataset) was done before the hackathon, which the rules
+explicitly encourage. **All code in this submission was written during the
+hackathon period and the repository's commit history reflects that.** No
+pre-existing codebase was submitted.
