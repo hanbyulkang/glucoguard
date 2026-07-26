@@ -113,7 +113,7 @@ def write_markdown() -> None:
     test_budgets = test.get(payload["model"], {}).get("budgets", {})
 
     lines = [
-        "# External validation — a different population, no retraining",
+        "# External validation, a different population, no retraining",
         "",
         "Held-out patients answer *does this work on a new person*. They do not "
         "answer *does this work on a different kind of person*. Every split so "
@@ -121,7 +121,7 @@ def write_markdown() -> None:
         "overwhelmingly Dexcom sensors.",
         "",
         "So the archive's other half was built into a separate set. Those are "
-        "AndroidAPS exports — a different app, a mix of Dexcom, Medtronic and "
+        "AndroidAPS exports, a different app, a mix of Dexcom, Medtronic and "
         "Abbott Libre sensors, and UTC offsets that place most of these users in "
         "Europe. None of it was read when the training data was assembled.",
         "",
@@ -129,7 +129,7 @@ def write_markdown() -> None:
         f"{payload['hypo_rate']:.2%} of them below 70 mg/dL** (the original test "
         "patients were at 4.29%, so this population goes low about half as often).",
         "",
-        "Four donors had uploaded under both export formats — one of them a test "
+        "Four donors had uploaded under both export formats, one of them a test "
         "patient, three of them training patients. They are excluded. Without "
         "that check this would have been a re-test on people the model already "
         "knew.",
@@ -146,8 +146,8 @@ def write_markdown() -> None:
         f"| {payload['model']} | {m['rmse']:.2f} | {m['mae']:.2f} | {m['mard']:.2f}% | {m['clarke_ab']:.2f}% |",
         "",
         f"RMSE degrades from {test_rmse():.2f} on the original test patients to "
-        f"{m['rmse']:.2f} here — about {(m['rmse'] / test_rmse() - 1) * 100:.0f}% "
-        f"worse — while still beating persistence by "
+        f"{m['rmse']:.2f} here, about {(m['rmse'] / test_rmse() - 1) * 100:.0f}% "
+        f"worse, while still beating persistence by "
         f"{(1 - m['rmse'] / p['rmse']) * 100:.0f}%. Clinical acceptability is "
         f"unchanged at {m['clarke_ab']:.1f}%.",
         "",
@@ -164,7 +164,7 @@ def write_markdown() -> None:
             f"{row['false_alarms_per_day']:.1f} | "
             f"{ref:.1f}% |" if ref else
             f"| ≤{b} | {row['recall']:.1%} | {row['precision']:.1%} | "
-            f"{row['false_alarms_per_day']:.1f} | — |"
+            f"{row['false_alarms_per_day']:.1f} |, |"
         )
 
     lines += [

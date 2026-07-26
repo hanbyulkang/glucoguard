@@ -1,4 +1,4 @@
-"""GlucoGuard — 30-minute glucose forecasting demo.
+"""GlucoGuard: 30-minute glucose forecasting demo.
 
 Run:  streamlit run app.py
 
@@ -126,7 +126,7 @@ with st.sidebar:
     days = pd.to_datetime(pd.Series(forecast["target_time"])).dt.date
     day_options = sorted(days.unique())
 
-    # Default to the day holding the most low-glucose readings — the interesting one.
+    # Default to the day holding the most low-glucose readings, the interesting one.
     lows_per_day = (
         pd.DataFrame({"day": days, "low": forecast["actual"].to_numpy() < HYPO_THRESHOLD})
         .groupby("day")["low"].sum()
@@ -149,7 +149,7 @@ with st.sidebar:
         value=budgets[len(budgets) // 2] if budgets else None,
         help="The alarm cutoff is tuned on validation patients to hit this "
              "budget, then applied unchanged here. Catching more lows always "
-             "costs more false alarms — this is that dial.",
+             "costs more false alarms, this is that dial.",
     ) if budgets else None
 
     st.markdown("---")
@@ -180,7 +180,7 @@ day_fc = forecast[mask].reset_index(drop=True)
 target_time = pd.to_datetime(day_fc["target_time"])
 
 # --------------------------------------------------------------------------- #
-# alert banner — what the model is saying about this day
+# alert banner: what the model is saying about this day
 # --------------------------------------------------------------------------- #
 threshold = tuned_threshold(fc, budget) if budget else None
 predicted_low = pd.Series(alarm_flags(day_fc, threshold), index=day_fc.index)
@@ -238,8 +238,8 @@ fig.add_hrect(
     fillcolor="rgba(12,163,12,0.055)", line_width=0, layer="below",
 )
 for value, colour, text in [
-    (HYPO_THRESHOLD, CRITICAL, f"{HYPO_THRESHOLD} — low"),
-    (HYPER_THRESHOLD, WARNING, f"{HYPER_THRESHOLD} — high"),
+    (HYPO_THRESHOLD, CRITICAL, f"{HYPO_THRESHOLD}, low"),
+    (HYPER_THRESHOLD, WARNING, f"{HYPER_THRESHOLD}, high"),
 ]:
     fig.add_hline(
         y=value, line=dict(color=colour, width=1, dash="dot"),
@@ -247,7 +247,7 @@ for value, colour, text in [
         annotation_font=dict(size=11, color=INK_MUTED), layer="below",
     )
 
-# Where the model reports its own spread, draw it — a forecast that admits
+# Where the model reports its own spread, draw it: a forecast that admits
 # doubt is more useful to a controller than a confident single number.
 if "sigma" in day_fc.columns:
     fig.add_trace(go.Scatter(
@@ -278,7 +278,7 @@ if show_persistence:
         hovertemplate="Persistence %{y:.0f} mg/dL<extra></extra>",
     ))
 
-# Mark the moments the model called a low and was right — the point of the system.
+# Mark the moments the model called a low and was right: the point of the system.
 hit = predicted_low & actual_low
 if hit.any():
     fig.add_trace(go.Scatter(
@@ -298,13 +298,13 @@ st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 st.markdown(
     f'<div class="gg-caption">Both lines are drawn at the time they describe. '
     f"The dashed line was produced {HORIZON_MINUTES} minutes before that moment, "
-    f"using only data available then — so the gap between the lines is the error a "
+    f"using only data available then, so the gap between the lines is the error a "
     f"patient would actually have experienced.</div>",
     unsafe_allow_html=True,
 )
 
 # --------------------------------------------------------------------------- #
-# risk strip — only for models that emit one
+# risk strip: only for models that emit one
 # --------------------------------------------------------------------------- #
 if "hypo_prob" in day_fc.columns:
     risk = go.Figure()
@@ -329,7 +329,7 @@ if "hypo_prob" in day_fc.columns:
         f'<div class="gg-caption">This model outputs a probability, not just a '
         f"number, which is what makes the alarm a tunable decision. The dotted "
         f"line is the cutoff tuned on <i>validation</i> patients to stay within "
-        f"<b>{budget}</b> false alarms — move the slider and watch it trade "
+        f"<b>{budget}</b> false alarms, move the slider and watch it trade "
         f"missed lows against false alarms. A fixed 70 mg/dL rule has no such "
         f"dial.</div>",
         unsafe_allow_html=True,
@@ -342,7 +342,7 @@ m_model = evaluate(forecast["actual"].to_numpy(), forecast["predicted"].to_numpy
 m_persist = evaluate(forecast["actual"].to_numpy(), forecast["current"].to_numpy())
 
 # Alarm statistics must follow the tuned cutoff, not the 70 mg/dL one baked into
-# `evaluate` — otherwise the tiles would contradict the slider above them.
+# `evaluate`: otherwise the tiles would contradict the slider above them.
 record_alarm = alarm_flags(forecast, threshold)
 record_low = (forecast["actual"] < HYPO_THRESHOLD).to_numpy()
 tp = float((record_alarm & record_low).sum())
@@ -353,7 +353,7 @@ median_lead, caught_share = hypo_lead_time(forecast, threshold)
 episodes = hypo_episodes(forecast, threshold)
 improvement = (m_persist["rmse"] - m_model["rmse"]) / m_persist["rmse"] * 100
 
-st.markdown(f'<div class="gg-h2">Patient {patient_id} — full record</div>',
+st.markdown(f'<div class="gg-h2">Patient {patient_id}, full record</div>',
             unsafe_allow_html=True)
 cols = st.columns(5)
 cols[0].markdown(
@@ -367,7 +367,7 @@ cols[1].markdown(
 cols[2].markdown(
     tile("Median warning",
          f"{median_lead:.0f} <span style='font-size:.9rem;font-weight:400'>min</span>"
-         if median_lead else "—",
+         if median_lead else ", ",
          "ahead of glucose crossing 70"),
     unsafe_allow_html=True)
 cols[3].markdown(

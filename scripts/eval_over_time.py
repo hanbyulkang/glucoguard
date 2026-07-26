@@ -1,7 +1,7 @@
 """Does anything actually improve as the weeks accumulate?
 
-Worth being precise about what could. The network is frozen after training — it
-never sees another gradient — so its forecast accuracy has no mechanism to
+Worth being precise about what could. The network is frozen after training, it
+never sees another gradient, so its forecast accuracy has no mechanism to
 improve with wear, and if RMSE moves over time that is the wearer changing, not
 the model learning.
 

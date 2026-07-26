@@ -3,17 +3,17 @@
 Round 1 produced a clear diagnosis. The networks beat every baseline on RMSE and
 then *lost* to persistence on low-glucose recall. That is not a modelling
 failure, it is what squared error does: it pulls the forecast toward the mean,
-so the model becomes reluctant to commit to the rare extremes — which are
+so the model becomes reluctant to commit to the rare extremes, which are
 exactly the events the product exists to catch.
 
 Three candidate fixes, trained on the architecture that won round 1:
 
-* ``_prob``  — predict a Gaussian instead of a point, and alarm on
+* ``_prob``, predict a Gaussian instead of a point, and alarm on
   P(glucose < 70). Uncertainty is the thing that lets a forecast say "probably
   fine, but I would not bet on it".
-* ``_cls``   — add a head trained directly on the low/not-low label. Optimises
+* ``_cls`` , add a head trained directly on the low/not-low label. Optimises
   the decision rather than a number that a decision is later read off.
-* ``_mt``    — both at once, plus the loss reweighting from round 1.
+* ``_mt``  , both at once, plus the loss reweighting from round 1.
 
 All of them are then compared against the baselines at matched false-alarm
 budgets, which is the only comparison that is not rigged by threshold choice.
@@ -69,7 +69,7 @@ def main() -> None:
             windows=windows,
         ))
 
-    print(f"\n{'=' * 100}\nROUND 2 — forecast accuracy\n{'=' * 100}")
+    print(f"\n{'=' * 100}\nROUND 2, forecast accuracy\n{'=' * 100}")
     print(HEADER)
     for r in results:
         print(format_row(f"{r['name']} (test)", r["test"]))

@@ -44,9 +44,9 @@ def score_of(pred: np.ndarray, cfg: dict) -> np.ndarray:
     to thresholding its probability, so no sigmoid is needed here.
     """
     if cfg.get("classify"):
-        return pred[..., -1]
+        return pred[... -1]
     if cfg.get("probabilistic"):
-        return risk_score(pred[..., 0], pred[..., 1])
+        return risk_score(pred[... 0], pred[... 1])
     return risk_score(as_point(pred))
 
 
@@ -106,7 +106,7 @@ def main() -> None:
 
 def write_markdown(report: dict) -> None:
     lines = [
-        "# Low-glucose alarm — matched false-alarm comparison",
+        "# Low-glucose alarm, matched false-alarm comparison",
         "",
         "Reporting recall at a fixed 70 mg/dL cutoff compares the *biases* of "
         "differently-trained predictors, not their skill. A model trained on "
@@ -144,8 +144,8 @@ def write_markdown(report: dict) -> None:
         "",
         "This is worth stating plainly rather than tuning away. It means a "
         "population-level alarm threshold does not transfer between people, and "
-        "that per-patient calibration — using a wearer's own first weeks of data "
-        "to set their threshold — is not a refinement but a requirement.",
+        "that per-patient calibration, using a wearer's own first weeks of data "
+        "to set their threshold, is not a refinement but a requirement.",
     ]
     (ARTIFACTS_DIR.parent / "alarm.md").write_text("\n".join(lines) + "\n")
 

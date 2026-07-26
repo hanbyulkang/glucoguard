@@ -78,7 +78,7 @@ class Forecaster:
     def predict(self, windows: np.ndarray) -> np.ndarray:
         """Point forecast in mg/dL, whatever heads the checkpoint carries."""
         raw = self._raw(windows)
-        return raw[..., 0] if raw.ndim == 2 else raw
+        return raw[... 0] if raw.ndim == 2 else raw
 
     def predict_full(self, windows: np.ndarray) -> dict[str, np.ndarray | None]:
         """Forecast plus, where the model has them, spread and low-risk.
@@ -92,10 +92,10 @@ class Forecaster:
         if raw.ndim == 1:
             return {"mu": raw, "sigma": None, "hypo_prob": None}
 
-        mu = raw[..., 0]
-        sigma = raw[..., 1] if self.probabilistic else None
+        mu = raw[... 0]
+        sigma = raw[... 1] if self.probabilistic else None
         if self.classifies:
-            hypo_prob = 1.0 / (1.0 + np.exp(-raw[..., -1]))
+            hypo_prob = 1.0 / (1.0 + np.exp(-raw[... -1]))
         elif sigma is not None:
             hypo_prob = ndtr((HYPO_THRESHOLD - mu) / np.maximum(sigma, 1e-6))
         else:
@@ -111,7 +111,7 @@ def bundle_summary() -> dict:
 
 
 def wearer_facts(patient_id: str) -> dict:
-    """Record length, reading count and time-below-70 — however they are available.
+    """Record length, reading count and time-below-70: however they are available.
 
     On a full checkout these come from the glucose table; on a deploy they come
     from the bundle, which stores them precisely so the raw table can be left
@@ -131,7 +131,7 @@ def wearer_facts(patient_id: str) -> dict:
 
 
 def checkpoint_path(name: str):
-    """Where a checkpoint lives — artifacts normally, the bundle on a deploy."""
+    """Where a checkpoint lives: artifacts normally, the bundle on a deploy."""
     local = ARTIFACTS_DIR / f"{name}.pt"
     return local if local.exists() else DEMO_BUNDLE / f"{name}.pt"
 
@@ -194,8 +194,8 @@ def alarm_budgets() -> list[str]:
 def tuned_threshold(forecaster: "Forecaster", budget: str) -> float | None:
     """The validation-tuned alarm cutoff, in the units ``alarm_flags`` expects.
 
-    Without this the demo would fall back to an arbitrary cutoff — probability
-    0.5, or 70 mg/dL on the point forecast — and show a far worse alarm than the
+    Without this the demo would fall back to an arbitrary cutoff, probability
+    0.5, or 70 mg/dL on the point forecast, and show a far worse alarm than the
     one actually measured. The threshold is part of the system, not a detail.
     """
     entry = load_alarm_report().get(forecaster.name)
@@ -356,7 +356,7 @@ def hypo_episodes(frame: pd.DataFrame, threshold: float | None = None) -> pd.Dat
         onset = onset_time[s]
         # Row s is the forecast that targets the onset reading itself; it was
         # issued one horizon earlier. An episode counts as caught only if that
-        # forecast called it — a warning that lands after glucose has already
+        # forecast called it, a warning that lands after glucose has already
         # dropped is not a warning. Walking back through the unbroken run of
         # earlier low calls gives credit when the model saw it coming sooner.
         if called[s]:

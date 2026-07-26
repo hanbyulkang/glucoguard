@@ -1,4 +1,4 @@
-"""GlucoGuard — entry point.
+"""GlucoGuard: entry point.
 
 Run:  streamlit run app.py
 
@@ -26,7 +26,6 @@ PAGES = [
     ("views/5_Calibration.py", "Calibration", ":material/tune:"),
     ("views/6_Generalisation.py", "Generalisation", ":material/public:"),
     ("views/7_Inputs.py", "Inputs", ":material/input:"),
-    ("views/8_Live.py", "Live", ":material/sensors:"),
     ("views/9_Method.py", "Method", ":material/science:"),
 ]
 

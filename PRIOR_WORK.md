@@ -6,7 +6,7 @@
 
 ---
 
-## 1. 요약 — 우리는 어디쯤인가
+## 1. 요약: 우리는 어디쯤인가
 
 | 항목 | 우리 결과 | 문헌 대표 범위 | 판정 |
 |---|---|---|---|
@@ -14,7 +14,7 @@
 | 30분 RMSE (persistence 기준선) | **23.16** mg/dL | OhioT1DM `t0`: 21.67–22.60 | 문헌과 **거의 동일** → 과제 난이도가 비슷하다는 방증 |
 | persistence 대비 개선폭 | **-4.31** mg/dL (-18.6%) | Mirshekarian 2019: 22.60→19.07 (-15.6%)<br>Toledo-Marín 2023(OpenAPS): 개선 없음 | 문헌 **상단** |
 | cross-patient 30분 RMSE | **18.85** | LOPO-CV(Ohio): 24.89 / 29.00 / 30.86<br>patient-excluded(Ohio): 18.32 | 상위권이나 **데이터셋이 달라 직접 비교 불가** |
-| 저혈당 재현율 @ 거짓경보 | 74.8% (예산 6/일, **실측 14.7/일**)<br>59.9% (예산 3/일, **실측 8.1/일**) | sens 85–90% @ FPR 21–38% (비율 기준) | **직접 비교 불가** — 문헌은 FA를 "비율"로, 우리는 "1일 횟수"로 보고 |
+| 저혈당 재현율 @ 거짓경보 | 74.8% (예산 6/일, **실측 14.7/일**)<br>59.9% (예산 3/일, **실측 8.1/일**) | sens 85–90% @ FPR 21–38% (비율 기준) | **직접 비교 불가**, 문헌은 FA를 "비율"로, 우리는 "1일 횟수"로 보고 |
 | Clarke A+B | **96.61%** | 92%(LOPO-CV) / 97.3–99.3%(개인화) / 99.6% | 문헌 범위 안이나 **하단** |
 
 **판단 3줄**
@@ -27,16 +27,16 @@
 
 ## 2. 30분 예측 RMSE 벤치마크
 
-### 2.1 OhioT1DM — 기준선 및 개인화 모델
+### 2.1 OhioT1DM: 기준선 및 개인화 모델
 
 | 연구 | 데이터셋 | 환자수 | 분할 방식 | 입력 | 30분 RMSE (mg/dL) | 출처 |
 |---|---|---|---|---|---|---|
-| Mirshekarian et al. 2019 — `t0` (persistence) | OhioT1DM 2018 | 6 | 환자별(개인화) | CGM | **22.60** (agnostic) / 21.67 (inertial) | Mirshekarian, Shen, Bunescu, Marling, *EMBC 2019*, Table IV |
+| Mirshekarian et al. 2019, `t0` (persistence) | OhioT1DM 2018 | 6 | 환자별(개인화) | CGM | **22.60** (agnostic) / 21.67 (inertial) | Mirshekarian, Shen, Bunescu, Marling, *EMBC 2019*, Table IV |
 | 〃 ARIMA | 〃 | 6 | 개인화 | CGM | 20.17 / 19.36 | 〃 |
 | 〃 LSTM (dropout 0.1) | 〃 | 6 | 개인화 | **CGM만** | **19.07** / 18.72 | 〃 |
 | 〃 LSTM | 〃 | 6 | 개인화 | CGM+인슐린+식사 | 18.74 / 18.07 | 〃 Table V |
 | 〃 double LSTM (What-if) | 〃 | 6 | 개인화 | CGM+I+M(+생체신호) | **18.10–18.19** | 〃 Table VI–VII |
-| Nemat et al. 2024 — ARIMA / SVR / LSTM 평균 | OhioT1DM 2018 | 6 | 개인화(환자별 하이퍼파라미터 튜닝) | CGM(univariate) | 20.39–20.78 | Nemat, Khadem, Elliott, Benaissa, *Sci Rep* 14:21863 (2024), Table 4 |
+| Nemat et al. 2024, ARIMA / SVR / LSTM 평균 | OhioT1DM 2018 | 6 | 개인화(환자별 하이퍼파라미터 튜닝) | CGM(univariate) | 20.39–20.78 | Nemat, Khadem, Elliott, Benaissa, *Sci Rep* 14:21863 (2024), Table 4 |
 | 〃 (multivariate) | 〃 | 6 | 개인화 | CGM+Carb+Bolus+활동 | 19.59–21.11 | 〃 |
 | Nemat et al. 2024 | OhioT1DM 2020 | 6 | 개인화 | CGM | 20.03–20.83 | 〃 Table 6 |
 
@@ -48,7 +48,7 @@
 |---|---|---|
 | 참가 팀 수 | 7팀 | Mirshekarian et al. 2019, §C |
 | Mirshekarian 팀 (원 마감일 기준 1위) 30분 RMSE | **18.11–18.19** | 〃 ("rank us first among results submitted by the original deadline") |
-| 2018 챌린지 결과의 30분 RMSE 범위 | **18.9 – 21.7** | Rubin-Falcone, Fox, Wiens, *KDH/BGLP 2020*, CEUR-WS Vol-2675 pp.85-89 본문: "comparable to the results achieved in the 2018 challenge (i.e., 18.9 to 21.7 for 30 minute rMSE)" |
+| 2018 챌린지 결과의 30분 RMSE 범위 | **18.9 – 21.7** | Rubin-Falcone, Fox, Wiens, *KDH/BGLP 2020*, CEUR-WS Vol-2675 pp.85-89 본문: "comparable to the results achieved in the 2018 challenge (i.e. 18.9 to 21.7 for 30 minute rMSE)" |
 
 > 주: Mirshekarian 저자들 스스로 "참가 시스템들이 반드시 동일한 실험 설정으로 평가된 것은 아니므로 순위는 신중히 봐야 한다"고 명시했다.
 
@@ -58,9 +58,9 @@
 |---|---|---|---|---|
 | Freiburghaus, Rizzotti-Kaddouri, Albertetti | Deep learning | 개인화 | **17.45** | paper23, pp.116-120 |
 | Rubin-Falcone, Fox, Wiens (Michigan) | Deep residual (N-BEATS 계열) + 사전학습 | 개인화 | **18.2** (baseline 21.2) | paper18, pp.96-100 |
-| **Bevan & Coenen — all patients** | LSTM(128) | **전 환자 통합** | **18.23** (±2.36) | paper17, pp.91-95, Table 3 |
-| **Bevan & Coenen — patient excluded** | LSTM(128) | **cross-patient (해당 환자 데이터 제외)** | **18.32** (±2.40) | 〃 |
-| **Bevan & Coenen — patient only** | LSTM(128) | 개인화 | 19.21 (±2.48) | 〃 |
+| **Bevan & Coenen, all patients** | LSTM(128) | **전 환자 통합** | **18.23** (±2.36) | paper17, pp.91-95, Table 3 |
+| **Bevan & Coenen, patient excluded** | LSTM(128) | **cross-patient (해당 환자 데이터 제외)** | **18.32** (±2.40) | 〃 |
+| **Bevan & Coenen, patient only** | LSTM(128) | 개인화 | 19.21 (±2.48) | 〃 |
 | Zhu, Yao, Li, Herrero, Georgiou | GAN | 개인화 | 18.34 ± 0.17 | paper15, pp.86-90 |
 | Pavan et al. (NN-EIM) | Shallow NN + error imputation | 개인화 | 18.63 (CGM-NN 19.50 대비) | paper16, pp.91-95 |
 | Nemat et al. | 활동+CGM 데이터 융합 | 개인화 | 18.99 | paper21 |
@@ -85,11 +85,11 @@
 
 | 연구 | 데이터셋 | 환자수 | 분할 | 30분 RMSE | 출처 |
 |---|---|---|---|---|---|
-| Moon, Kim, Yoo, Cho 2025 — BiT-MAML | OhioT1DM 2018 | 6 | **LOPO-CV (leave-one-patient-out)** | **24.89 ± 4.60** (환자별 19.64–30.57) | *Sci Rep* 15:30636 (2025), Table 5–6 |
+| Moon, Kim, Yoo, Cho 2025. BiT-MAML | OhioT1DM 2018 | 6 | **LOPO-CV (leave-one-patient-out)** | **24.89 ± 4.60** (환자별 19.64–30.57) | *Sci Rep* 15:30636 (2025), Table 5–6 |
 | 〃 Edge-LSTM 재구현 baseline | 〃 | 6 | LOPO-CV | 29.00 ± 7.04 | 〃 |
 | 〃 LSTM 재구현 baseline | 〃 | 6 | LOPO-CV | 30.86 ± 5.78 | 〃 |
 | Bevan & Coenen 2020 (patient excluded) | OhioT1DM 2020 | 6 | cross-patient | 18.32 | CEUR-WS Vol-2675 paper17 |
-| Toledo-Marín, Ali, van Rooij, Görges, Wasserman 2023 — CNN | **OpenAPS Data Commons** | **139** | train 7% / test 93% (환자 단위 여부 ⚠️ 미확인) | **24** (15분 16 / 60분 37). **딥러닝이 last-measurement 대비 유의한 개선 없음**이라고 결론 | *J Clin Med* 2023;12(4):1695 |
+| Toledo-Marín, Ali, van Rooij, Görges, Wasserman 2023, CNN | **OpenAPS Data Commons** | **139** | train 7% / test 93% (환자 단위 여부 ⚠️ 미확인) | **24** (15분 16 / 60분 37). **딥러닝이 last-measurement 대비 유의한 개선 없음**이라고 결론 | *J Clin Med* 2023;12(4):1695 |
 | **우리 (TCN)** | **OpenAPS Data Commons** | **40 (test 8)** | **환자 단위 cross-patient** | **18.85** (persistence 23.16) | `results.md` |
 
 ### 2.5 Clarke Error Grid A+B 벤치마크
@@ -102,7 +102,7 @@
 | Xiong et al. 2025 (Ls-Encoder) | 자체 임상 데이터셋 13명, PH 30 | 99.60% (PH 120에서도 96.37%) | *DIGITAL HEALTH*, Table 4 |
 | **우리 (TCN)** | **OpenAPS, PH 30, cross-patient** | **96.61%** (persistence 95.14%) | `results.md` |
 
-> **A+B에 대한 공식 규제 기준은 "예측 모델"에 대해서는 존재하지 않는다.** Clarke EGA는 원래 혈당 자가측정기(SMBG) 평가용으로 제안되었고(Clarke WL, Cox D, Gonder-Frederick LA, Carter W, Pohl SL. *Diabetes Care* 1987;10(5):622-8), ISO 15197 계열 기준은 오차 그리드가 아니라 절대/상대 오차 한계로 규정된다(예: DIN EN ISO 15197:2003 — 결과의 ≥95%가 <75 mg/dL 구간에서 ±15 mg/dL, ≥75 mg/dL 구간에서 ±20% 이내. Freckmann G et al., *Diabetes Technol Ther* 2010;12(3):221-31). 따라서 "A+B 몇 % 이상이면 합격"이라는 인용 가능한 임계값은 없다. 실무적으로 이 분야 논문들은 92–99.6% 범위를 보고한다.
+> **A+B에 대한 공식 규제 기준은 "예측 모델"에 대해서는 존재하지 않는다.** Clarke EGA는 원래 혈당 자가측정기(SMBG) 평가용으로 제안되었고(Clarke WL, Cox D, Gonder-Frederick LA, Carter W, Pohl SL. *Diabetes Care* 1987;10(5):622-8), ISO 15197 계열 기준은 오차 그리드가 아니라 절대/상대 오차 한계로 규정된다(예: DIN EN ISO 15197:2003, 결과의 ≥95%가 <75 mg/dL 구간에서 ±15 mg/dL, ≥75 mg/dL 구간에서 ±20% 이내. Freckmann G et al. *Diabetes Technol Ther* 2010;12(3):221-31). 따라서 "A+B 몇 % 이상이면 합격"이라는 인용 가능한 임계값은 없다. 실무적으로 이 분야 논문들은 92–99.6% 범위를 보고한다.
 
 ---
 
@@ -114,18 +114,18 @@ sensitivity와 false alarm을 **함께** 보고한 연구만 정리했다.
 |---|---|---|---|---|---|---|
 | Palerm CC, Bequette BW 2007 | hypoglycemic clamp 데이터 | **30분** | 70 mg/dL | **90%** | specificity 79% → 저자 표현 "**21% false alarm rate를 감수해야 한다**" | *J Diabetes Sci Technol* 2007;1(5):624-9 |
 | Seo W, Lee YB, Lee S, Jin SM, Park SM 2019 | 식후 저혈당, T1D | **30분** | hypoglycemia alert value | **89.6%** (평균) | specificity 91.3%, **F1 0.543** (→ precision이 낮음을 시사) | *BMC Med Inform Decis Mak* 2019;19(1):210 |
-| Li J, Ma X, et al. 2020 | 야간 저혈당 | **30분** | — | **>90.07%** | specificity **>87.79%** (15분 시점: sens >96.03%, spec >96.07%) | *J Diabetes Res* 2020:8830774 |
+| Li J, Ma X, et al. 2020 | 야간 저혈당 | **30분** |, | **>90.07%** | specificity **>87.79%** (15분 시점: sens >96.03%, spec >96.07%) | *J Diabetes Res* 2020:8830774 |
 | Yu X, Ma N, Yang T, et al. 2021 | 임상 데이터, 다단계 조기경보 | 평균 조기경보 **20.61분** (level-I) | level-I | **85.90%** | **false-positive 23.86%**, miss 14.10% | *BMC Med Inform Decis Mak* 2021;21(1):22 |
 | 〃 level-II | 〃 | 평균 27.66분 | level-II | 80.36% | false-positive 17.37% | 〃 |
-| Fleischer J, Hansen TK, Cichosz SL 2022 | 225명, CGM 370만 포인트, 앙상블 | **40분** | — | **90%** (event 기준) | **false-positive rate 38%**, lead-time 17.5분, ROC AUC 0.988, PR AUC 0.767 | *Front Clin Diabetes Healthc* 2022;3:1066744 |
-| Bertachi et al. (Xiong et al. 2025가 인용) | OhioT1DM, ANN+생리모델 | 야간 저혈당 검출 | — | **85%** | specificity **92%** | Xiong et al., *DIGITAL HEALTH* 2025, 서론부 인용. **원논문 직접 확인 못함 ⚠️** |
-| Cameron F, Niemeyer G, Gundy-Burlet K, Buckingham B 2008 | DirecNet 입원 26건, Navigator 1분 데이터 | 0–20분 | — | 놓친 이벤트 **0건** | **PPV 60%로 설정**(경보의 60%가 실제 이벤트), 평균 lead time 23분, 오경보 시 최저혈당 평균 97 mg/dL | *J Diabetes Sci Technol* 2008;2(4):612-21 |
-| Prendin F, et al. 2025 | **post-bariatric 저혈당(T1D 아님)**, 50명 | run-to-run rAR | — | recall **84.43%** | precision 64.38%, F1 73.06%, **6일에 1회 거짓경보** | *BMC Med Inform Decis Mak* 2025;25(1):33 |
+| Fleischer J, Hansen TK, Cichosz SL 2022 | 225명, CGM 370만 포인트, 앙상블 | **40분** |, | **90%** (event 기준) | **false-positive rate 38%**, lead-time 17.5분, ROC AUC 0.988, PR AUC 0.767 | *Front Clin Diabetes Healthc* 2022;3:1066744 |
+| Bertachi et al. (Xiong et al. 2025가 인용) | OhioT1DM, ANN+생리모델 | 야간 저혈당 검출 |, | **85%** | specificity **92%** | Xiong et al. *DIGITAL HEALTH* 2025, 서론부 인용. **원논문 직접 확인 못함 ⚠️** |
+| Cameron F, Niemeyer G, Gundy-Burlet K, Buckingham B 2008 | DirecNet 입원 26건, Navigator 1분 데이터 | 0–20분 |, | 놓친 이벤트 **0건** | **PPV 60%로 설정**(경보의 60%가 실제 이벤트), 평균 lead time 23분, 오경보 시 최저혈당 평균 97 mg/dL | *J Diabetes Sci Technol* 2008;2(4):612-21 |
+| Prendin F, et al. 2025 | **post-bariatric 저혈당(T1D 아님)**, 50명 | run-to-run rAR |, | recall **84.43%** | precision 64.38%, F1 73.06%, **6일에 1회 거짓경보** | *BMC Med Inform Decis Mak* 2025;25(1):33 |
 | **우리 (tcn_prob)** | **OpenAPS, 미학습 환자 8명** | **30분** | 70 mg/dL | **74.8%** | 검증셋 기준 예산 6회/일 → **테스트 실측 14.7회/일**, precision 38.6% | `alarm.md` |
 | **우리 (tcn_prob, 중간 작동점)** | 〃 | 30분 | 70 mg/dL | **59.9%** | 예산 3회/일 → **실측 8.1회/일**, precision 47.8% | 〃 |
 | **우리 (tcn_prob, 보수 작동점)** | 〃 | 30분 | 70 mg/dL | 38.3% | 예산 1회/일 → 실측 3.3회/일, precision 59.2% | 〃 |
 
-**해석 주의 — 이 표는 그대로 비교하면 안 된다.**
+**해석 주의, 이 표는 그대로 비교하면 안 된다.**
 
 - 문헌의 "false alarm rate"는 대부분 **비율**(1−specificity, 또는 FP/(FP+TN))이다. 우리 지표는 **하루 몇 번 울리는가**다. 두 값은 저혈당 사건의 기저율(prevalence)과 평가 단위(샘플 단위 vs 이벤트 단위)에 따라 전혀 다른 숫자가 된다.
 - 우리 표의 precision 38.6–59.2%는 Prendin 2025의 64.38%, Cameron 2008의 PPV 60%와 **같은 축**이며, 그 관점에서는 우리 보수 작동점(precision 59.2% @ recall 38.3%)이 문헌과 같은 대역에 있다. 다만 recall이 낮다.
@@ -140,7 +140,7 @@ sensitivity와 false alarm을 **함께** 보고한 연구만 정리했다.
 | 저혈당 예측 알고리즘 체계적 문헌고찰 | T1D 저혈당 예측 모델 **19개**를 검토했으나 성능 요약이 "**정확도 70%~99%**"라는 한 줄뿐이며, false alarm rate·precision·경보 빈도에 대한 종합은 제시되지 않음 | Tsichlaki S, Koumakis L, Tsiknakis M. *JMIR Diabetes* 2022;7(3):e34699 |
 | 저혈당 예측 모델링 리뷰 (79편) | 5개 저혈당 유형별로 모델을 분류했으나 경보 부담(alarm burden)을 공통 지표로 다루지 않음 | Zhang L, Yang L, Zhou Z. *Front Public Health* 2023;11:1044059 |
 | CGM 경보 평가 방법론 비판 | CGM 성능 논문 **129편 중 약 25%만** 경보 평가를 포함. **예측(predictive) 경보에 대해서는 "문헌에서 찾은 결과가 더 적다"**고 명시 | Pleus S, Eichenlaub M, Waldenmaier D, Freckmann G. *J Diabetes Sci Technol* 2024;18(4):847-856 |
-| 혈당 예측 딥러닝 논문 다수 | Mirshekarian 2019, Nemat 2024, Moon 2025, 그리고 BGLP 2020 챌린지 논문 17편 전체 — **RMSE/MAE와 (일부) Clarke EGA만 보고. 저혈당 경보의 sensitivity/false alarm을 보고한 논문은 없음** | 본 조사에서 전문 직접 확인 |
+| 혈당 예측 딥러닝 논문 다수 | Mirshekarian 2019, Nemat 2024, Moon 2025, 그리고 BGLP 2020 챌린지 논문 17편 전체, **RMSE/MAE와 (일부) Clarke EGA만 보고. 저혈당 경보의 sensitivity/false alarm을 보고한 논문은 없음** | 본 조사에서 전문 직접 확인 |
 | ML 모델 메타분석 | 저혈당 예측에 대해 **likelihood ratio로만** 종합: LR+ 8.3 (95% CI 5.7–12.0), LR− 0.31 (0.22–0.44). 경보 빈도 지표 없음 | Liu K et al. *JMIR Med Inform* 2023;11:e47833 |
 
 → **결론: 우리가 `alarm.md`에서 "동일 false-alarm 예산 하의 recall"을 보고한 것은 이 분야의 표준보다 엄격한 보고 방식이다. 대신 직접 대응하는 선행 수치가 거의 없다.**
@@ -149,7 +149,7 @@ sensitivity와 false alarm을 **함께** 보고한 연구만 정리했다.
 
 ## 4. 상용 시스템 수치와 비교 가능성
 
-### 4.1 Dexcom G6 / G7 — "Urgent Low Soon"
+### 4.1 Dexcom G6 / G7: "Urgent Low Soon"
 
 | 항목 | 값 | 출처 |
 |---|---|---|
@@ -168,7 +168,7 @@ sensitivity와 false alarm을 **함께** 보고한 연구만 정리했다.
 | 640G-SmartGuard 후향 관찰 | 소아 **n=21**, 평균 5.0±2.1개월 | 저혈당 빈도 **10.4±5.2% → 7.6±3.3%** (P=.044). 고혈당 증가 없음. 평균 정지시간 3.1±1.2 h/일 | Villafuerte Quispe B, et al. *Endocrinol Diabetes Nutr* 2017;64(4):198-203 |
 | SMILE (640G SmartGuard PLGM, 고위험군) | 24주 RCT 프로토콜 논문 (1차 결과: SG ≤55 mg/dL 20분 초과 사건 수) | 프로토콜만 확인, 결과 수치 **⚠️ 미확인** | De Valk HW, et al. *Diabetes Technol Ther* 2018;20(11):758-766 |
 
-### 4.3 Tandem Basal-IQ (참고 — 동일 계열 PLGS)
+### 4.3 Tandem Basal-IQ (참고: 동일 계열 PLGS)
 
 | 시험 | 설계 | 결과 | 출처 |
 |---|---|---|---|
@@ -179,9 +179,9 @@ sensitivity와 false alarm을 **함께** 보고한 연구만 정리했다.
 | 항목 | 값 | 출처 |
 |---|---|---|
 | FreeStyle Libre 2 | **임계값 기반 선택적 경보만 제공. 예측 경보 없음** ("isCGM with glucose threshold-based optional alerts only") | Preechasuk et al. *Diabetes Technol Ther* 2024;26(7):498-502 |
-| FreeStyle Libre 3 / 3 Plus 예측 경보 유무 및 사양 | **⚠️ 미확인** | — |
+| FreeStyle Libre 3 / 3 Plus 예측 경보 유무 및 사양 | **⚠️ 미확인** |, |
 
-### 4.5 직접 비교 가능성 — 결론
+### 4.5 직접 비교 가능성: 결론
 
 **불가능하다.** 근거는 방법론 리뷰 한 편에 명확히 정리되어 있다.
 
@@ -213,12 +213,12 @@ sensitivity와 false alarm을 **함께** 보고한 연구만 정리했다.
 - Nemat et al. 2024는 ARIMA의 (p,d,q)와 SVR의 (γ, C, ε)를 **환자마다 개별 탐색**했다 (*Sci Rep* 14:21863, Table 2–3). 이것이 이 분야의 기본값이다.
 - 이 관행의 대가는 Moon et al. 2025가 명시적으로 지적한다: 개인화 논문들이 보고하는 우수한 수치는 "미학습 환자로의 일반화"를 측정하지 않는다는 것.
 
-### 5.2 cross-patient가 얼마나 불리한가 — 증거가 엇갈린다
+### 5.2 cross-patient가 얼마나 불리한가: 증거가 엇갈린다
 
 | 증거 | 방향 | 수치 |
 |---|---|---|
 | **Bevan & Coenen 2020** (CEUR-WS Vol-2675 paper17, OhioT1DM 2020, n=6) | **cross-patient가 오히려 유리** | patient-only **19.21** → patient-excluded **18.32** → all-patients **18.23**.<br>저자 결론: "해당 환자 데이터를 제외하고 대량 데이터로 학습한 모델이 **그 환자 자신의 데이터만으로 학습한 모델을 유의하게 능가**했다(p=0.05)". 또 all-patients와 patient-excluded 사이에는 **유의차 없음**. |
-| **Moon et al. 2025** (*Sci Rep* 15:30636, OhioT1DM 2018, n=6, LOPO-CV) | **cross-patient가 크게 불리** | LOPO-CV에서 LSTM **30.86**, Edge-LSTM **29.00**, 제안 모델(메타러닝) **24.89**.<br>동일 데이터셋의 개인화 문헌값(Edge-LSTM 19.10 ± 2.04, Martinsson LSTM 18.86 ± 1.79 — Moon et al. Table 1)과 비교하면 **약 +6 ~ +12 mg/dL 열화**. |
+| **Moon et al. 2025** (*Sci Rep* 15:30636, OhioT1DM 2018, n=6, LOPO-CV) | **cross-patient가 크게 불리** | LOPO-CV에서 LSTM **30.86**, Edge-LSTM **29.00**, 제안 모델(메타러닝) **24.89**.<br>동일 데이터셋의 개인화 문헌값(Edge-LSTM 19.10 ± 2.04, Martinsson LSTM 18.86 ± 1.79. Moon et al. Table 1)과 비교하면 **약 +6 ~ +12 mg/dL 열화**. |
 | **Toledo-Marín et al. 2023** (OpenAPS, n=139) | 대규모 데이터에서는 딥러닝의 이점 자체가 사라질 수 있음 | CNN 30분 RMSE 24, 그러나 **last-measurement 대비 유의한 개선 없음** |
 
 **해석:** 두 결과의 차이는 학습 데이터 규모와 모델 용량으로 설명하는 것이 자연스럽다. Bevan은 단일 LSTM(128 유닛)에 12명 전체 데이터를 통합해 학습했고, Moon은 6명 중 5명으로 학습해 1명에 적용했다(LOPO). 즉 **cross-patient 자체가 본질적으로 불리한 것이 아니라, 학습 환자 수가 적을 때 불리하다**는 쪽이 증거에 부합한다.
@@ -240,11 +240,11 @@ sensitivity와 false alarm을 **함께** 보고한 연구만 정리했다.
 
 ### 불리한 점
 
-1. **RMSE 절대값의 dataset-대-dataset 비교가 성립하지 않는다.** OpenAPS Data Commons는 **오픈소스 폐쇄루프(AID) 사용자**들이 기증한 데이터다(Shahid A, Lewis DM. *Nutrients* 2022;14(9):1906 — "open-source AID users"). 이들은 TIR/TBR/TAR이 권장 목표 안에 있는 집단으로 보고되었다(Cooper D, Reinhold B, Shahid A, Lewis DM. *J Diabetes Sci Technol* 2025;19(3):649-657). OhioT1DM 참가자는 Medtronic 530G/630G(비폐쇄루프 SAP) 사용자다(Marling & Bunescu, CEUR-WS Vol-2675 pp.71-74). **혈당 변동성이 낮은 집단은 예측이 쉽다.** 우리 persistence 23.16이 Ohio의 22.60과 비슷하다는 점이 이 우려를 부분적으로 완화하지만 해소하지는 않는다.
+1. **RMSE 절대값의 dataset-대-dataset 비교가 성립하지 않는다.** OpenAPS Data Commons는 **오픈소스 폐쇄루프(AID) 사용자**들이 기증한 데이터다(Shahid A, Lewis DM. *Nutrients* 2022;14(9):1906, "open-source AID users"). 이들은 TIR/TBR/TAR이 권장 목표 안에 있는 집단으로 보고되었다(Cooper D, Reinhold B, Shahid A, Lewis DM. *J Diabetes Sci Technol* 2025;19(3):649-657). OhioT1DM 참가자는 Medtronic 530G/630G(비폐쇄루프 SAP) 사용자다(Marling & Bunescu, CEUR-WS Vol-2675 pp.71-74). **혈당 변동성이 낮은 집단은 예측이 쉽다.** 우리 persistence 23.16이 Ohio의 22.60과 비슷하다는 점이 이 우려를 부분적으로 완화하지만 해소하지는 않는다.
 2. **OhioT1DM에서 평가하지 않았다.** 이 분야의 사실상 공통 벤치마크에서 수치가 없으므로 "SOTA와 비교"라는 문장을 쓸 수 없다.
 3. **테스트 환자가 8명뿐이다.** Moon et al. 2025는 n=6 LOPO-CV에서 제안 모델이 baseline을 이겼음에도 **통계적 유의성에 도달하지 못했다**(paired t-test p=0.19, p=0.29)고 정직하게 보고했다. 우리 n=8도 같은 한계에 노출된다. 환자별 RMSE 분산과 유의성 검정을 보고하지 않으면 같은 비판을 받는다.
 4. **Clarke A+B 96.61%는 문헌 범위의 하단이다.** 개인화 연구들은 97.3–99.6%를 보고한다. 우리보다 나은 유일한 cross-patient 비교 대상인 Moon et al.의 >92%보다는 높지만, "임상적으로 안전"이라는 주장을 하기에는 근거가 약하다.
-5. **경보 임계값이 검증→테스트로 전이되지 않는다.** 예산 1/3/6회/일로 맞춘 임계값이 테스트에서 3.3/8.1/14.7회/일로 나타났다. 즉 요약에서 "6회/일에 재현율 74.8%"라고 쓰면 **부정확하다** — 정확한 서술은 "검증셋에서 6회/일이 되도록 맞춘 임계값을 테스트에 적용했더니 재현율 74.8%, 실제 거짓경보 14.7회/일"이다. 하루 14.7회 경보는 착용 가능한 제품이 아니다.
+5. **경보 임계값이 검증→테스트로 전이되지 않는다.** 예산 1/3/6회/일로 맞춘 임계값이 테스트에서 3.3/8.1/14.7회/일로 나타났다. 즉 요약에서 "6회/일에 재현율 74.8%"라고 쓰면 **부정확하다**, 정확한 서술은 "검증셋에서 6회/일이 되도록 맞춘 임계값을 테스트에 적용했더니 재현율 74.8%, 실제 거짓경보 14.7회/일"이다. 하루 14.7회 경보는 착용 가능한 제품이 아니다.
 6. **실생활 저혈당 예측의 문헌 상한선과 비교하면 우수하지 않다.** Fleischer et al. 2022는 실생활 데이터 225명에서 40분 horizon, sensitivity 90% @ FPR 38%를 얻었다. 우리는 30분 horizon에서 74.8%가 상한이다. horizon과 지표 정의가 달라 직접 비교는 불가하지만, "문헌을 앞선다"는 주장의 근거는 없다.
 7. **상용 시스템과의 비교가 원천적으로 불가능하다.** §4.5 참조.
 

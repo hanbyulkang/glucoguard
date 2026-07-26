@@ -10,7 +10,7 @@ Split is by patient. No patient appears in more than one split, so the test colu
 | val | 6 | 1,388,273 |
 | test | 8 | 1,529,924 |
 
-The two splits are not equally hard, and it would be misleading to hide that: the validation patients spend far less time low than the test patients do. That is real between-person variation, not a bug, and it is why validation RMSE sits well below test RMSE for every model alike. Selection still works — the *ranking* is what selection needs — but the validation column should not be read as a performance estimate.
+The two splits are not equally hard, and it would be misleading to hide that: the validation patients spend far less time low than the test patients do. That is real between-person variation, not a bug, and it is why validation RMSE sits well below test RMSE for every model alike. Selection still works, the *ranking* is what selection needs, but the validation column should not be read as a performance estimate.
 
 ## Held-out test set
 
@@ -29,9 +29,9 @@ The two splits are not equally hard, and it would be misleading to hide that: th
 | ensemble(tcn+trf+lstm) | 810,467 | 16.60 | 19.27 | 13.36 | 10.82% | 21.79 | 35.9% | 59.4% | 3.03 | 96.66% |
 | tcn_prob † | 233,282 | 16.20 | 18.86 | 13.21 | 11.00% | 25.20 | 18.2% | 72.4% | 0.86 | 96.29% |
 
-† These models carry a risk head — a predicted distribution, a trained low/not-low classifier, or both. Their recall, precision and false-alarm columns above are computed the same way as everyone else's, by asking whether the *point* forecast fell under 70, and for them that is the wrong question: their alarm is meant to read the probability instead. Judge them in [`alarm.md`](alarm.md), where every model is compared on the signal it was actually built to emit.
+† These models carry a risk head, a predicted distribution, a trained low/not-low classifier, or both. Their recall, precision and false-alarm columns above are computed the same way as everyone else's, by asking whether the *point* forecast fell under 70, and for them that is the wrong question: their alarm is meant to read the probability instead. Judge them in [`alarm.md`](alarm.md), where every model is compared on the signal it was actually built to emit.
 
-Selection was done on the validation split; **tcn** had the lowest validation RMSE among the round-1 models and its test numbers are reported above without further tuning. Which model actually ships is decided in [`alarm.md`](alarm.md), on alarm performance — for the reason immediately below.
+Selection was done on the validation split; **tcn** had the lowest validation RMSE among the round-1 models and its test numbers are reported above without further tuning. Which model actually ships is decided in [`alarm.md`](alarm.md), on alarm performance, for the reason immediately below.
 
 ## Read the table sideways: accuracy and sensitivity to lows move in opposite directions
 
@@ -39,7 +39,7 @@ Rank the models by RMSE and you almost exactly reverse their ranking by low-gluc
 
 This is not a coincidence, and it is not a bug in any particular model. Squared error rewards a forecast that stays near the conditional mean, and hypoglycaemia lives in the tail. A model that learns to hedge toward the middle wins on RMSE by systematically refusing to commit to the events the product exists to catch.
 
-The `false alarms/day` column is the mechanism in plain sight. The high-recall models are not more insightful — they simply alarm more often. Linear extrapolation reaches 74% recall by raising an alarm roughly 21 times a day, which no one would wear.
+The `false alarms/day` column is the mechanism in plain sight. The high-recall models are not more insightful, they simply alarm more often. Linear extrapolation reaches 74% recall by raising an alarm roughly 21 times a day, which no one would wear.
 
 Two consequences follow, and they shape the rest of the project:
 

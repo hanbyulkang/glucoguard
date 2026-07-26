@@ -1,12 +1,12 @@
-# External validation — a different population, no retraining
+# External validation: a different population, no retraining
 
 Held-out patients answer *does this work on a new person*. They do not answer *does this work on a different kind of person*. Every split so far came from one corner of the OpenAPS archive: Nightscout exports, overwhelmingly Dexcom sensors.
 
-So the archive's other half was built into a separate set. Those are AndroidAPS exports — a different app, a mix of Dexcom, Medtronic and Abbott Libre sensors, and UTC offsets that place most of these users in Europe. None of it was read when the training data was assembled.
+So the archive's other half was built into a separate set. Those are AndroidAPS exports, a different app, a mix of Dexcom, Medtronic and Abbott Libre sensors, and UTC offsets that place most of these users in Europe. None of it was read when the training data was assembled.
 
 **33 patients, 3,927,464 windows, 2.14% of them below 70 mg/dL** (the original test patients were at 4.29%, so this population goes low about half as often).
 
-Four donors had uploaded under both export formats — one of them a test patient, three of them training patients. They are excluded. Without that check this would have been a re-test on people the model already knew.
+Four donors had uploaded under both export formats, one of them a test patient, three of them training patients. They are excluded. Without that check this would have been a re-test on people the model already knew.
 
 The shipped model was applied unchanged: no retraining, no refitting, and the alarm thresholds are the ones already tuned on the original validation patients.
 
@@ -17,7 +17,7 @@ The shipped model was applied unchanged: no retraining, no refitting, and the al
 | persistence | 23.77 | 16.58 | 12.63% | 96.17% |
 | tcn_prob | 19.95 | 13.80 | 10.76% | 97.25% |
 
-RMSE degrades from 18.86 on the original test patients to 19.95 here — about 6% worse — while still beating persistence by 16%. Clinical acceptability is unchanged at 97.3%.
+RMSE degrades from 18.86 on the original test patients to 19.95 here, about 6% worse, while still beating persistence by 16%. Clinical acceptability is unchanged at 97.3%.
 
 ## The alarm transfers, but the threshold does not
 

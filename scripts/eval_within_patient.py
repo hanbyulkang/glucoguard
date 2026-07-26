@@ -1,8 +1,8 @@
 """Does the forecast decay for a given person, or did the cohort just change?
 
 Pooled RMSE rose from 17.1 to 21.0 across the time buckets, which looks like a
-model going stale. It cannot be caused by recalibration — the threshold decides
-when to alarm and never touches the prediction — so either the wearers are
+model going stale. It cannot be caused by recalibration, the threshold decides
+when to alarm and never touches the prediction, so either the wearers are
 drifting away from what the network learned, or the later buckets simply contain
 different people. The wearer count falls from 7 to 4 and 25 to 9, so the second
 explanation is available for free.
@@ -97,7 +97,7 @@ def main() -> None:
         centred = summarise(per_patient)
         results[cohort] = {"per_patient": per_patient, "centred": centred}
 
-        print(f"\n=== {cohort} — RMSE per wearer, each centred on their own mean ===")
+        print(f"\n=== {cohort}, RMSE per wearer, each centred on their own mean ===")
         print(f"{'since calibration':<20}{'wearers':>9}{'ΔRMSE':>9}{'worse than own avg':>21}")
         for label, r in centred.items():
             print(f"{label:<20}{r['wearers']:>9}{r['mean_delta']:>+9.2f}"

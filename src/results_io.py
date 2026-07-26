@@ -68,7 +68,7 @@ def alarm_curves() -> dict | None:
 
 
 def matched_table() -> pd.DataFrame | None:
-    """Recall at matched achieved false-alarm rates — the fair comparison."""
+    """Recall at matched achieved false-alarm rates: the fair comparison."""
     m = load("matched")
     if not m:
         return None

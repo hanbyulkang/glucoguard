@@ -31,7 +31,7 @@ def caption(text: str) -> None:
 
 
 def note(text: str) -> None:
-    """A quieter aside — caveats, definitions, things that qualify a number."""
+    """A quieter aside: caveats, definitions, things that qualify a number."""
     st.markdown(f'<div class="gg-note">{text}</div>', unsafe_allow_html=True)
 
 

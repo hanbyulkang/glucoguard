@@ -3,10 +3,10 @@
 Two sources, because a demo should not depend on someone being hypoglycaemic on
 cue:
 
-* **Nightscout** — the self-hosted server most of this community already runs,
+* **Nightscout**, the self-hosted server most of this community already runs,
   and the same software that produced the training archive. A URL is all that is
   needed; the read API is public on most instances.
-* **Replay** — a recorded trace stepped forward in real time. Identical code
+* **Replay**, a recorded trace stepped forward in real time. Identical code
   path, no credentials, and you can point it at a day that actually contains a
   low.
 
@@ -50,7 +50,7 @@ def fetch_nightscout(base_url: str, count: int = 64,
     """Pull the most recent sensor readings from a Nightscout instance.
 
     Raises on network or parse failure rather than returning something
-    plausible-looking — a glucose display that silently invents data is worse
+    plausible-looking, a glucose display that silently invents data is worse
     than one that says it is broken.
     """
     base = base_url.strip().rstrip("/")

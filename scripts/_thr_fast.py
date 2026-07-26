@@ -32,7 +32,7 @@ json.dump(rows, open(ARTIFACTS_DIR/"thresholds.json","w"), indent=2)
 for cohort, out in rows.items():
     ok = [r for r in out if r["thr"] is not None]
     thrs = np.array([r["thr"] for r in ok])
-    print(f"\n=== {cohort} — 개인 임계값 {len(ok)}명 (보정 실패 {len(out)-len(ok)}명) ===")
+    print(f"\n=== {cohort}, 개인 임계값 {len(ok)}명 (보정 실패 {len(out)-len(ok)}명) ===")
     print(f"  중앙값 {np.median(thrs):.1%}   범위 {thrs.min():.1%} ~ {thrs.max():.1%}   "
           f"사분위 {np.percentile(thrs,25):.1%} / {np.percentile(thrs,75):.1%}")
     print(f"  {'환자':<12}{'임계값':>9}{'저혈당 기저율':>14}{'배수':>7}{'경고율':>9}{'헛경보/일':>10}")

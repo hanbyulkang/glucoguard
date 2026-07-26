@@ -23,7 +23,7 @@ st.markdown(
     f"""
 | | |
 |---|---|
-| Input | {HISTORY_STEPS} CGM samples — {HISTORY_STEPS * SAMPLE_MINUTES} minutes at {SAMPLE_MINUTES}-minute spacing |
+| Input | {HISTORY_STEPS} CGM samples, {HISTORY_STEPS * SAMPLE_MINUTES} minutes at {SAMPLE_MINUTES}-minute spacing |
 | Output | glucose {HORIZON_MINUTES} minutes after the last sample, as a distribution |
 | Decision | is this person heading below {HYPO_THRESHOLD} mg/dL |
 | Not the task | insulin dosing, longer horizons, anything prospective |
@@ -65,7 +65,7 @@ ui.caption(
 ui.h3("2. Baselines first")
 ui.caption(
     f"At a {HORIZON_MINUTES}-minute horizon, glucose is autocorrelated enough that "
-    "<i>persistence</i> — predicting no change at all — is already a decent "
+    "<i>persistence</i>, predicting no change at all, is already a decent "
     "forecaster. Any result that omits it can make a mediocre model look "
     "impressive. Linear extrapolation and ridge regression on the raw window are "
     "reported too, so every neural number reads as <i>how much did the extra "
@@ -101,7 +101,7 @@ st.markdown(
 | Clarke A+B | share of predictions in zones that would not lead to wrong treatment |
 | Episode recall | share of continuous stretches below {HYPO_THRESHOLD} preceded by an alarm |
 | False alarms/day | de-duplicated alarm events that no low followed, per day of wear |
-| Time below 70 | share of a wearer's readings under {HYPO_THRESHOLD} — clinical target is under 4% |
+| Time below 70 | share of a wearer's readings under {HYPO_THRESHOLD}, clinical target is under 4% |
 """
 )
 ui.note(

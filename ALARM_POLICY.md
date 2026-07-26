@@ -2,13 +2,13 @@
 
 Every number before this one treated each five-minute reading as its own alarm opportunity. A device does not work that way and neither does a person. Under per-reading accounting, half an hour of nuisance alarming is six false alarms, and one low the model catches slightly late is several misses and several hits at the same time.
 
-So: an alarm fires and then stays quiet for 30 minutes. A **low episode** counts as warned if the device made a sound in the hour before glucose crossed 70. An **alarm event** counts as false only if no low followed it. Alarms during an ongoing low are not false — the wearer is low and the device is right to be noisy.
+So: an alarm fires and then stays quiet for 30 minutes. A **low episode** counts as warned if the device made a sound in the hour before glucose crossed 70. An **alarm event** counts as false only if no low followed it. Alarms during an ongoing low are not false, the wearer is low and the device is right to be noisy.
 
 Three policies, all scored on the same windows (everything after each wearer's two-week warm-up):
 
-- **shared** — one threshold for everybody, fitted on the validation wearers
-- **fixed** — fitted once on this wearer's first fortnight, then never touched
-- **rolling** — re-fitted weekly on this wearer's trailing four weeks
+- **shared**, one threshold for everybody, fitted on the validation wearers
+- **fixed**, fitted once on this wearer's first fortnight, then never touched
+- **rolling**, re-fitted weekly on this wearer's trailing four weeks
 
 ## Test cohort
 
@@ -28,7 +28,7 @@ Three policies, all scored on the same windows (everything after each wearer's t
 
 ## Why this is not a metric trick
 
-It would be, if the change only ever moved numbers upward. It does not: the same de-duplication that raises recall also strips out most of what used to be counted as false alarms, so the threshold has to be re-tuned in event units to hit the same budget. What changes is that both sides of the trade are now expressed in what the wearer experiences — how many times it interrupted them, and how many of their lows it saw coming.
+It would be, if the change only ever moved numbers upward. It does not: the same de-duplication that raises recall also strips out most of what used to be counted as false alarms, so the threshold has to be re-tuned in event units to hit the same budget. What changes is that both sides of the trade are now expressed in what the wearer experiences, how many times it interrupted them, and how many of their lows it saw coming.
 
 The per-reading numbers elsewhere in this repository are not wrong, they answer a different and less useful question: given a randomly chosen five-minute window that happens to be low, was the model's output under 70 at that instant.
 

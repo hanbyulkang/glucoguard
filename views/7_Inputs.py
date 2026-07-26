@@ -27,7 +27,7 @@ ui.note(
 ui.banner(
     "caution", "Read the alarm table, not the RMSE table.",
     "Adding insulin and carbohydrate records made validation RMSE better and "
-    "test RMSE worse — and at the same time made the low-glucose alarm better on "
+    "test RMSE worse, and at the same time made the low-glucose alarm better on "
     "both. We drew the wrong conclusion from RMSE first. The same disagreement "
     "between accuracy and sensitivity that this whole project is about applies "
     "to its own input experiment.",
@@ -84,7 +84,7 @@ if mma:
         rows.append(row)
     ui.table(pd.DataFrame(rows))
     ui.note(
-        "<b>Insulin and carbohydrate records do help the alarm</b> — 1 to 2 points "
+        "<b>Insulin and carbohydrate records do help the alarm</b>, 1 to 2 points "
         "of recall at every matched false-alarm rate, despite costing 0.44 mg/dL of "
         "RMSE. But look at the last two columns: <b>once each wearer has their own "
         "threshold the difference disappears</b> (77.4% against 77.6%). Per-wearer "
@@ -101,7 +101,7 @@ else:
 ui.h2("Why the treatment channels are harder than they look")
 ui.note(
     "One wearer records 71 boluses a day at a median of 0.20 U; another records "
-    "0.5 a day at a median of 3.5 U. That is not sloppy record-keeping — the first "
+    "0.5 a day at a median of 3.5 U. That is not sloppy record-keeping, the first "
     "is running <b>SMB</b>, where the loop delivers a micro-bolus every few minutes "
     "instead of adjusting basal, and the second boluses only at meals. "
     "<b>The same number in the same channel means opposite things</b>, and the "
@@ -124,7 +124,7 @@ st.markdown(
 """
 )
 ui.note(
-    "Two very different kinds of information. <b>Treatments are what happened</b> — "
+    "Two very different kinds of information. <b>Treatments are what happened</b>, "
     "hand-entered, so under-reported, but ground truth about actions. "
     "<b>devicestatus is what OpenAPS calculated</b>, already convolved through its "
     "pharmacokinetic model, which saves the network rediscovering insulin action "
@@ -135,7 +135,7 @@ ui.h3("Absent action and absent state are not the same thing")
 ui.caption(
     "A bolus that was not recorded probably did not happen, so zero is the right "
     "fill. Insulin-on-board is a running estimate that is simply missing when the "
-    "loop was not reporting — filling it with zero would assert <i>no insulin "
+    "loop was not reporting, filling it with zero would assert <i>no insulin "
     "active</i>, which is a different and usually false claim. So state channels "
     "carry a per-source <b>observedness flag</b>, and the two sources get separate "
     "flags because their coverage differs by a factor of three. Without that, the "

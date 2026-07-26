@@ -20,7 +20,7 @@ ui.page(
 ui.note(
     "The model outputs a probability that glucose will be under "
     f"{HYPO_THRESHOLD} mg/dL in half an hour. To alarm or not, that probability "
-    "needs a cutoff — and the model does not supply one. The cutoff is a "
+    "needs a cutoff, and the model does not supply one. The cutoff is a "
     "statement about how much interruption a person will tolerate, so it is "
     "chosen by asking for a <b>false-alarm budget</b> and finding the threshold "
     "that delivers it."
@@ -66,7 +66,7 @@ ui.table(rio.matched_table(), "Run `python -m scripts.matched_comparison`.")
 ui.note(
     "Compare this with the fixed-cutoff numbers on the Models page. "
     "<b>Linear extrapolation reaches 74% recall at a fixed 70 mg/dL cutoff and "
-    "comes last here</b> — its apparent advantage was 21 alarms a day, which "
+    "comes last here</b>, its apparent advantage was 21 alarms a day, which "
     "nobody would wear. Matching the rate is the only comparison that is not "
     "decided by the threshold."
 )

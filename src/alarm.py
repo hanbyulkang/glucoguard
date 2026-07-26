@@ -1,4 +1,4 @@
-"""Turning a forecast into a low-glucose alarm — and comparing alarms fairly.
+"""Turning a forecast into a low-glucose alarm: and comparing alarms fairly.
 
 The first version of this project scored the alarm by asking whether the point
 forecast happened to land below 70 mg/dL. That comparison is rigged, and it
@@ -11,7 +11,7 @@ extrapolation actively over-shoots the fall. Reading a single fixed cutoff on
 three differently-biased predictors compares their biases, not their skill.
 
 The fix is to treat the alarm as a decision with a free parameter. Every model
-emits a *score* — how much it believes a low is coming — and the threshold on
+emits a *score*, how much it believes a low is coming, and the threshold on
 that score is tuned, on validation, to a chosen false-alarm budget. Then all
 models are compared at the same budget, which is the only comparison a patient
 would recognise: *given that I will tolerate this many false alarms per day,
@@ -32,7 +32,7 @@ def risk_score(pred: np.ndarray, sigma: np.ndarray | None = None) -> np.ndarray:
     """Convert a forecast into "how much do I believe a low is coming".
 
     For a point forecast this is just how far below the threshold it sits, so
-    thresholding the score is equivalent to thresholding the prediction — but
+    thresholding the score is equivalent to thresholding the prediction, but
     now with a tunable offset rather than a hard-coded 70.
 
     For a probabilistic forecast it is the actual probability that glucose ends
@@ -95,7 +95,7 @@ def alarm_metrics(
 def pr_curve(y_true: np.ndarray, score: np.ndarray, n_points: int = 200) -> dict:
     """Recall and false-alarm rate across the whole threshold range.
 
-    This is the object that actually answers "which alarm is better" — a single
+    This is the object that actually answers "which alarm is better", a single
     (recall, precision) pair is one arbitrary point on it.
     """
     order = np.argsort(-score)
@@ -117,7 +117,7 @@ def pr_curve(y_true: np.ndarray, score: np.ndarray, n_points: int = 200) -> dict
 def recall_at_budget(
     y_val: np.ndarray, score_val: np.ndarray,
     y_test: np.ndarray, score_test: np.ndarray,
-    budgets: tuple[float, ...] = (1.0, 3.0, 6.0),
+    budgets: tuple[float...] = (1.0, 3.0, 6.0),
 ) -> dict[str, dict]:
     """Tune on validation at each budget, report on test. The headline table."""
     out = {}

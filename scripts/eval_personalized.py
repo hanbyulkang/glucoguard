@@ -2,9 +2,9 @@
 
 Three variants, scored on the same windows:
 
-* **shared** — the global model, frozen, as shipped.
-* **personal (once)** — fine-tuned once on the wearer's first 90 days.
-* **personal (refreshed)** — re-fine-tuned every 90 days on the trailing 90,
+* **shared**, the global model, frozen, as shipped.
+* **personal (once)**, fine-tuned once on the wearer's first 90 days.
+* **personal (refreshed)**, re-fine-tuned every 90 days on the trailing 90,
   always restarting from the shared weights.
 
 Every personal model is fitted only on readings from strictly before the block
@@ -90,7 +90,7 @@ def run(cohort: str, ws, fc: Forecaster, device) -> dict:
         # Fall back to the shared model wherever no personal one was ready.
         missing = ~np.isfinite(rolled_eval).all(axis=-1) if rolled_eval.ndim == 2 \
             else ~np.isfinite(rolled_eval)
-        rolled_eval = np.where(missing[..., None] if rolled_eval.ndim == 2 else missing,
+        rolled_eval = np.where(missing[... None] if rolled_eval.ndim == 2 else missing,
                                variants["shared"], rolled_eval)
         variants["personal_rolling"] = rolled_eval
 

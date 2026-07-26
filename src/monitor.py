@@ -58,7 +58,7 @@ def should_alert(state: MonitorState, alarming: bool, now: datetime,
     Three rules, in order:
 
     * Nothing to say when the risk is below the wearer's own cutoff.
-    * Say it once, then stay quiet for the snooze window — a low that lasts an
+    * Say it once, then stay quiet for the snooze window, a low that lasts an
       hour is one event, not twelve.
     * Speak again if it is *still* going after the escalation window, because
       silence at that point is indistinguishable from the app having crashed.
@@ -91,10 +91,10 @@ def alert_text(kind: str, glucose: float, predicted: float,
                 f"{glucose:.0f} mg/dL now, {predicted:.0f} expected in "
                 f"{HORIZON_MINUTES} minutes. This is a repeat of an earlier "
                 f"warning.")
-    return (f"Glucose heading low — {HORIZON_MINUTES} min warning",
+    return (f"Glucose heading low, {HORIZON_MINUTES} min warning",
             f"{glucose:.0f} mg/dL now, {predicted:.0f} mg/dL expected in "
             f"{HORIZON_MINUTES} minutes ({risk:.0%} chance of going under "
-            f"{HYPO_THRESHOLD}). Research demo, not a medical device — do not "
+            f"{HYPO_THRESHOLD}). Research demo, not a medical device, do not "
             f"treat based on this.")
 
 

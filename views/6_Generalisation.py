@@ -28,11 +28,11 @@ if ext:
         ("Clarke A+B", f"{m['clarke_ab']:.1f}%", "clinically acceptable"),
     ])
     ui.note(
-        "These are AndroidAPS exports from the untouched half of the archive — a "
+        "These are AndroidAPS exports from the untouched half of the archive, a "
         "different app, a sensor mix including Medtronic and Abbott Libre, mostly "
         "European wearers. None of it was read when the training data was "
-        "assembled. <b>Four donors had uploaded under both export formats — one a "
-        "test wearer, three training wearers — and are excluded</b>; without that "
+        "assembled. <b>Four donors had uploaded under both export formats, one a "
+        "test wearer, three training wearers, and are excluded</b>; without that "
         "check this would have been a re-test on people the model already knew. "
         "The model was applied unchanged, thresholds and all."
     )
@@ -64,7 +64,7 @@ ui.caption(
     "A threshold fitted on a fortnight and then left alone. Six false alarms a "
     "day requested; 6.5 delivered in weeks 3–4 and 6.2 past the two-year mark. "
     "The external cohort's slow decline tracks those wearers going low less often "
-    "over the same period — an alarm firing less because the person needs it "
+    "over the same period, an alarm firing less because the person needs it "
     "less, not a threshold decaying."
 )
 
@@ -74,8 +74,8 @@ ui.table(rio.over_time_table(), "Run `python -m scripts.eval_over_time`.")
 ui.note(
     "No, and it should not: the network is frozen after training and never sees "
     "another gradient. Episode recall holds at 74–79% from month one past year "
-    "two. <b>Holding steady is the useful outcome</b> — a wearer who calibrated "
-    "two years ago still gets the alarm they asked for — but it is not the system "
+    "two. <b>Holding steady is the useful outcome</b>, a wearer who calibrated "
+    "two years ago still gets the alarm they asked for, but it is not the system "
     "learning."
 )
 
@@ -84,7 +84,7 @@ ui.table(rio.within_patient_table(), "Run `python -m scripts.eval_within_patient
 ui.caption(
     "Pooled RMSE rose from 17.1 to 21.0 across the buckets, which looks like a "
     "model going stale. Comparing each wearer against their own average, the "
-    "within-wearer slope is +0.07 mg/dL per bucket on test and +0.19 externally — "
+    "within-wearer slope is +0.07 mg/dL per bucket on test and +0.19 externally, "
     "essentially flat. <b>The pooled rise was composition</b>: the wearer count "
     "falls from 7 to 4 and 25 to 9, so later rows describe different people."
 )

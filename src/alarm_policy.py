@@ -14,7 +14,7 @@ It also replaces fit-once calibration with a rolling one. Fitting a threshold on
 someone's first fortnight and never touching it again happened to hold up here,
 but it is a fragile design: it cannot follow a person whose control changes, and
 "it held on our data" is not a safety argument. Re-fitting on a trailing window
-costs nothing — the data is already there — and tracks the wearer.
+costs nothing, the data is already there, and tracks the wearer.
 """
 from __future__ import annotations
 
@@ -77,7 +77,7 @@ def event_metrics(y: np.ndarray, alarm_raised: np.ndarray,
     """Episode-level recall and event-level false alarms.
 
     An episode counts as warned if the device made a sound at any point in the
-    hour before glucose crossed the threshold — the forecast is issued 30
+    hour before glucose crossed the threshold, the forecast is issued 30
     minutes ahead, so a warning can legitimately arrive a little earlier than
     that if the model saw the fall developing.
 
@@ -105,8 +105,8 @@ def event_metrics(y: np.ndarray, alarm_raised: np.ndarray,
             first = fired_idx[window][0]
             leads.append((start - first) * SAMPLE_MINUTES)
 
-    # Alarms inside an ongoing episode are not false — the wearer is low and the
-    # device is right to be noisy — they simply do not earn a fresh warning.
+    # Alarms inside an ongoing episode are not false, the wearer is low and the
+    # device is right to be noisy, they simply do not earn a fresh warning.
     inside = np.zeros(len(y), dtype=bool)
     for start, end in episodes:
         inside[start : end + 1] = True

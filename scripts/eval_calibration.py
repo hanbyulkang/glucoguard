@@ -108,7 +108,7 @@ def write_markdown(model: str, results: dict) -> None:
         "So the threshold stops being a property of the model and becomes a "
         "property of the wearer: hold out each person's **first two weeks**, tune "
         "their cutoff on that, and use it for the rest of their record. A CGM is "
-        "worn continuously, so this data costs nothing — it is simply the "
+        "worn continuously, so this data costs nothing, it is simply the "
         "beginning of wearing the device.",
         "",
         "Both strategies below are scored on identical windows (everything after "
@@ -157,7 +157,7 @@ def write_markdown(model: str, results: dict) -> None:
         "So it costs roughly five points of pooled recall. That price is worth "
         "understanding rather than explaining away: a single global threshold "
         "earns its pooled score partly by treating people unequally. It lets the "
-        "wearers who go low often alarm constantly — cheap true positives — while "
+        "wearers who go low often alarm constantly, cheap true positives, while "
         "the wearers who rarely go low get almost no warnings at all. Pooling "
         "hides that, and rewards it.",
         "",
@@ -167,7 +167,7 @@ def write_markdown(model: str, results: dict) -> None:
         "## Reading this",
         "",
         "The column that matters is the last one. A shared cutoff does not miss "
-        "the target by a little — it misses it by different amounts for different "
+        "the target by a little, it misses it by different amounts for different "
         "people, which is what makes a population-level threshold unshippable. "
         "Per-wearer calibration is not about squeezing out more recall; it is "
         "about the alarm rate meaning what it says for the person wearing it.",

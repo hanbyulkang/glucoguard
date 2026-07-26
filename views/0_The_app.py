@@ -122,7 +122,7 @@ if step_index == 0:
                                      index=patients.index(state.patient))
         facts = wearer_facts(state.patient)
         ui.tiles([
-            ("Record shown", f"{facts['days']:,.0f} days", "of continuous wear"),
+            ("Record shown", f"{facts['days']:.0f} days", "of continuous wear"),
             ("Readings", f"{facts['readings']:,}", "every 5 minutes"),
             ("Time below 70", f"{facts['time_below_70']:.1%}",
              "clinical target is under 4%"),
@@ -132,7 +132,7 @@ if step_index == 0:
             ui.caption(
                 "<b>This wearer is simulated.</b> The model is the real trained "
                 "checkpoint and everything it does here is genuine, including its "
-                "mistakes — but the glucose trace is generated, because the "
+                "mistakes, but the glucose trace is generated, because the "
                 "donated recordings it was trained and tested on are not ours to "
                 "republish. The measured results on the other pages all come from "
                 "the real cohort."
@@ -160,14 +160,14 @@ if step_index == 0:
                     ui.banner("ok", "Connected.",
                               f"Latest reading {window.values[-1]:.0f} mg/dL at "
                               f"{window.last_time.strftime('%H:%M')} UTC.")
-            except Exception as exc:                    # noqa: BLE001 — shown to user
+            except Exception as exc:                    # noqa: BLE001, shown to user
                 ui.banner("caution", "Could not read from that address.", str(exc))
         ui.caption(
             "Readings are fetched directly from the address you enter and are not "
             "stored or sent anywhere else."
         )
 
-    if st.button("Next — calibrate", type="primary"):
+    if st.button("Next, calibrate", type="primary"):
         go_to(1)
 
 # --------------------------------------------------------------------------- #
@@ -179,7 +179,7 @@ elif step_index == 1:
         '<div class="gg-lead">Catching more lows always costs more false alarms. '
         "No setting avoids that trade, so you pick the side of it you can live "
         "with and GlucoGuard works out the cutoff that delivers it <i>for you</i> "
-        "— from your own history, not from an average of other people.</div>",
+        ",  from your own history, not from an average of other people.</div>",
         unsafe_allow_html=True,
     )
 
@@ -220,7 +220,7 @@ elif step_index == 1:
         else:
             ui.banner("caution", "Not enough history to personalise yet.",
                       f"{result['reason']}. It falls back to a shared setting "
-                      f"until you have worn it longer — and that shared setting "
+                      f"until you have worn it longer, and that shared setting "
                       f"is wrong for most people, which is why this step exists.")
     else:
         ui.banner("caution", "Personal calibration needs history.",
@@ -231,7 +231,7 @@ elif step_index == 1:
     left, right = st.columns(2)
     if left.button("Back"):
         go_to(0)
-    if right.button("Next — monitor", type="primary"):
+    if right.button("Next, monitor", type="primary"):
         go_to(2)
 
 # --------------------------------------------------------------------------- #
@@ -239,9 +239,10 @@ elif step_index == 1:
 # --------------------------------------------------------------------------- #
 else:
     if state.source != "demo":
-        ui.banner("caution", "Live monitoring is on the Live page.",
-                  "This step replays a recorded wearer, sped up, so a low "
-                  "actually arrives while you are watching.")
+        ui.banner("caution", "Monitoring runs on the demo wearer.",
+                  "A live feed has no past to calibrate against and no low "
+                  "conveniently arriving while you watch, so this step replays "
+                  "a recorded wearer, sped up.")
         state.source = "demo"
 
     frame = get_history(state.patient, model_name)
@@ -298,7 +299,7 @@ else:
             state.monitor.ticks += 1
 
         row = frame.iloc[state.cursor]
-        # The clock that matters is the trace's, not the wall's — see should_alert.
+        # The clock that matters is the trace's, not the wall's, see should_alert.
         sim_now = times.iloc[state.cursor].to_pydatetime()
         now_g = float(row["current"])
         predicted = float(row["predicted"])
@@ -352,7 +353,7 @@ else:
 
         # These live inside the fragment on purpose. Rendered outside it they
         # only repaint on a full rerun, so the counters sit at zero while the
-        # loop is plainly running — which reads as the app being broken.
+        # loop is plainly running, which reads as the app being broken.
         stats = summarise(state.monitor.log)
         with stats_slot.container():
             ui.tiles([
@@ -375,7 +376,7 @@ else:
                 )
                 ui.caption(
                     f"One alert, then silence for {SNOOZE_MINUTES} minutes even if "
-                    "glucose stays low — a low that lasts an hour is one event, not "
+                    "glucose stays low, a low that lasts an hour is one event, not "
                     "twelve. It speaks again after an hour, because at that point "
                     "silence is indistinguishable from the app having crashed. "
                     "<b>Deciding when to speak is the part worth building; carrying "
@@ -384,7 +385,7 @@ else:
                 )
             else:
                 ui.caption(
-                    "Nothing yet. Press **Start monitoring** and let it run — the "
+                    "Nothing yet. Press **Start monitoring** and let it run, the "
                     "playback opens shortly before a real low, so you should not "
                     "have to wait long."
                 )

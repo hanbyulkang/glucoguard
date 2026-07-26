@@ -1,8 +1,8 @@
 """Evaluation metrics.
 
 Accuracy in mg/dL is not the whole story for a glucose forecaster. A model can
-win on RMSE while being useless at the only moment that matters clinically —
-the approach to hypoglycaemia — because lows are rare and the error there is
+win on RMSE while being useless at the only moment that matters clinically, 
+the approach to hypoglycaemia, because lows are rare and the error there is
 averaged away. So alongside the regression numbers we report how often the
 model would actually have caught a low, and how often it would have cried wolf.
 """
@@ -16,7 +16,7 @@ from src.config import HYPER_THRESHOLD, HYPO_THRESHOLD
 def _clarke_zones(reference: np.ndarray, prediction: np.ndarray) -> np.ndarray:
     """Clarke Error Grid zone for each point, as 0..4 meaning A..E.
 
-    Clarke et al., *Diabetes Care* 1987. Zone A is clinically accurate, B is
+    Clarke et al. *Diabetes Care* 1987. Zone A is clinically accurate, B is
     benign error, and C/D/E are the ones that would lead to wrong treatment.
     """
     ref, pred = reference.astype(float), prediction.astype(float)
@@ -34,7 +34,7 @@ def _clarke_zones(reference: np.ndarray, prediction: np.ndarray) -> np.ndarray:
     zone_d = (((ref < 70) & (pred > 70) & (pred < 180))
               | ((ref > 240) & (pred > 70) & (pred < 180)))
 
-    # Zone C: overcorrection — prediction pushes treatment on a value in range.
+    # Zone C: overcorrection, prediction pushes treatment on a value in range.
     zone_c = (((ref >= 70) & (ref <= 180) & (pred > 180))
               | ((ref >= 70) & (ref <= 180) & (pred < 70)))
 
@@ -89,7 +89,7 @@ def evaluate(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
     out["clarke_ab"] = float(np.mean(zones <= 1) * 100)
     out["clarke_de"] = float(np.mean(zones >= 3) * 100)
 
-    # RMSE restricted to windows that actually end low — where a glucose
+    # RMSE restricted to windows that actually end low, where a glucose
     # forecaster earns its keep, and where the overall average hides failure.
     if actual_low.any():
         out["rmse_hypo"] = float(np.sqrt(np.mean(err[actual_low] ** 2)))

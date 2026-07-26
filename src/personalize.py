@@ -2,7 +2,7 @@
 
 Recalibrating the threshold adapts *when* the system speaks. It cannot change
 what the network believes, and the within-wearer analysis left a small residual
-drift — around 1 mg/dL by the second year — that no threshold can touch. If the
+drift, around 1 mg/dL by the second year, that no threshold can touch. If the
 person or their hardware has moved away from what the network learned, the
 network has to move too.
 
@@ -72,9 +72,9 @@ def _loss_of(model: nn.Module, X: torch.Tensor, y: torch.Tensor,
             xb, yb = X[i : i + BATCH_PREDICT], y[i : i + BATCH_PREDICT]
             out = model(xb)
             if probabilistic:
-                loss = gaussian_nll(out[..., :2], yb)
+                loss = gaussian_nll(out[... :2], yb)
             else:
-                mu = out[..., 0] if out.ndim == 2 else out
+                mu = out[... 0] if out.ndim == 2 else out
                 loss = huber(mu, yb)
             total += float(loss.sum())
             n += len(yb)
@@ -107,12 +107,12 @@ def fine_tune(base: nn.Module, X: np.ndarray, y: np.ndarray, device: torch.devic
         xb, yb = Xt[idx], yt[idx]
         out = model(xb)
         if probabilistic:
-            loss = gaussian_nll(out[..., :2], yb)
+            loss = gaussian_nll(out[... :2], yb)
         else:
-            mu = out[..., 0] if out.ndim == 2 else out
+            mu = out[... 0] if out.ndim == 2 else out
             loss = huber(mu, yb)
         if classify:
-            loss = loss + bce(out[..., -1], (yb < HYPO_THRESHOLD).float())
+            loss = loss + bce(out[... -1], (yb < HYPO_THRESHOLD).float())
         loss = loss.mean()
 
         opt.zero_grad(set_to_none=True)
@@ -134,7 +134,7 @@ def rolling_personal_predictions(
     """Predictions where each block is produced by a model refreshed before it.
 
     Returns an array shaped like the base model's output, with NaN wherever no
-    personal model was available yet — the caller falls back to the shared model
+    personal model was available yet, the caller falls back to the shared model
     there rather than pretending coverage it does not have.
     """
     t = np.asarray(times, dtype="datetime64[ns]")

@@ -17,7 +17,7 @@ from scripts.run_sweep import write_results_md
 def collect() -> dict:
     sweep_path = ARTIFACTS_DIR / "sweep.json"
     if not sweep_path.exists():
-        sys.exit(f"{sweep_path} not found — run `python -m scripts.run_sweep` first.")
+        sys.exit(f"{sweep_path} not found, run `python -m scripts.run_sweep` first.")
     payload = json.loads(sweep_path.read_text())
 
     known = {r["name"] for r in payload["results"]}

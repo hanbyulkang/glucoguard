@@ -46,9 +46,9 @@ HORIZON_STEPS = HORIZON_MINUTES // SAMPLE_MINUTES   # predict t+30 min
 MAX_INTERPOLATION_GAP_STEPS = 3     # 15 min; longer gaps invalidate the window
 
 # --- Clinical thresholds ------------------------------------------------------
-# ADA/ATTD international consensus on CGM metrics (Battelino et al., Diabetes Care 2019).
-HYPO_THRESHOLD = 70         # mg/dL — level 1 hypoglycaemia
-HYPER_THRESHOLD = 180       # mg/dL — level 1 hyperglycaemia
+# ADA/ATTD international consensus on CGM metrics (Battelino et al. Diabetes Care 2019).
+HYPO_THRESHOLD = 70         # mg/dL, level 1 hypoglycaemia
+HYPER_THRESHOLD = 180       # mg/dL, level 1 hyperglycaemia
 
 # --- Splits -------------------------------------------------------------------
 SEED = 1337

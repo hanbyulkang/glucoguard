@@ -2,7 +2,7 @@
 
 Figure 1 is the finding: across every model we trained, accuracy and
 low-glucose sensitivity move in *opposite* directions. Optimising RMSE does not
-merely fail to help the clinical objective — it actively works against it,
+merely fail to help the clinical objective, it actively works against it,
 because squared error rewards a forecast that hugs the mean and lows are the
 tail.
 
@@ -59,8 +59,8 @@ def _clean(ax) -> None:
 def _place_labels(ax, xs, ys, names, fontsize: float = 9) -> None:
     """Annotate points, nudging each label to the first spot that is free.
 
-    Several of these models land almost on top of each other — that proximity
-    is itself part of the finding — so fixed offsets produce an unreadable pile.
+    Several of these models land almost on top of each other, that proximity
+    is itself part of the finding, so fixed offsets produce an unreadable pile.
     Candidate positions are tried in order of preference and the first one that
     collides with neither a placed label nor a data point wins.
     """
@@ -133,7 +133,7 @@ def figure_tradeoff(sweep: dict) -> None:
 
 
 def figure_alarm(alarm: dict) -> None:
-    """Recall against false alarms per day — the fair comparison."""
+    """Recall against false alarms per day: the fair comparison."""
     keep = [n for n in ("persistence", "ridge", "linear_extrapolation") if n in alarm]
     learned = [n for n in alarm if n not in keep]
     # Show the best learned alarm plus the baselines, not all fifteen curves.
@@ -143,7 +143,7 @@ def figure_alarm(alarm: dict) -> None:
 
     fig, ax = plt.subplots(figsize=(8.2, 5.2), dpi=200)
     # The three baselines share a colour role, so dash pattern rather than hue
-    # separates them — keeping the two coloured lines unmistakably the subject.
+    # separates them, keeping the two coloured lines unmistakably the subject.
     baseline_style = {
         "persistence": ("-", INK_SECONDARY),
         "ridge": ("--", MUTED),
@@ -207,7 +207,7 @@ def figure_trajectory(traj: dict, cohort: str = "test") -> None:
     """Each wearer's threshold as it is re-fitted, against their own recent lows.
 
     Both series are fractions in the same 0–25% range and are drawn on one
-    shared axis — the alarm threshold is a probability, the other is the share
+    shared axis, the alarm threshold is a probability, the other is the share
     of recent readings below 70. No second scale is introduced.
     """
     wearers = list(traj.get(cohort, {}).items())

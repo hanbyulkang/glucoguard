@@ -136,7 +136,7 @@ def write_results_md(payload: dict) -> None:
         "that: the validation patients spend far less time low than the test "
         "patients do. That is real between-person variation, not a bug, and it is "
         "why validation RMSE sits well below test RMSE for every model alike. "
-        "Selection still works — the *ranking* is what selection needs — but the "
+        "Selection still works, the *ranking* is what selection needs, but the "
         "validation column should not be read as a performance estimate.",
         "",
         "## Held-out test set",
@@ -153,7 +153,7 @@ def write_results_md(payload: dict) -> None:
         t, v = r["test"], r["val"]
         p = r.get("n_params", 0)
         star = " **←**" if r["name"] == payload["selected_on_validation"] else ""
-        # Models with a risk head should not be judged by these three columns —
+        # Models with a risk head should not be judged by these three columns, 
         # their alarm reads a probability, not the point forecast.
         dagger = " †" if (r.get("probabilistic") or r.get("classify")) else ""
         lines.append(
@@ -166,7 +166,7 @@ def write_results_md(payload: dict) -> None:
     if payload.get("has_risk_heads"):
         lines += [
             "",
-            "† These models carry a risk head — a predicted distribution, a "
+            "† These models carry a risk head, a predicted distribution, a "
             "trained low/not-low classifier, or both. Their recall, precision and "
             "false-alarm columns above are computed the same way as everyone "
             "else's, by asking whether the *point* forecast fell under 70, and "
@@ -181,7 +181,7 @@ def write_results_md(payload: dict) -> None:
         f"{payload['selected_on_validation']}** had the lowest validation RMSE among "
         "the round-1 models and its test numbers are reported above without further "
         "tuning. Which model actually ships is decided in [`alarm.md`](alarm.md), on "
-        "alarm performance — for the reason immediately below.",
+        "alarm performance, for the reason immediately below.",
         "",
         "## Read the table sideways: accuracy and sensitivity to lows move in opposite directions",
         "",
@@ -196,7 +196,7 @@ def write_results_md(payload: dict) -> None:
         "events the product exists to catch.",
         "",
         "The `false alarms/day` column is the mechanism in plain sight. The "
-        "high-recall models are not more insightful — they simply alarm more "
+        "high-recall models are not more insightful, they simply alarm more "
         "often. Linear extrapolation reaches 74% recall by raising an alarm "
         "roughly 21 times a day, which no one would wear.",
         "",

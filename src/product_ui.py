@@ -70,19 +70,19 @@ def headline(state: str, now: float, predicted: float | None,
         return ("No recent reading",
                 "The sensor has not reported for a while, so there is no forecast.")
     if state == "low_now":
-        return (f"You are low — {now:.0f}",
+        return (f"You are low, {now:.0f}",
                 "Treat this now. The forecast below is what happens next.")
     if state == "low_soon":
         chance = f" ({risk:.0%} chance)" if risk is not None else ""
         return (f"Heading low in about {minutes} minutes{chance}",
                 f"Predicted {predicted:.0f} mg/dL. You have time to act before it happens.")
     if state == "watch":
-        return (f"Drifting down — {predicted:.0f} expected",
+        return (f"Drifting down, {predicted:.0f} expected",
                 f"Not a low yet, but worth watching over the next {minutes} minutes.")
     if state == "high":
-        return (f"Above range — {now:.0f}",
+        return (f"Above range, {now:.0f}",
                 f"Predicted {predicted:.0f} mg/dL in {minutes} minutes.")
-    return (f"In range — {now:.0f}",
+    return (f"In range, {now:.0f}",
             f"Predicted {predicted:.0f} mg/dL in {minutes} minutes. Nothing to do.")
 
 
@@ -90,7 +90,7 @@ def _flatten(html: str) -> str:
     """Collapse indentation before handing HTML to Streamlit.
 
     `st.markdown` runs the string through a Markdown parser first, and Markdown
-    treats any line indented four spaces or more as a code block — so nicely
+    treats any line indented four spaces or more as a code block, so nicely
     formatted HTML arrives on screen as literal `<div style=...>` text.
     """
     return " ".join(line.strip() for line in html.splitlines() if line.strip())
@@ -121,7 +121,7 @@ def phone(now: float | None, predicted: float | None, risk: float | None,
             <span>chance of going low</span><span>{risk:.0%}</span>
           </div>
           <div style="position:relative;margin-top:7px;height:10px;border-radius:99px;
-                      background:rgba(255,255,255,.16)">
+                      background:rgba(255,255,255.16)">
             <div style="width:{pct:.1f}%;height:100%;border-radius:99px;
                         background:{s['accent']}"></div>{marker}
           </div>
@@ -134,8 +134,8 @@ def phone(now: float | None, predicted: float | None, risk: float | None,
     if notification:
         banner = f"""
         <div style="position:absolute;top:14px;left:14px;right:14px;z-index:5;
-                    background:rgba(255,255,255,.96);border-radius:16px;padding:11px 13px;
-                    box-shadow:0 8px 24px rgba(0,0,0,.28);font-family:{FONT};
+                    background:rgba(255,255,255.96);border-radius:16px;padding:11px 13px;
+                    box-shadow:0 8px 24px rgba(0,0,0.28);font-family:{FONT};
                     text-align:left">
           <div style="font-size:10.5px;color:#898781;letter-spacing:.04em;
                       text-transform:uppercase">GlucoGuard · now</div>
@@ -151,7 +151,7 @@ def phone(now: float | None, predicted: float | None, risk: float | None,
     return _flatten(f"""
     <div style="display:flex;justify-content:center;padding:6px 0 18px 0">
       <div style="position:relative;width:330px;border-radius:44px;padding:11px;
-                  background:#111110;box-shadow:0 26px 60px rgba(0,0,0,.30)">
+                  background:#111110;box-shadow:0 26px 60px rgba(0,0,0.30)">
         <div style="border-radius:34px;overflow:hidden;background:{s['bg']};
                     color:{s['fg']};font-family:{FONT};position:relative;
                     min-height:600px">
@@ -182,7 +182,7 @@ def phone(now: float | None, predicted: float | None, risk: float | None,
             {risk_bar}
 
             <div style="margin-top:26px;padding-top:14px;
-                        border-top:1px solid rgba(255,255,255,.14);
+                        border-top:1px solid rgba(255,255,255.14);
                         font-size:11px;opacity:.55;line-height:1.5">
               GlucoGuard does not recommend insulin doses. Research demonstration,
               not a medical device.
@@ -195,7 +195,7 @@ def phone(now: float | None, predicted: float | None, risk: float | None,
 
 def _sparkline(values: list[float], colour: str, width: int = 282,
                height: int = 74) -> str:
-    """Last couple of hours as a bare line — no axes, no numbers."""
+    """Last couple of hours as a bare line: no axes, no numbers."""
     if len(values) < 2:
         return ""
     lo, hi = min(values), max(values)
@@ -212,7 +212,7 @@ def _sparkline(values: list[float], colour: str, width: int = 282,
     threshold_line = ""
     if 0 <= y70 <= height:
         threshold_line = (f'<line x1="0" y1="{y70:.1f}" x2="{width}" y2="{y70:.1f}" '
-                          f'stroke="rgba(255,255,255,.28)" stroke-width="1" '
+                          f'stroke="rgba(255,255,255.28)" stroke-width="1" '
                           f'stroke-dasharray="3 4"/>')
     last_x = (len(values) - 1) * step
     last_y = height - (values[-1] - lo) / (hi - lo) * height

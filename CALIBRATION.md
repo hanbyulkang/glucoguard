@@ -2,7 +2,7 @@
 
 Two independent population shifts in this project broke the alarm threshold, and neither broke the model's ranking. A cutoff tuned for six false alarms a day lands at 14.7 on the test patients and 10.5 on the external population, because people differ enormously in how often they actually go low. There is no single number to find.
 
-So the threshold stops being a property of the model and becomes a property of the wearer: hold out each person's **first two weeks**, tune their cutoff on that, and use it for the rest of their record. A CGM is worn continuously, so this data costs nothing — it is simply the beginning of wearing the device.
+So the threshold stops being a property of the model and becomes a property of the wearer: hold out each person's **first two weeks**, tune their cutoff on that, and use it for the rest of their record. A CGM is worn continuously, so this data costs nothing, it is simply the beginning of wearing the device.
 
 Both strategies below are scored on identical windows (everything after each patient's warm-up), so the only difference is where the threshold came from. A wearer whose warm-up contains fewer than 20 low readings falls back to the shared cutoff rather than inventing a personal one from a handful of events.
 
@@ -41,13 +41,13 @@ Per-wearer calibration is not free, and the earlier tables make it look worse th
 | external | 14d | 47.1% | 5.34 | 52.8% | -5.7 pp |
 | external | 28d | 49.4% | 5.57 | 53.9% | -4.5 pp |
 
-So it costs roughly five points of pooled recall. That price is worth understanding rather than explaining away: a single global threshold earns its pooled score partly by treating people unequally. It lets the wearers who go low often alarm constantly — cheap true positives — while the wearers who rarely go low get almost no warnings at all. Pooling hides that, and rewards it.
+So it costs roughly five points of pooled recall. That price is worth understanding rather than explaining away: a single global threshold earns its pooled score partly by treating people unequally. It lets the wearers who go low often alarm constantly, cheap true positives, while the wearers who rarely go low get almost no warnings at all. Pooling hides that, and rewards it.
 
 Equalising the alarm rate across people gives some of that back. What it buys is that the number on the dial is true for the person reading it.
 
 ## Reading this
 
-The column that matters is the last one. A shared cutoff does not miss the target by a little — it misses it by different amounts for different people, which is what makes a population-level threshold unshippable. Per-wearer calibration is not about squeezing out more recall; it is about the alarm rate meaning what it says for the person wearing it.
+The column that matters is the last one. A shared cutoff does not miss the target by a little, it misses it by different amounts for different people, which is what makes a population-level threshold unshippable. Per-wearer calibration is not about squeezing out more recall; it is about the alarm rate meaning what it says for the person wearing it.
 
 The warm-up length trades off against itself: longer warm-ups pin the threshold down better but delay the moment the device is properly tuned, and leave fewer windows to evaluate on.
 

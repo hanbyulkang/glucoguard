@@ -23,7 +23,7 @@ def linear_extrapolation(X: np.ndarray, fit_steps: int = 6) -> np.ndarray:
 
     Deliberately included because the MetaboNet-Bench authors found that plain
     linear extrapolation beats far heavier models specifically in the low-glucose
-    region — the region we care most about. If our network cannot beat this
+    region, the region we care most about. If our network cannot beat this
     there, the network is not earning its complexity.
     """
     recent = X[:, -fit_steps:]

@@ -21,7 +21,7 @@ from src.predictor import (
 def main() -> None:
     names = sys.argv[1:] or [n for n in [best_checkpoint()] if n]
     if not names:
-        sys.exit("No checkpoint found — train a model first.")
+        sys.exit("No checkpoint found, train a model first.")
 
     patients = load_splits()["test"]
     for name in names:

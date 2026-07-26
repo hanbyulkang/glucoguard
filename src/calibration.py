@@ -9,7 +9,7 @@ population-wide number is chasing something that does not exist.
 The fix does not need a better model. It needs the threshold to belong to the
 person: hold out a wearer's first `warmup_days` of readings, tune their cutoff
 on that, and use it for the rest of their life with the device. This is exactly
-what a real deployment can do — a CGM is worn continuously, so the warm-up data
+what a real deployment can do, a CGM is worn continuously, so the warm-up data
 arrives for free in the first two weeks.
 
 Nothing here is fitted on the evaluation period, and no labels from it are used.
@@ -63,7 +63,7 @@ def calibrate_patient(
     warmup_lows = int((y[warmup] < HYPO_THRESHOLD).sum())
 
     if warmup.sum() == 0 or warmup_lows < MIN_WARMUP_LOWS:
-        # Not enough lows to see. Falling back is the honest behaviour — a
+        # Not enough lows to see. Falling back is the honest behaviour, a
         # device should not invent a personal threshold from three events.
         cal = PatientCalibration(patient_id, population_threshold, True,
                                  int(warmup.sum()), warmup_lows,
@@ -87,8 +87,8 @@ def evaluate_strategies(
 ) -> dict:
     """Compare one shared cutoff against a per-wearer cutoff, same eval windows.
 
-    Both strategies are scored on identical windows — everything after each
-    patient's warm-up — so the comparison isolates the threshold and nothing
+    Both strategies are scored on identical windows, everything after each
+    patient's warm-up, so the comparison isolates the threshold and nothing
     else.
     """
     per_patient, pooled = [], {"pop": [], "cal": [], "y": []}

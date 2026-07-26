@@ -1,7 +1,7 @@
 # Does anything improve as the weeks accumulate?
 
-Worth being precise about what could. The network is frozen after training — it
-never sees another gradient — so its forecast accuracy has no mechanism to
+Worth being precise about what could. The network is frozen after training, it
+never sees another gradient, so its forecast accuracy has no mechanism to
 improve with wear. Only the alarm threshold adapts, re-fitting weekly on the
 trailing month.
 
@@ -37,7 +37,7 @@ not be dressed up as the system learning, because it is not learning anything.
 ## A claim we had to withdraw
 
 On the test cohort the rolling policy pulls ahead of the fixed one as time
-passes — level at first, then +3.0 points by months 6–12 and year 1–2. That is a
+passes, level at first, then +3.0 points by months 6–12 and year 1–2. That is a
 tidy story about recalibration paying off slowly, and we believed it.
 
 The external cohort does the opposite. Rolling leads by 1–2 points through the
@@ -63,8 +63,8 @@ Two things survive, and neither is about recall:
   against a target of 6; the fixed threshold drifts low, 5.2–5.7, quietly
   alarming less than the wearer asked for.
 
-Choosing it is a design argument — a threshold that cannot follow the person is
-fragile whether or not this data punishes it — not a claim of measured
+Choosing it is a design argument, a threshold that cannot follow the person is
+fragile whether or not this data punishes it, not a claim of measured
 superiority.
 
 ## What this does not show

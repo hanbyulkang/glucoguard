@@ -3,7 +3,7 @@
 The first version of the deploy bundle shipped four real wearers' CGM readings.
 That was a mistake: the OpenAPS Data Commons is donated patient data behind a
 use agreement, redistribution is not obviously permitted, and a public
-repository cannot be un-published — forks and caches outlive any deletion.
+repository cannot be un-published, forks and caches outlive any deletion.
 
 Aggregate findings are a different matter. RMSE tables, alarm curves and
 calibration statistics are *results*, not data, and those still come from the
@@ -12,7 +12,7 @@ real cohort. What the hosted app plays back is simulated.
 The simulation is deliberately unflattering. It is not a smooth curve the model
 will ace; it carries meal spikes, correction overshoot, dawn rise, sensor noise
 and dropouts, and it is tuned to put a wearer below 70 several times a week.
-The model is the real trained model, running on it unmodified — so the demo
+The model is the real trained model, running on it unmodified, so the demo
 shows genuine behaviour, including genuine mistakes, on a patient who does not
 exist.
 
@@ -60,7 +60,7 @@ PROFILES = {
 def simulate(profile: dict, days: int) -> pd.DataFrame:
     """A glucose trace with the shapes a CGM actually produces.
 
-    Not a physiological model — a curve generator whose failure modes resemble
+    Not a physiological model, a curve generator whose failure modes resemble
     the real ones: a meal ramps over ~40 minutes and decays over hours, the
     correction that follows overshoots downward, glucose drifts up before dawn,
     and the sensor adds noise on top of all of it.
@@ -117,7 +117,7 @@ ID_PATTERN = re.compile(r"^(?:aaps_)?\d{6,}$")
 def anonymise(node, mapping: dict):
     """Replace archive patient ids with stable pseudonyms, everywhere they occur.
 
-    The results carry per-person figures — a wearer's own alarm threshold and
+    The results carry per-person figures, a wearer's own alarm threshold and
     how much time they spend below 70. Those are findings worth publishing, but
     keyed by the archive's own identifier they would link a published health
     statistic back to a specific donated record. The pseudonym keeps the finding
@@ -194,7 +194,7 @@ def solve_baseline(profile: dict, days: int, tolerance: float = 0.003) -> float:
 def main() -> None:
     checkpoint = ARTIFACTS_DIR / f"{MODEL}.pt"
     if not checkpoint.exists():
-        raise SystemExit(f"{checkpoint} not found — train a model first.")
+        raise SystemExit(f"{checkpoint} not found, train a model first.")
 
     if BUNDLE.exists():
         shutil.rmtree(BUNDLE)
@@ -241,7 +241,7 @@ def main() -> None:
     shutil.copy2(checkpoint, BUNDLE / f"{MODEL}.pt")
     total += checkpoint.stat().st_size
 
-    # Aggregate findings are results, not data, and stay real — but the ones
+    # Aggregate findings are results, not data, and stay real, but the ones
     # keyed by wearer get pseudonymised on the way out.
     id_map = build_id_map()
     for name in ("alarm.json", "selection.json", "matched.json", "policy.json",
@@ -258,7 +258,7 @@ def main() -> None:
         total += dest.stat().st_size
     print(f"  pseudonymised {len(id_map)} wearer ids in the published results")
 
-    print(f"\nWrote {BUNDLE} — {total / 1e6:.1f} MB, {len(PROFILES)} simulated wearers")
+    print(f"\nWrote {BUNDLE}, {total / 1e6:.1f} MB, {len(PROFILES)} simulated wearers")
     print("No donated patient readings are included.")
 
 

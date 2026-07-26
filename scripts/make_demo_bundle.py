@@ -1,13 +1,13 @@
 """Package the smallest thing that still runs the app, for a public deploy.
 
-The full working set is about 110 MB — a 72 MB glucose table plus 39 MB of
-cached forecasts — which is more than belongs in a git repository and more than
+The full working set is about 110 MB, a 72 MB glucose table plus 39 MB of
+cached forecasts, which is more than belongs in a git repository and more than
 a free host wants to clone on every deploy.
 
 Almost none of it is needed. The forecasts are already computed, so the hosted
 app never has to touch the raw archive: it needs a slice of each wearer's
 predictions and a few summary numbers. Taking a contiguous stretch that actually
-contains lows keeps the demo honest — it is a real span of a real record, not a
+contains lows keeps the demo honest, it is a real span of a real record, not a
 reel of good moments.
 
 Run:  python -m scripts.make_demo_bundle
@@ -51,7 +51,7 @@ def main() -> None:
     source = CACHE_DIR / "forecasts" / MODEL
     if not source.exists():
         raise SystemExit(
-            f"{source} not found — run `python -m scripts.precompute_forecasts` first."
+            f"{source} not found, run `python -m scripts.precompute_forecasts` first."
         )
 
     BUNDLE.mkdir(exist_ok=True)
@@ -66,7 +66,7 @@ def main() -> None:
         frame = pd.read_parquet(path)
         lows = int((frame["actual"] < HYPO_THRESHOLD).sum())
         ranked.append((lows, pid, frame))
-    # Wearers with lows to show, but not only the easiest ones — take a spread.
+    # Wearers with lows to show, but not only the easiest ones, take a spread.
     ranked.sort(reverse=True, key=lambda r: r[0])
     chosen = [ranked[0], ranked[len(ranked) // 3], ranked[2 * len(ranked) // 3],
               ranked[-1]][:N_WEARERS]
@@ -112,7 +112,7 @@ def main() -> None:
             shutil.copy2(src, BUNDLE / name)
             total += src.stat().st_size
 
-    print(f"\nWrote {BUNDLE} — {total / 1e6:.1f} MB total, "
+    print(f"\nWrote {BUNDLE}, {total / 1e6:.1f} MB total, "
           f"{len(chosen)} wearers, {SLICE_DAYS} days each")
 
 

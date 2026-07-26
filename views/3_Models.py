@@ -15,7 +15,7 @@ from src.theme import ACTUAL, INK_MUTED, MUTED_LINE, PREDICTED, style
 ui.page(
     "Models",
     "Eleven models, all scored on the same eight held-out wearers. The table is "
-    "sorted by accuracy — read it, then read the chart below it, which shows why "
+    "sorted by accuracy, read it, then read the chart below it, which shows why "
     "sorting by accuracy is the wrong thing to do.",
     pills=["held-out test split"],
 )
@@ -25,7 +25,7 @@ df = rio.model_table()
 ui.table(df, "Run `python -m scripts.run_sweep` to populate this.")
 ui.caption(
     "RMSE and MAE are in mg/dL. <b>RMSE (lows)</b> is restricted to windows whose "
-    "true value is under 70 — the region that matters clinically and the one an "
+    "true value is under 70, the region that matters clinically and the one an "
     "overall average hides. <b>Clarke A+B</b> is the share of predictions in the "
     "clinically acceptable zones of the Clarke Error Grid."
 )
@@ -59,7 +59,7 @@ if sweep:
         "error does: it rewards a forecast that stays near the conditional mean, "
         "and hypoglycaemia lives in the tail, so the accurate model becomes the "
         "reluctant one. It is also why a fixed cutoff is the wrong way to compare "
-        "alarms — see the Alarm page."
+        "alarms, see the Alarm page."
     )
 
 # --------------------------------------------------------------------------- #
@@ -97,8 +97,8 @@ sel = rio.load("selection")
 if sel:
     st.markdown(
         f'<div class="gg-lead">The shipped model is <b>{sel["selected"]}</b>. '
-        "It was chosen on validation wearers only — split into two folds, a "
-        "threshold tuned on one and scored on the other — because the top three "
+        "It was chosen on validation wearers only, split into two folds, a "
+        "threshold tuned on one and scored on the other, because the top three "
         "sit within 1.6 points of each other and picking among near-ties by "
         "reading the test set turns noise into a decision.</div>",
         unsafe_allow_html=True,

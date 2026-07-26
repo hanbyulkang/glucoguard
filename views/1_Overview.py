@@ -1,4 +1,4 @@
-"""Overview — the front page of the app."""
+"""Overview: the front page of the app."""
 from __future__ import annotations
 
 import numpy as np
@@ -45,17 +45,17 @@ policy_recall = (policy["results"]["test"]["rolling"]["episode_recall"]
 
 ui.tiles([
     ("Forecast error",
-     f"{best_rmse:.1f}" if best_rmse else "—",
+     f"{best_rmse:.1f}" if best_rmse else ", ",
      f"mg/dL RMSE · persistence {persistence_rmse:.1f}" if persistence_rmse else ""),
     ("Low episodes warned",
-     f"{policy_recall:.0%}" if policy_recall else "—",
+     f"{policy_recall:.0%}" if policy_recall else ", ",
      "at 6 false alarms a day, per-wearer threshold"),
     ("On a second population",
-     f"{ext_rmse:.1f}" if ext_rmse else "—",
+     f"{ext_rmse:.1f}" if ext_rmse else ", ",
      "mg/dL, different sensors, no retraining"),
     ("Held-out wearers",
      f"{len(sweep['counts']['test']['patients']) if False else sweep['counts']['test']['patients']}"
-     if sweep else "—",
+     if sweep else ", ",
      f"{sweep['counts']['test']['windows']:,} scored windows" if sweep else ""),
 ])
 
@@ -81,7 +81,7 @@ fig = go.Figure()
 fig.add_hrect(y0=HYPO_THRESHOLD, y1=180, fillcolor="rgba(12,163,12,0.055)",
               line_width=0, layer="below")
 fig.add_hline(y=HYPO_THRESHOLD, line=dict(color="#d03b3b", width=1, dash="dot"),
-              annotation_text=f"{HYPO_THRESHOLD} — low", annotation_position="right",
+              annotation_text=f"{HYPO_THRESHOLD}, low", annotation_position="right",
               annotation_font=dict(size=11, color=INK_MUTED))
 fig.add_trace(go.Scatter(x=t[:20], y=actual[:20], name="CGM so far",
                          mode="lines", line=dict(color=ACTUAL, width=2.4)))
@@ -106,7 +106,7 @@ with left:
     st.markdown(
         '<div class="gg-caption">Rank the models by RMSE and you almost exactly '
         "reverse their ranking by low-glucose recall. Squared error rewards a "
-        "forecast that hugs the mean, and hypoglycaemia is the tail — so "
+        "forecast that hugs the mean, and hypoglycaemia is the tail, so "
         "optimising accuracy taught the model to avoid committing to the events "
         "it exists to catch. <b>Selecting on RMSE would have shipped the worst "
         "available alarm.</b></div>",
@@ -118,14 +118,14 @@ with mid:
         '<div class="gg-caption">Reading every model at a fixed 70 mg/dL cutoff '
         "compares their biases, not their skill: the high-recall ones simply "
         "alarm more often. Tuning each to the same false-alarm budget inverts the "
-        "ranking — linear extrapolation goes from apparently best to last.</div>",
+        "ranking, linear extrapolation goes from apparently best to last.</div>",
         unsafe_allow_html=True,
     )
 with right:
     ui.h3("The threshold belongs to the wearer")
     st.markdown(
         '<div class="gg-caption">One shared cutoff delivers wildly different '
-        "alarm rates to different people — 3 to 26 a day across the external "
+        "alarm rates to different people, 3 to 26 a day across the external "
         "cohort. Fitting each wearer on their own first weeks puts almost all of "
         "them on the rate they asked for.</div>",
         unsafe_allow_html=True,
@@ -145,7 +145,6 @@ st.markdown(
 | **Calibration** | Per-wearer thresholds, how they move over time, and what that costs |
 | **Generalisation** | A second population with different sensors, and drift over years |
 | **Inputs** | What happens when insulin and carbohydrate records are added |
-| **Live** | Drive the forecast from a Nightscout feed or a replay, with phone alerts |
 | **Method** | Data, splits, and the rules that make these numbers mean something |
 """,
     unsafe_allow_html=True,

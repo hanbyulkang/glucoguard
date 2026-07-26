@@ -1,7 +1,7 @@
 """Does a threshold fitted in week 1–2 still hold in month 6?
 
 `eval_calibration.py` shows that a per-wearer cutoff makes the alarm rate mean
-what it says. It pools the entire post-warm-up record to say so — and these
+what it says. It pools the entire post-warm-up record to say so, and these
 records run from 300 to 1400 days. A threshold fitted on two weeks and then
 pooled over three years can look correct on average while being wrong at both
 ends.
@@ -99,7 +99,7 @@ def main() -> None:
     for cohort, ws in cohorts.items():
         res = analyse(ws, fc)
         results[cohort] = res
-        print(f"\n=== {cohort} — threshold fitted on days 0–{WARMUP_DAYS:g}, "
+        print(f"\n=== {cohort}, threshold fitted on days 0–{WARMUP_DAYS:g}, "
               f"target {TARGET_FA:g} FA/day, {res['calibrated_patients']} wearers ===")
         print(f"{'window':<14s}{'wearers':>8s}{'days':>9s}{'lows':>8s}"
               f"{'FA/day':>9s}{'recall':>9s}{'precision':>11s}")
@@ -131,14 +131,14 @@ def write_markdown(results: dict) -> None:
     ]
     for cohort, res in results.items():
         lines += [
-            f"## {cohort.capitalize()} cohort — {res['calibrated_patients']} wearers with a personal threshold",
+            f"## {cohort.capitalize()} cohort, {res['calibrated_patients']} wearers with a personal threshold",
             "",
             "| time since calibration | wearers | wearer-days | share of readings low | false alarms/day | recall | precision |",
             "|---|---:|---:|---:|---:|---:|---:|",
         ]
         for label, b in res["buckets"].items():
             lines.append(
-                f"| {label} | {b['patients']} | {b['days']:,.0f} | {b['hypo_rate']:.2%} | "
+                f"| {label} | {b['patients']} | {b['days']:.0f} | {b['hypo_rate']:.2%} | "
                 f"**{b['false_alarms_per_day']:.1f}** | {b['recall']:.1%} | "
                 f"{b['precision']:.1%} |"
             )
@@ -157,7 +157,7 @@ def write_markdown(results: dict) -> None:
         "honest plan was to find out how fast so recalibration could be scheduled. "
         "It does not appear to need one.",
         "",
-        "The slow downward drift in the external cohort — 5.3 falling to 4.6 — "
+        "The slow downward drift in the external cohort, 5.3 falling to 4.6, "
         "tracks the *share of readings low* column falling alongside it, 3.05% to "
         "2.44%. Those wearers are going low less often as the years pass, and an "
         "alarm that fires less often in response is behaving correctly rather than "

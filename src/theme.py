@@ -1,6 +1,6 @@
 """Chart palette and Plotly styling.
 
-Colours come from a validated categorical palette — the actual/predicted pair
+Colours come from a validated categorical palette, the actual/predicted pair
 was checked for colour-vision-deficiency separation and contrast against the
 chart surface rather than picked by eye. Status colours are reserved for
 clinical state (a low, a high) and never reused as a data series, so a red on
@@ -90,9 +90,9 @@ CSS = f"""
     font-size: .96rem; line-height: 1.45; border: 1px solid {BORDER};
   }}
   .gg-banner b {{ font-weight: 650; }}
-  .gg-alert   {{ background: #fdeaea; color: #7d1d1d; border-color: rgba(208,59,59,.35); }}
-  .gg-caution {{ background: #fdf4e0; color: #6b4c07; border-color: rgba(250,178,25,.40); }}
-  .gg-ok      {{ background: #eaf6ea; color: #14550f; border-color: rgba(12,163,12,.30); }}
+  .gg-alert   {{ background: #fdeaea; color: #7d1d1d; border-color: rgba(208,59,59.35); }}
+  .gg-caution {{ background: #fdf4e0; color: #6b4c07; border-color: rgba(250,178,25.40); }}
+  .gg-ok      {{ background: #eaf6ea; color: #14550f; border-color: rgba(12,163,12.30); }}
   .gg-icon {{ font-size: 1.15rem; line-height: 1; }}
 
   .gg-tile {{

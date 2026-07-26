@@ -2,8 +2,8 @@
 
 RMSE already misled us once here: `treatments` improved validation RMSE and
 then made test RMSE worse, while its low-glucose recall went *up*. That is the
-same disagreement this project has hit repeatedly — accuracy and sensitivity to
-lows are not the same axis — so the input experiment has to be settled on the
+same disagreement this project has hit repeatedly, accuracy and sensitivity to
+lows are not the same axis, so the input experiment has to be settled on the
 alarm, using the protocol the alarm pages use.
 
 Three readings, in increasing order of how much they resemble wearing the thing:
@@ -135,7 +135,7 @@ def main() -> None:
     if not results:
         return
 
-    print(f"\n{'=' * 96}\nPOOLED — recall at matched achieved false-alarm rates\n{'=' * 96}")
+    print(f"\n{'=' * 96}\nPOOLED, recall at matched achieved false-alarm rates\n{'=' * 96}")
     print(f"{'inputs':<16}" + "".join(f"{f'{r:g} FA/day':>14s}" for r in RATES))
     base = results.get("cgm", {}).get("matched")
     for name, r in results.items():
@@ -146,7 +146,7 @@ def main() -> None:
             row += f"{v:>8.1%}{delta:>6s}"
         print(row)
 
-    print(f"\n{'=' * 96}\nEVENT LEVEL — low episodes warned, on held-out wearers\n{'=' * 96}")
+    print(f"\n{'=' * 96}\nEVENT LEVEL, low episodes warned, on held-out wearers\n{'=' * 96}")
     print(f"{'inputs':<16}{'shared cutoff':>28s}{'per-wearer cutoff':>30s}")
     print(f"{'':<16}{'recall':>12s}{'FA/day':>9s}{'lead':>7s}"
           f"{'recall':>13s}{'FA/day':>9s}{'lead':>7s}")

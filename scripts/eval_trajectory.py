@@ -76,7 +76,7 @@ def main() -> None:
     for cohort, ws in {"test": windows["test"],
                        "external": external_windows()}.items():
         results[cohort] = trajectories(ws, fc)
-        print(f"\n=== {cohort} — {len(results[cohort])} wearers with a rolling history ===")
+        print(f"\n=== {cohort}, {len(results[cohort])} wearers with a rolling history ===")
         print(f"{'wearer':<16}{'weeks':>6}{'refits':>8}{'first':>8}{'last':>8}"
               f"{'min':>7}{'max':>7}{'CV':>7}{'weekly step':>13}{'corr w/ TBR':>13}")
         for pid, r in results[cohort].items():

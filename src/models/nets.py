@@ -25,7 +25,7 @@ import torch.nn as nn
 class _GlucoseFeatures(nn.Module):
     """Normalise the input window into per-timestep channels.
 
-    Glucose always contributes two channels — its level and its rate of change.
+    Glucose always contributes two channels, its level and its rate of change.
     Any further channels (insulin given, carbohydrates eaten, the loop's own
     estimate of insulin on board) arrive already stacked and are standardised
     with statistics measured on the training split, so a channel that is mostly
@@ -49,19 +49,19 @@ class _GlucoseFeatures(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # x: (B, T) or (B, T, 1 + n_aux)  ->  (B, T, 2 + n_aux)
-        glucose = x if x.ndim == 2 else x[..., 0]
+        glucose = x if x.ndim == 2 else x[... 0]
         value = (glucose - self.mean) / self.std
         delta = torch.diff(value, dim=1, prepend=value[:, :1])
         channels = [value, delta]
         if self.n_aux and x.ndim == 3:
-            aux = (x[..., 1:] - self.aux_mean) / torch.clamp(self.aux_std, min=1e-6)
+            aux = (x[... 1:] - self.aux_mean) / torch.clamp(self.aux_std, min=1e-6)
             channels.extend(aux.unbind(dim=-1))
         return torch.stack(channels, dim=-1)
 
 
 def glucose_of(x: torch.Tensor) -> torch.Tensor:
     """The glucose channel, whichever shape the caller passed."""
-    return x if x.ndim == 2 else x[..., 0]
+    return x if x.ndim == 2 else x[... 0]
 
 
 class _DeltaHead(nn.Module):
@@ -71,7 +71,7 @@ class _DeltaHead(nn.Module):
     the model can report how confident it is rather than only what it expects.
     That matters more than it sounds: a point forecast trained on squared error
     is pulled toward the mean, which makes it systematically reluctant to
-    predict the rare extremes — exactly the lows we care about. A predicted
+    predict the rare extremes, exactly the lows we care about. A predicted
     distribution lets the alarm ask "what is the probability of going below 70"
     instead of "did the single guessed number happen to land below 70".
 
@@ -105,15 +105,15 @@ class _DeltaHead(nn.Module):
 
     def forward(self, h: torch.Tensor, last: torch.Tensor) -> torch.Tensor:
         out = self.net(h)
-        parts = [last + out[..., 0] * self.std]
+        parts = [last + out[... 0] * self.std]
         idx = 1
         if self.heteroscedastic:
             # Softplus keeps the scale positive; the floor stops the NLL from
             # running away to zero variance on flat stretches of the trace.
-            parts.append(nn.functional.softplus(out[..., idx]) * self.std + 1.0)
+            parts.append(nn.functional.softplus(out[... idx]) * self.std + 1.0)
             idx += 1
         if self.classify:
-            parts.append(out[..., idx])       # raw logit, sigmoid applied later
+            parts.append(out[... idx])       # raw logit, sigmoid applied later
         return parts[0] if len(parts) == 1 else torch.stack(parts, dim=-1)
 
 

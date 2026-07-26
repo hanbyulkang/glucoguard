@@ -48,7 +48,7 @@ if thr is not None and not thr.empty:
     missing = thr[(thr["Cohort"] == cohort) & (thr["Threshold"].isna())]
     if not missing.empty:
         ui.caption(
-            f"<b>{len(missing)} wearers could not be calibrated</b> — their warm-up "
+            f"<b>{len(missing)} wearers could not be calibrated</b>, their warm-up "
             "held fewer than 20 lows. They fall back to the shared cutoff, and they "
             "are exactly the people the shared cutoff serves worst."
         )
@@ -60,7 +60,7 @@ ui.h2("What per-wearer calibration buys, and what it costs")
 ui.table(rio.calibration_table(), "Run `python -m scripts.eval_calibration`.")
 ui.note(
     "The column that matters is the last one. A shared cutoff does not miss the "
-    "target by a little — it misses by different amounts for different people. "
+    "target by a little, it misses by different amounts for different people. "
     "Per-wearer calibration costs roughly five points of pooled recall at the "
     "same achieved rate, and that price is worth understanding: <b>a single "
     "global threshold earns part of its pooled score by treating people "

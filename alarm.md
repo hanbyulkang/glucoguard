@@ -1,4 +1,4 @@
-# Low-glucose alarm — matched false-alarm comparison
+# Low-glucose alarm: matched false-alarm comparison
 
 Reporting recall at a fixed 70 mg/dL cutoff compares the *biases* of differently-trained predictors, not their skill. A model trained on squared error is pulled toward the mean and under-shoots rare lows; linear extrapolation over-shoots every fall. Read at one cutoff, the over-shooting model looks like the better alarm purely because it alarms more often.
 
@@ -22,4 +22,4 @@ So each model instead emits a risk score, and the threshold on that score is tun
 
 A threshold tuned to 1 false alarm per day on validation delivers several on test. The two splits are not equally hard: the validation patients spend far less time below 70 than the test patients do, so a cutoff calibrated on the first is too permissive for the second.
 
-This is worth stating plainly rather than tuning away. It means a population-level alarm threshold does not transfer between people, and that per-patient calibration — using a wearer's own first weeks of data to set their threshold — is not a refinement but a requirement.
+This is worth stating plainly rather than tuning away. It means a population-level alarm threshold does not transfer between people, and that per-patient calibration, using a wearer's own first weeks of data to set their threshold, is not a refinement but a requirement.

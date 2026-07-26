@@ -4,7 +4,7 @@ The threshold is fitted on each wearer's first 14 days and then left alone. Thes
 
 Target was **6 false alarms per day**. The question is whether that is still what the wearer gets a year later.
 
-## Test cohort — 7 wearers with a personal threshold
+## Test cohort: 7 wearers with a personal threshold
 
 | time since calibration | wearers | wearer-days | share of readings low | false alarms/day | recall | precision |
 |---|---:|---:|---:|---:|---:|---:|
@@ -15,7 +15,7 @@ Target was **6 false alarms per day**. The question is whether that is still wha
 | months 6–12 | 7 | 1,008 | 3.41% | **5.6** | 47.7% | 45.4% |
 | year 2+ | 6 | 2,788 | 4.56% | **6.2** | 48.4% | 50.6% |
 
-## External cohort — 25 wearers with a personal threshold
+## External cohort: 25 wearers with a personal threshold
 
 | time since calibration | wearers | wearer-days | share of readings low | false alarms/day | recall | precision |
 |---|---:|---:|---:|---:|---:|---:|
@@ -32,7 +32,7 @@ Target was **6 false alarms per day**. The question is whether that is still wha
 
 That was not the expected answer. A threshold fitted on a fortnight and then applied to a further three years had every reason to rot, and the honest plan was to find out how fast so recalibration could be scheduled. It does not appear to need one.
 
-The slow downward drift in the external cohort — 5.3 falling to 4.6 — tracks the *share of readings low* column falling alongside it, 3.05% to 2.44%. Those wearers are going low less often as the years pass, and an alarm that fires less often in response is behaving correctly rather than decaying. The threshold is not going stale; the person is getting better at avoiding the thing it watches for.
+The slow downward drift in the external cohort, 5.3 falling to 4.6, tracks the *share of readings low* column falling alongside it, 3.05% to 2.44%. Those wearers are going low less often as the years pass, and an alarm that fires less often in response is behaving correctly rather than decaying. The threshold is not going stale; the person is getting better at avoiding the thing it watches for.
 
 Recall wanders between roughly 41% and 59% without trend. At this alarm rate that is the operating point, not drift.
 

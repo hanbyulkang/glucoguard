@@ -1,10 +1,10 @@
 """Three alarm policies, scored the way a wearer would count them.
 
-* **fixed** — one threshold fitted on the wearer's first two weeks, never touched
+* **fixed**, one threshold fitted on the wearer's first two weeks, never touched
   again.
-* **rolling** — re-fitted every week on the trailing four weeks, so it follows
+* **rolling**, re-fitted every week on the trailing four weeks, so it follows
   the person.
-* **shared** — one population threshold for everybody, as a floor.
+* **shared**, one population threshold for everybody, as a floor.
 
 All three are scored on episodes and alarm events rather than on individual
 five-minute readings, with a refractory period so a burst counts once.
@@ -147,15 +147,15 @@ def write_markdown(results: dict) -> None:
         f"So: an alarm fires and then stays quiet for {REFRACTORY_MINUTES} minutes. "
         "A **low episode** counts as warned if the device made a sound in the hour "
         "before glucose crossed 70. An **alarm event** counts as false only if no "
-        "low followed it. Alarms during an ongoing low are not false — the wearer "
+        "low followed it. Alarms during an ongoing low are not false, the wearer "
         "is low and the device is right to be noisy.",
         "",
         "Three policies, all scored on the same windows (everything after each "
         "wearer's two-week warm-up):",
         "",
-        "- **shared** — one threshold for everybody, fitted on the validation wearers",
-        "- **fixed** — fitted once on this wearer's first fortnight, then never touched",
-        "- **rolling** — re-fitted weekly on this wearer's trailing four weeks",
+        "- **shared**, one threshold for everybody, fitted on the validation wearers",
+        "- **fixed**, fitted once on this wearer's first fortnight, then never touched",
+        "- **rolling**, re-fitted weekly on this wearer's trailing four weeks",
         "",
     ]
     for cohort, res in results.items():
@@ -185,7 +185,7 @@ def write_markdown(results: dict) -> None:
         "the same de-duplication that raises recall also strips out most of what "
         "used to be counted as false alarms, so the threshold has to be re-tuned "
         "in event units to hit the same budget. What changes is that both sides of "
-        "the trade are now expressed in what the wearer experiences — how many "
+        "the trade are now expressed in what the wearer experiences, how many "
         "times it interrupted them, and how many of their lows it saw coming.",
         "",
         "The per-reading numbers elsewhere in this repository are not wrong, they "

@@ -1,9 +1,9 @@
-# Devpost submission — Vitalitics 2026
+# Devpost submission: Vitalitics 2026
 
 Paste into the matching fields. Every number here is measured; nothing is
 rounded up in our favour.
 
-**Deadline: 2026-07-30 21:00 PDT** — the Devpost value is 2026-07-31 00:00 EDT,
+**Deadline: 2026-07-30 21:00 PDT**, the Devpost value is 2026-07-31 00:00 EDT,
 so July 31 never actually happens.
 
 ---
@@ -15,7 +15,7 @@ so July 31 never actually happens.
 ## Elevator pitch (≤200 characters)
 
 > A continuous glucose monitor tells you that you're low. GlucoGuard tells you
-> you're about to be — and lets you set how often it's allowed to be wrong.
+> you're about to be, and lets you set how often it's allowed to be wrong.
 
 *(139 characters)*
 
@@ -25,7 +25,7 @@ so July 31 never actually happens.
 - **Source:** https://github.com/hanbyulkang/glucoguard
 
 The hosted demo plays back simulated wearers. The model is the real trained
-checkpoint and every measured result is from the real cohort — the trace is
+checkpoint and every measured result is from the real cohort, the trace is
 generated because the donated recordings are not ours to republish, and the app
 says so on screen.
 
@@ -45,7 +45,7 @@ sleep, and severe nocturnal lows are among the outcomes people with type 1
 diabetes fear most.
 
 The gap is not sensing. It is anticipation. We wanted to know how much warning
-you can extract from the CGM signal alone — no new hardware, no extra inputs,
+you can extract from the CGM signal alone, no new hardware, no extra inputs,
 just the trace the device is already producing.
 
 ## What it does
@@ -59,7 +59,7 @@ they begin**, at six false alarms a day, with a median of 25 minutes of warning.
 
 The alarm threshold is not a constant. It is fitted to each wearer from their
 own first two weeks, because a single population-wide cutoff delivers wildly
-different alarm rates to different people — 3 to 26 a day across our external
+different alarm rates to different people, 3 to 26 a day across our external
 cohort.
 
 It does not recommend insulin doses.
@@ -79,7 +79,7 @@ producing a beautiful test score and a system that fails on the first new person
 it meets. 26 wearers train, 6 select, 8 are held out entirely.
 
 **Models.** Persistence and linear extrapolation as non-learned floors, ridge
-regression on the raw window, then LSTM, dilated TCN, and Transformer — all
+regression on the raw window, then LSTM, dilated TCN, and Transformer, all
 predicting the *change* in glucose rather than the level, with rate of change as
 an explicit second channel. Then a probabilistic head (Gaussian NLL), a
 classification head trained directly on the low/not-low label, and loss
@@ -97,7 +97,7 @@ experiences.
 project more than any modelling choice did.
 
 *Ranking by RMSE almost exactly reverses the ranking by low-glucose recall.*
-Our most accurate model was the worst at catching lows — worse than doing
+Our most accurate model was the worst at catching lows, worse than doing
 nothing. Squared error rewards a forecast that hugs the mean and hypoglycaemia
 is the tail, so optimising accuracy taught the model to refuse to commit to the
 exact events we built it for. Selecting on RMSE, as is standard in this area,
@@ -111,21 +111,21 @@ Matched to the same false-alarm budget it comes **last**.
 crossed 70.* The median came out as exactly zero, which is what exposed it.
 
 *We were choosing the shipped model by reading test recall.* The top three sat
-within 1.6 points of each other — exactly where selecting on test turns noise
+within 1.6 points of each other, exactly where selecting on test turns noise
 into a decision. Selection moved inside validation, using two patient folds.
 
 **And the archive fights you.** Two incompatible export formats, one wearer
 holding 1.5 GB alone, traces riddled with dropouts. We stream the relevant files
 out of the zip, interpolate gaps up to 15 minutes, and discard any window
-spanning a longer one — filling a three-hour hole with a straight line invents
+spanning a longer one, filling a three-hour hole with a straight line invents
 data and quietly inflates the score.
 
 ## Accomplishments that we're proud of
 
 **The evaluation is the accomplishment**, and its best moment was catching a
 contamination nobody would have found by accident. We built a second cohort from
-the untouched half of the archive — 33 AndroidAPS wearers, different app,
-different sensors, mostly European — and discovered that **four donors had
+the untouched half of the archive, 33 AndroidAPS wearers, different app,
+different sensors, mostly European, and discovered that **four donors had
 uploaded under both export formats**, one of them a test wearer. Without that
 check, our "external validation" would have been a re-test on people the model
 already knew.
@@ -133,7 +133,7 @@ already knew.
 Applied unchanged to that population, the model holds: RMSE 19.95 against
 persistence's 23.77, Clarke A+B **97.3%**, and at every matched false-alarm rate
 it still beats persistence by 9 to 13 points. **The ranking survives; the
-calibration does not** — which is precisely the evidence that sent us to
+calibration does not**, which is precisely the evidence that sent us to
 per-wearer thresholds.
 
 ## What we learned
@@ -144,7 +144,7 @@ evaluation was being too kind to us.
 
 The clearest example arrived last. Adding insulin and carbohydrate records
 improved validation RMSE, made **test** RMSE worse, and improved the alarm on
-both. We concluded "the extra inputs failed" — from RMSE — and had to withdraw
+both. We concluded "the extra inputs failed", from RMSE, and had to withdraw
 that an hour later after scoring them as alarms. It is the exact mistake this
 project exists to warn about, committed by us, on our own work.
 
@@ -166,7 +166,7 @@ outside this submission and involves no human insulin delivery.
 
 ---
 
-## Note on prior work — include this, the rules are ambiguous here
+## Note on prior work: include this, the rules are ambiguous here
 
 Background research (reading the CGM forecasting literature, obtaining the
 OpenAPS Data Commons dataset) was done before the hackathon, which the rules

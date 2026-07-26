@@ -35,7 +35,7 @@ def main() -> None:
             for n, v in alarm.items()}
     order = sorted(rows, key=lambda n: -rows[n][RATES[-1]])
 
-    print("TEST SPLIT — recall at matched achieved false-alarm rates")
+    print("TEST SPLIT, recall at matched achieved false-alarm rates")
     print(f"{'model':<24s}" + "".join(f"{f'{r:g} FA/day':>13s}" for r in RATES))
     for n in order:
         print(f"{n:<24s}" + "".join(f"{rows[n][r]:12.1%} " for r in RATES))
@@ -45,7 +45,7 @@ def main() -> None:
     if ext_path.exists():
         ext = json.loads(ext_path.read_text())
         ext_rows = {k: {r: recall_at(c, r) for r in RATES} for k, c in ext.items()}
-        print("\nEXTERNAL POPULATION — same rates")
+        print("\nEXTERNAL POPULATION, same rates")
         print(f"{'':<24s}" + "".join(f"{f'{r:g} FA/day':>13s}" for r in RATES))
         for k, v in ext_rows.items():
             print(f"{k:<24s}" + "".join(f"{v[r]:12.1%} " for r in RATES))
