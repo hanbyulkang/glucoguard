@@ -187,6 +187,28 @@ The shared threshold's apparent 90% recall is bought with nearly twice the
 interruptions, and it still misses the requested rate for a third of wearers.
 [`ALARM_POLICY.md`](ALARM_POLICY.md) has the full tables.
 
+### What the threshold actually does over time
+
+![Each wearer's threshold as it is re-fitted](assets/trajectory_test.png)
+
+Re-fitting weekly on the trailing month, the cutoff does not settle on a number
+and stay there — it tracks the wearer. Across the eight test wearers its
+correlation with their own recent time below 70 runs from 0.31 to 0.87 (median
+0.54), and it moves about **1 percentage point per week**: gradual drift, not
+week-to-week thrashing.
+
+The mechanism is straightforward once seen. When someone starts going low more
+often, the model hands out high probabilities more often, so the bar has to rise
+to keep interruptions at six a day. One wearer's threshold travels from 0.3% to
+23% across three and a half years of wear. No fixed number could have served
+them at both ends.
+
+Rolling also reaches one more person. Fixing at two weeks needs 20 lows inside
+that fortnight, which one test wearer and eight external ones never produce;
+re-fitting only needs 15 lows in the trailing month, and that wearer gets a
+personal threshold as soon as they have had enough lows to fit one — whenever
+that happens to be.
+
 ## Running it against a live feed
 
 `streamlit run live_app.py` drives the same forecast from a CGM feed rather than

@@ -19,6 +19,7 @@ import json
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 
 from src.config import ARTIFACTS_DIR
 
@@ -191,6 +192,64 @@ def main() -> None:
     if alarm_path.exists():
         figure_alarm(json.loads(alarm_path.read_text()))
         print(f"wrote {ASSETS / 'alarm_curve.png'}")
+
+    traj_path = ARTIFACTS_DIR / "trajectory.json"
+    if traj_path.exists():
+        traj = json.loads(traj_path.read_text())
+        for cohort in traj:
+            figure_trajectory(traj, cohort)
+            print(f"wrote {ASSETS / f'trajectory_{cohort}.png'}")
+
+
+
+
+def figure_trajectory(traj: dict, cohort: str = "test") -> None:
+    """Each wearer's threshold as it is re-fitted, against their own recent lows.
+
+    Both series are fractions in the same 0–25% range and are drawn on one
+    shared axis — the alarm threshold is a probability, the other is the share
+    of recent readings below 70. No second scale is introduced.
+    """
+    wearers = list(traj.get(cohort, {}).items())
+    if not wearers:
+        return
+    cols = 4
+    rows = (len(wearers) + cols - 1) // cols
+    fig, axes = plt.subplots(rows, cols, figsize=(3.4 * cols, 2.5 * rows),
+                             dpi=200, sharex=False, sharey=True)
+    axes = np.atleast_1d(axes).ravel()
+
+    for ax, (pid, r) in zip(axes, wearers):
+        sched = r["schedule"]
+        days = [p["days_since_start"] for p in sched]
+        thr = [p["threshold"] * 100 for p in sched]
+        tbr = [p["trailing_hypo_rate"] * 100 for p in sched]
+
+        ax.plot(days, tbr, color=MUTED, linewidth=1.4, linestyle="--",
+                label="recent time below 70")
+        ax.plot(days, thr, color=BLUE, linewidth=2, label="alarm threshold")
+        ax.set_title(f"{pid}  (r = {r['corr_threshold_vs_rate']:.2f})",
+                     fontsize=9, color=INK_SECONDARY, loc="left", pad=6)
+        _clean(ax)
+        ax.tick_params(labelsize=8)
+
+    for ax in axes[len(wearers):]:
+        ax.set_visible(False)
+    for ax in axes[:len(wearers)]:
+        ax.set_xlabel("days worn", fontsize=8.5)
+    axes[0].set_ylabel("%", fontsize=9)
+
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, frameon=False, fontsize=9, ncol=2,
+               labelcolor=INK_SECONDARY, loc="upper right",
+               bbox_to_anchor=(0.995, 0.985))
+    fig.suptitle(
+        "The threshold follows the wearer, not the calendar",
+        fontsize=13, color=INK, fontweight="bold", x=0.012, ha="left", y=0.985,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.savefig(ASSETS / f"trajectory_{cohort}.png", facecolor=SURFACE)
+    plt.close(fig)
 
 
 if __name__ == "__main__":

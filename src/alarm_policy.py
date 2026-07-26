@@ -176,22 +176,37 @@ def rolling_thresholds(y: np.ndarray, score: np.ndarray, times: np.ndarray,
     current: float | None = None
     n_refits, n_carried = 0, 0
     edge = start + trailing
+    schedule: list[dict] = []
 
     while edge <= t_sorted[-1] + refit:
         window = (t_sorted >= edge - trailing) & (t_sorted < edge)
         lows = int((y_sorted[window] < HYPO_THRESHOLD).sum())
+        refitted = False
         if window.sum() > 0 and lows >= min_lows:
             current = tune_event_threshold(
                 y_sorted[window], s_sorted[window], target_false_events_per_day
             )
             n_refits += 1
+            refitted = True
         elif current is not None:
             n_carried += 1
 
         applies = (t_sorted >= edge) & (t_sorted < edge + refit)
         if current is not None:
             out[order[applies]] = current
+            schedule.append({
+                "date": str(np.datetime_as_string(edge, unit="D")),
+                "days_since_start": float((edge - start) / np.timedelta64(1, "D")),
+                "threshold": float(current),
+                "refitted": refitted,
+                # The wearer's own recent behaviour, which is what moves the
+                # threshold. Reported alongside it so the two can be compared.
+                "trailing_hypo_rate": float((y_sorted[window] < HYPO_THRESHOLD).mean())
+                if window.sum() else float("nan"),
+                "trailing_lows": lows,
+            })
         edge = edge + refit
 
     return out, {"refits": n_refits, "carried_forward": n_carried,
-                 "covered": float(np.isfinite(out).mean())}
+                 "covered": float(np.isfinite(out).mean()),
+                 "schedule": schedule}
