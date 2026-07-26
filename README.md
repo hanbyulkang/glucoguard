@@ -155,6 +155,38 @@ those wearers going low less often over the same period, which is an alarm
 behaving correctly rather than decaying. [`DRIFT.md`](DRIFT.md) has the table and
 the three reasons not to over-read it.
 
+## Counting alarms the way a wearer counts them
+
+Every number above treats each five-minute reading as its own alarm
+opportunity. A device does not work that way and neither does a person. Under
+per-reading accounting, half an hour of nuisance alarming is six false alarms,
+and one low the model catches slightly late is several misses and several hits
+at once.
+
+So: an alarm fires and then stays quiet for 30 minutes. A **low episode** counts
+as warned if the device made a sound in the hour before glucose crossed 70. An
+alarm event is false only if no low followed it — alarms during an ongoing low
+are not false, the wearer is low and the device is right to be noisy. And a
+single alarm sitting between two nearby lows can only be credited to one of
+them.
+
+| policy (test cohort) | low episodes warned | false alarms/day | median warning |
+|---|---:|---:|---:|
+| one shared threshold | 90.2% | 9.3 | 35 min |
+| fitted once, at two weeks | 76.3% | 5.5 | 25 min |
+| **re-fitted weekly on the trailing month** | **78.2%** | 5.9 | 25 min |
+
+On the external cohort the rolling policy warns about **76.6%** of episodes at
+6.0 false alarms a day, and puts **100%** of wearers within 2× of the rate they
+asked for, against 68% for a shared threshold.
+
+This is not a metric trick. The same de-duplication that raises recall strips out
+most of what used to count as a false alarm, so the threshold has to be re-tuned
+in event units to hit the same budget — both sides of the trade move together.
+The shared threshold's apparent 90% recall is bought with nearly twice the
+interruptions, and it still misses the requested rate for a third of wearers.
+[`ALARM_POLICY.md`](ALARM_POLICY.md) has the full tables.
+
 ## Running it against a live feed
 
 `streamlit run live_app.py` drives the same forecast from a CGM feed rather than
