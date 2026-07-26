@@ -13,7 +13,7 @@ import streamlit as st
 
 from src import product_ui as pu
 from src import ui
-from src.alarm_policy import tune_event_threshold
+from src.alarm_policy import event_metrics, tune_event_threshold
 from src.calibration import split_by_time
 from src.config import HISTORY_STEPS, HORIZON_MINUTES, HYPO_THRESHOLD, SAMPLE_MINUTES
 from src.live import fetch_nightscout, to_window
@@ -202,20 +202,25 @@ elif step_index == 1:
             frame = get_history(state.patient, model_name)
             warm = split_by_time(frame["target_time"].to_numpy(), state.warmup)
             after = frame[~warm]
-            fired = (after["hypo_prob"] >= thr).to_numpy()
-            low = (after["actual"] < HYPO_THRESHOLD).to_numpy()
-            days = len(after) * SAMPLE_MINUTES / (60 * 24)
+            # Score in the same units the threshold was tuned in. Counting each
+            # five-minute reading separately, while the cutoff was fitted to a
+            # budget of de-duplicated alarm events, reports a rate two to five
+            # times the one that was actually requested.
+            m = event_metrics(after["actual"].to_numpy(),
+                              (after["hypo_prob"] >= thr).to_numpy())
             ui.tiles([
                 ("Your cutoff", f"{thr:.0%}", "chance of going low"),
-                ("Lows it catches", f"{(fired & low).sum() / max(low.sum(), 1):.0%}",
-                 "of readings under 70, on the rest of your record"),
-                ("False alarms", f"{(fired & ~low).sum() / days:.1f}",
+                ("Low episodes caught", f"{m.episode_recall:.0%}",
+                 "warned before they began, on the rest of your record"),
+                ("False alarms", f"{m.false_alarms_per_day:.1f}",
                  f"a day, against the {state.target_fa:g} you asked for"),
-                ("Learned from", f"{result['windows']:,}", "readings you already had"),
+                ("Warning time", f"{m.median_lead_minutes:.0f} min",
+                 "median, ahead of glucose crossing 70"),
             ])
             ui.caption(
-                "Everything above was measured on the part of the record the "
-                "cutoff was <i>not</i> fitted on."
+                "Measured on the part of the record the cutoff was <i>not</i> "
+                "fitted on, and counted the way you would experience it: one "
+                "alert per episode, not one per reading."
             )
         else:
             ui.banner("caution", "Not enough history to personalise yet.",

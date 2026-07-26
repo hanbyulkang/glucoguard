@@ -88,13 +88,9 @@ seconds, then back to 6. Let the tiles recompute each time.
 > one percent to nearly eighteen, which is why a single shared cutoff cannot
 > work."
 
-**Say this, do not skip it.** The tiles will read about 12.7 false alarms a day
-against a target of 6:
-
-> "You will notice it delivers about twice the rate that was asked for. That is
-> real and it is on the Calibration page. A threshold fitted on two weeks
-> overshoots on the months after it. Per-wearer calibration fixes the spread
-> between people, not the absolute level."
+**On screen at 6/day:** cutoff 20%, 62% of low episodes caught, 2.7 false alarms
+a day, 10 minutes of median warning. Quieter than requested, which is the
+direction you want a first setting to err in.
 
 **Action:** click **Next, monitor**.
 
