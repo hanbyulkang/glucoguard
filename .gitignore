@@ -6,7 +6,8 @@ __pycache__/
 venv/
 
 # Raw and derived data are not redistributed (OpenAPS Data Commons terms).
+# `artifacts/` is excluded whole: alongside the aggregate results it holds the
+# archive's own wearer ids and per-person statistics. The publishable subset is
+# copied into `demo_data/` with those ids pseudonymised.
 data/
-artifacts/*.pt
-artifacts/smoke*
-artifacts/sweep.log
+artifacts/

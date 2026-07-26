@@ -21,6 +21,7 @@ Run:  python -m scripts.make_synthetic_demo
 from __future__ import annotations
 
 import json
+import re
 import shutil
 
 import numpy as np
@@ -110,6 +111,62 @@ def simulate(profile: dict, days: int) -> pd.DataFrame:
     return frame
 
 
+ID_PATTERN = re.compile(r"^(?:aaps_)?\d{6,}$")
+
+
+def anonymise(node, mapping: dict):
+    """Replace archive patient ids with stable pseudonyms, everywhere they occur.
+
+    The results carry per-person figures — a wearer's own alarm threshold and
+    how much time they spend below 70. Those are findings worth publishing, but
+    keyed by the archive's own identifier they would link a published health
+    statistic back to a specific donated record. The pseudonym keeps the finding
+    and drops the link.
+    """
+    if isinstance(node, dict):
+        out = {}
+        for key, value in node.items():
+            new_key = mapping.get(key, key) if isinstance(key, str) else key
+            out[new_key] = anonymise(value, mapping)
+        return out
+    if isinstance(node, list):
+        return [anonymise(v, mapping) for v in node]
+    if isinstance(node, str):
+        return mapping.get(node, node)
+    return node
+
+
+def build_id_map() -> dict:
+    """W1.. for the held-out cohort, E1.. for the external one, T1.. for training."""
+    splits = json.loads((ARTIFACTS_DIR / "splits.json").read_text())
+    mapping = {}
+    for prefix, key in (("T", "train"), ("V", "val"), ("W", "test")):
+        for i, pid in enumerate(sorted(splits.get(key, [])), 1):
+            mapping[pid] = f"{prefix}{i}"
+
+    seen = set()
+    for name in ("thresholds.json", "trajectory.json", "personalized.json",
+                 "within_patient.json", "calibration.json"):
+        path = ARTIFACTS_DIR / name
+        if not path.exists():
+            continue
+        stack = [json.loads(path.read_text())]
+        while stack:
+            node = stack.pop()
+            if isinstance(node, dict):
+                for k, v in node.items():
+                    if isinstance(k, str) and ID_PATTERN.match(k):
+                        seen.add(k)
+                    stack.append(v)
+            elif isinstance(node, list):
+                stack.extend(node)
+            elif isinstance(node, str) and ID_PATTERN.match(node):
+                seen.add(node)
+    for i, pid in enumerate(sorted(seen - set(mapping)), 1):
+        mapping[pid] = f"E{i}"
+    return mapping
+
+
 def solve_baseline(profile: dict, days: int, tolerance: float = 0.003) -> float:
     """Bisect on the baseline until the trace spends the intended time low.
 
@@ -184,16 +241,22 @@ def main() -> None:
     shutil.copy2(checkpoint, BUNDLE / f"{MODEL}.pt")
     total += checkpoint.stat().st_size
 
-    # Aggregate findings are results, not data, and stay real.
+    # Aggregate findings are results, not data, and stay real — but the ones
+    # keyed by wearer get pseudonymised on the way out.
+    id_map = build_id_map()
     for name in ("alarm.json", "selection.json", "matched.json", "policy.json",
                  "calibration.json", "external.json", "multimodal.json",
                  "multimodal_alarm.json", "sweep.json", "thresholds.json",
                  "trajectory.json", "over_time.json", "drift.json",
                  "within_patient.json", "personalized.json"):
         src = ARTIFACTS_DIR / name
-        if src.exists():
-            shutil.copy2(src, BUNDLE / name)
-            total += src.stat().st_size
+        if not src.exists():
+            continue
+        payload = anonymise(json.loads(src.read_text()), id_map)
+        dest = BUNDLE / name
+        dest.write_text(json.dumps(payload, indent=2))
+        total += dest.stat().st_size
+    print(f"  pseudonymised {len(id_map)} wearer ids in the published results")
 
     print(f"\nWrote {BUNDLE} — {total / 1e6:.1f} MB, {len(PROFILES)} simulated wearers")
     print("No donated patient readings are included.")
