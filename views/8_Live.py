@@ -32,7 +32,7 @@ from src.config import (
     HYPO_THRESHOLD,
     SAMPLE_MINUTES,
 )
-from src.live import fetch_nightscout, replay_window, send_alert, to_window
+from src.live import fetch_nightscout, replay_window, to_window
 from src.predictor import (
     Forecaster,
     available_checkpoints,
@@ -130,15 +130,6 @@ with st.sidebar:
     warmup_days = st.select_slider("Calibration warm-up", [7.0, 14.0, 28.0], value=14.0,
                                    format_func=lambda d: f"{d:g} days")
 
-    st.markdown("---")
-    st.markdown("### Phone alert")
-    topic = st.text_input(
-        "ntfy.sh topic", placeholder="glucoguard-<something-random>",
-        help="Install the ntfy app, subscribe to this topic, and alerts arrive "
-             "as push notifications. Anyone who knows the topic can read it, so "
-             "pick something unguessable.",
-    )
-    dry_run = st.checkbox("Dry run (do not actually send)", value=True)
 
 # --------------------------------------------------------------------------- #
 # header
@@ -297,15 +288,14 @@ with left:
         )
 
 with right:
-    st.markdown('<div class="gg-h2">Send to phone</div>', unsafe_allow_html=True)
-    if st.button("Send alert now", disabled=not topic, use_container_width=True):
-        status = send_alert(topic, now_value, risk or 0.0, mu, dry_run=dry_run)
-        (st.success if status.startswith("sent") or "dry run" in status
-         else st.error)(status)
+    st.markdown('<div class="gg-h2">Delivery</div>', unsafe_allow_html=True)
     st.markdown(
-        '<div class="gg-caption">Sends one notification to the ntfy.sh topic you '
-        "chose. Nothing is sent automatically and no data leaves this machine "
-        "otherwise.</div>",
+        '<div class="gg-caption">Alerts stay in the browser. Pushing them to a '
+        "handset would mean putting glucose readings on a third party's server, "
+        "and it would demonstrate nothing: choosing <i>when</i> to speak is the "
+        "hard part, and that logic — one alert, then thirty minutes of silence — "
+        "runs on the <b>The app</b> page. A real deployment would hand the same "
+        "decision to the platform's own push channel.</div>",
         unsafe_allow_html=True,
     )
 

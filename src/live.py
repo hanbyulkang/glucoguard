@@ -10,18 +10,19 @@ cue:
   path, no credentials, and you can point it at a day that actually contains a
   low.
 
-Alerts go out over `ntfy.sh`, a free publish-subscribe service that needs no
-account: you pick a topic string, subscribe on your phone, and anything posted
-to that topic arrives as a push notification. The topic is supplied by the user
-at runtime and never stored.
+Alerts stay inside the app. An earlier version pushed them to a third-party
+notification service, which was removed: it put glucose readings on someone
+else's server, anyone who guessed the topic string could read them, and it did
+nothing to demonstrate the part that is actually hard. Deciding *whether* to
+speak is the interesting problem; carrying the message to a handset is a
+solved one, and a real deployment would use the platform's own push channel.
 
 None of this is a medical device. It is a demonstration that the forecast can
-be driven by a live feed and reach a phone.
+be driven by a live feed.
 """
 from __future__ import annotations
 
 import json
-import urllib.error
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass
@@ -34,8 +35,6 @@ from src.config import (
     GLUCOSE_MAX,
     GLUCOSE_MIN,
     HISTORY_STEPS,
-    HORIZON_MINUTES,
-    HYPO_THRESHOLD,
     SAMPLE_MINUTES,
 )
 
@@ -152,40 +151,3 @@ def replay_window(series: pd.DataFrame, at: pd.Timestamp) -> LiveWindow:
     if len(recent) < HISTORY_STEPS or recent["glucose"].isna().any():
         return LiveWindow(None, None, "recorded trace has a gap at this point")
     return LiveWindow(recent["glucose"].to_numpy(dtype=np.float32)[-HISTORY_STEPS:], end)
-
-
-# --------------------------------------------------------------------------- #
-# push notification
-# --------------------------------------------------------------------------- #
-def send_alert(topic: str, glucose_now: float, risk: float,
-               predicted: float, dry_run: bool = False) -> str:
-    """Post a low-glucose warning to an ntfy.sh topic. Returns a status string."""
-    topic = topic.strip().strip("/")
-    if not topic:
-        return "no topic set"
-
-    title = f"Glucose heading low — {HORIZON_MINUTES} min warning"
-    body = (
-        f"Now {glucose_now:.0f} mg/dL, predicted {predicted:.0f} mg/dL "
-        f"in {HORIZON_MINUTES} minutes ({risk:.0%} chance of going under "
-        f"{HYPO_THRESHOLD}).\n\n"
-        f"Research demo. Not a medical device — do not treat based on this."
-    )
-    if dry_run:
-        return f"(dry run) would send to ntfy.sh/{topic}"
-
-    req = urllib.request.Request(
-        f"https://ntfy.sh/{urllib.parse.quote(topic)}",
-        data=body.encode("utf-8"),
-        headers={
-            "User-Agent": USER_AGENT,
-            "Title": title,
-            "Priority": "high",
-            "Tags": "warning",
-        },
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-            return f"sent ({resp.status})"
-    except (urllib.error.URLError, OSError) as exc:
-        return f"failed: {exc}"

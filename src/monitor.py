@@ -27,7 +27,7 @@ class AlertRecord:
     glucose: float
     predicted: float
     risk: float
-    delivered: str          # what the notifier reported back
+    shown: bool             # whether the wearer would have been interrupted
     kind: str               # "warning" | "still low" | "recovered"
 
 

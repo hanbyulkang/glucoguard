@@ -1,34 +1,40 @@
 {
   "model": "tcn_prob",
-  "slice_days": 60,
+  "synthetic": true,
+  "days": 45,
+  "note": "Simulated wearers. The model is the real trained checkpoint; the patients are not real and no donated data is redistributed.",
   "wearers": {
-    "86323903": {
-      "windows": 10974,
-      "days": 38.1,
-      "time_below_70": 0.13923819938035356,
-      "lows_in_slice": 1528,
-      "starts": "2015-08-11"
+    "sim-A": {
+      "windows": 12565,
+      "days": 43.6,
+      "time_below_70": 0.05411858336649423,
+      "lows_in_slice": 680,
+      "label": "tight control, frequent lows",
+      "synthetic": true
     },
-    "37948668": {
-      "windows": 8979,
-      "days": 31.2,
-      "time_below_70": 0.06749081189442031,
-      "lows_in_slice": 606,
-      "starts": "2017-08-20"
+    "sim-B": {
+      "windows": 12607,
+      "days": 43.8,
+      "time_below_70": 0.017926548742761957,
+      "lows_in_slice": 226,
+      "label": "runs high, rare lows",
+      "synthetic": true
     },
-    "01352464": {
-      "windows": 14008,
-      "days": 48.6,
-      "time_below_70": 0.053754997144488864,
-      "lows_in_slice": 753,
-      "starts": "2017-10-13"
+    "sim-C": {
+      "windows": 12567,
+      "days": 43.6,
+      "time_below_70": 0.04105991883504417,
+      "lows_in_slice": 516,
+      "label": "large swings",
+      "synthetic": true
     },
-    "06593293": {
-      "windows": 16477,
-      "days": 57.2,
-      "time_below_70": 0.02257692541117922,
-      "lows_in_slice": 372,
-      "starts": "2018-11-20"
+    "sim-D": {
+      "windows": 12616,
+      "days": 43.8,
+      "time_below_70": 0.025364616360177554,
+      "lows_in_slice": 320,
+      "label": "steady, grazes",
+      "synthetic": true
     }
   }
 }

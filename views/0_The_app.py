@@ -16,7 +16,7 @@ from src import ui
 from src.alarm_policy import tune_event_threshold
 from src.calibration import split_by_time
 from src.config import HISTORY_STEPS, HORIZON_MINUTES, HYPO_THRESHOLD, SAMPLE_MINUTES
-from src.live import fetch_nightscout, send_alert, to_window
+from src.live import fetch_nightscout, to_window
 from src.monitor import (
     AlertRecord,
     MonitorState,
@@ -84,7 +84,6 @@ state.setdefault("source", "demo")
 state.setdefault("patient", load_splits()["test"][0])
 state.setdefault("target_fa", 6.0)
 state.setdefault("warmup", 14.0)
-state.setdefault("topic", "")
 state.setdefault("monitor", MonitorState())
 state.setdefault("running", False)
 state.setdefault("cursor", None)
@@ -110,11 +109,11 @@ def go_to(index: int) -> None:
 # --------------------------------------------------------------------------- #
 if step_index == 0:
     ui.h2("Where should it read your glucose from?")
-    choice = st.radio(
-        "Source",
-        ["Try it with a real recorded wearer", "Connect my own Nightscout"],
-        label_visibility="collapsed",
-    )
+    from src.predictor import demo_mode as _demo
+    first = ("Try it with a simulated wearer" if _demo()
+             else "Try it with a real recorded wearer")
+    choice = st.radio("Source", [first, "Connect my own Nightscout"],
+                      label_visibility="collapsed")
 
     if choice.startswith("Try"):
         state.source = "demo"
@@ -129,11 +128,21 @@ if step_index == 0:
              "clinical target is under 4%"),
             ("Seen in training", "No", "held-out wearer"),
         ])
-        ui.caption(
-            "These are donated traces from the OpenAPS Data Commons. This wearer "
-            "was held out of training entirely, so what follows is the model "
-            "meeting them for the first time."
-        )
+        if _demo():
+            ui.caption(
+                "<b>This wearer is simulated.</b> The model is the real trained "
+                "checkpoint and everything it does here is genuine, including its "
+                "mistakes — but the glucose trace is generated, because the "
+                "donated recordings it was trained and tested on are not ours to "
+                "republish. The measured results on the other pages all come from "
+                "the real cohort."
+            )
+        else:
+            ui.caption(
+                "Donated traces from the OpenAPS Data Commons. This wearer was "
+                "held out of training entirely, so what follows is the model "
+                "meeting them for the first time."
+            )
     else:
         state.source = "nightscout"
         url = st.text_input("Nightscout address",
@@ -275,16 +284,6 @@ else:
             key="speed",
         )
 
-        state.topic = st.text_input(
-            "Phone alerts — ntfy.sh topic", value=state.topic,
-            placeholder="glucoguard-something-random",
-            help="Install ntfy, subscribe to this topic, and alerts arrive as "
-                 "push notifications. Anyone who knows the topic can read it.",
-        )
-        live_send = st.toggle("Actually send", value=False,
-                              help="Off by default. When off, alerts are logged "
-                                   "but nothing leaves this machine.")
-
         st.markdown("---")
         # `empty` replaces its contents each tick; `container` would append,
         # so the counters would stack into a growing column of stale tiles.
@@ -310,11 +309,9 @@ else:
         if advance:
             fire, kind = should_alert(state.monitor, alarming, sim_now, now_g)
             if fire:
-                delivered = send_alert(state.topic, now_g, risk or 0.0, predicted,
-                                       dry_run=not (live_send and state.topic))
                 state.monitor.log.append(AlertRecord(
                     at=sim_now, glucose=now_g, predicted=predicted,
-                    risk=risk or 0.0, delivered=delivered, kind=kind,
+                    risk=risk or 0.0, shown=True, kind=kind,
                 ))
                 state.monitor.last_alert_at = sim_now
                 state.monitor.last_state = kind
@@ -359,7 +356,7 @@ else:
         stats = summarise(state.monitor.log)
         with stats_slot.container():
             ui.tiles([
-                ("Alerts sent", f"{stats['warnings']}", "in this session"),
+                ("Times it spoke", f"{stats['warnings']}", "in this session"),
                 ("Readings seen", f"{state.monitor.ticks}", "since you pressed start"),
             ])
 
@@ -373,7 +370,6 @@ else:
                         "Glucose": f"{a.glucose:.0f}",
                         "Predicted": f"{a.predicted:.0f}",
                         "Risk": f"{a.risk:.0%}",
-                        "Delivery": a.delivered,
                     } for a in reversed(state.monitor.log)]),
                     use_container_width=True, hide_index=True,
                 )
@@ -381,7 +377,10 @@ else:
                     f"One alert, then silence for {SNOOZE_MINUTES} minutes even if "
                     "glucose stays low — a low that lasts an hour is one event, not "
                     "twelve. It speaks again after an hour, because at that point "
-                    "silence is indistinguishable from the app having crashed."
+                    "silence is indistinguishable from the app having crashed. "
+                    "<b>Deciding when to speak is the part worth building; carrying "
+                    "the message to a handset is a solved problem and a real "
+                    "deployment would use the platform's own push channel.</b>"
                 )
             else:
                 ui.caption(

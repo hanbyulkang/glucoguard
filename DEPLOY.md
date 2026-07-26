@@ -10,16 +10,31 @@ forecasts. That is more than belongs in a git repository, more than a free host
 wants to clone on every deploy, and — more importantly — **it is not ours to
 redistribute.** The OpenAPS Data Commons is donated patient data.
 
-## The bundle
+## A correction, and why the bundle is synthetic
 
-`python -m scripts.make_demo_bundle` writes a **4 MB** `demo_data/` folder:
+The first version of this bundle shipped four real wearers' CGM readings and
+this file claimed it contained "model outputs over donated traces, not the
+traces themselves". That was **wrong** — `actual` and `current` are the raw
+sensor values, with real dates. Publishing them would have redistributed
+donated patient data under a use agreement that does not obviously permit it,
+to a place that cannot be un-published.
 
-- four held-out wearers, 30–60 days each, chosen as the stretch of their record
-  containing the most lows, so the demo is a real span rather than a reel of
-  good moments;
-- their **precomputed** forecasts, so the hosted app never touches the archive;
-- the shipped model (0.95 MB) so the Live page still works;
+So `python -m scripts.make_synthetic_demo` writes a **4.7 MB** `demo_data/`
+folder built from simulated wearers instead:
+
+- four generated traces, 45 days each, carrying meal spikes, correction
+  overshoot, dawn rise, sensor noise and dropouts;
+- each solved at build time to spend a target share of time under 70 — 1.8% to
+  5.5%, spanning the range the real cohort covers;
+- their **precomputed** forecasts from the real trained checkpoint, so the
+  hosted app never touches the archive;
+- the model itself (0.95 MB) so the Live page still works;
 - the results JSON the evidence pages read.
+
+**The findings stay real.** RMSE tables, alarm curves and calibration
+statistics are results, not data, and every number on the evidence pages still
+comes from the 40-wearer cohort and the 33-wearer external one. Only the trace
+the app plays back is generated, and the app says so on screen.
 
 The app detects this automatically. `demo_mode()` is true when the full cache is
 absent and the bundle is present, and the loaders fall back accordingly — the

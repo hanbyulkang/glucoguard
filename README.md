@@ -211,11 +211,10 @@ that happens to be.
 
 ## Running it against a live feed
 
-`streamlit run live_app.py` drives the same forecast from a CGM feed rather than
-a saved file. It reads either a **Nightscout** instance — the self-hosted server
+`streamlit run app.py` drives the same forecast from a CGM feed rather than a
+saved file. It reads either a **Nightscout** instance — the self-hosted server
 this community already runs, and the software that produced the training
-archive — or replays a recorded trace as if it were happening now. Alerts go to
-a phone over `ntfy.sh`, which needs no account.
+archive — or replays a recorded trace as if it were happening now.
 
 It refuses rather than guesses: a gap longer than 15 minutes in the last two
 hours produces no forecast at all, and says why. A stale feed is reported as
