@@ -1,0 +1,125 @@
+{
+  "model": "tcn_prob",
+  "warmup_days": 14.0,
+  "target_fa_per_day": 6.0,
+  "results": {
+    "test": {
+      "calibrated_patients": 7,
+      "buckets": {
+        "weeks 3\u20134": {
+          "windows": 23734,
+          "days": 82.40972222222223,
+          "hypo_rate": 0.0546052077188843,
+          "recall": 0.5555555555555556,
+          "precision": 0.5750798722044729,
+          "false_alarms_per_day": 6.455549001432543,
+          "patients": 7
+        },
+        "month 2": {
+          "windows": 26454,
+          "days": 91.85416666666667,
+          "hypo_rate": 0.046231193770318285,
+          "recall": 0.4766966475878986,
+          "precision": 0.5,
+          "false_alarms_per_day": 6.347017464277614,
+          "patients": 7
+        },
+        "months 2\u20133": {
+          "windows": 100512,
+          "days": 349.0,
+          "hypo_rate": 0.05098893664438077,
+          "recall": 0.5845853658536585,
+          "precision": 0.5939730372720063,
+          "false_alarms_per_day": 5.868194842406877,
+          "patients": 7
+        },
+        "months 3\u20136": {
+          "windows": 143934,
+          "days": 499.7708333333333,
+          "hypo_rate": 0.039858546278155264,
+          "recall": 0.4992156179187729,
+          "precision": 0.49713591390383616,
+          "false_alarms_per_day": 5.796656801033808,
+          "patients": 7
+        },
+        "months 6\u201312": {
+          "windows": 290161,
+          "days": 1007.5034722222222,
+          "hypo_rate": 0.03411898911294075,
+          "recall": 0.4767676767676768,
+          "precision": 0.4535408859421543,
+          "false_alarms_per_day": 5.644645558844918,
+          "patients": 7
+        },
+        "year 2+": {
+          "windows": 802903,
+          "days": 2787.8576388888887,
+          "hypo_rate": 0.04556590273046682,
+          "recall": 0.4842421757550909,
+          "precision": 0.5059834918458859,
+          "false_alarms_per_day": 6.204405762589006,
+          "patients": 6
+        }
+      }
+    },
+    "external": {
+      "calibrated_patients": 25,
+      "buckets": {
+        "weeks 3\u20134": {
+          "windows": 91829,
+          "days": 318.85069444444446,
+          "hypo_rate": 0.030545905977414543,
+          "recall": 0.43351158645276294,
+          "precision": 0.4175824175824176,
+          "false_alarms_per_day": 5.3191039867579955,
+          "patients": 25
+        },
+        "month 2": {
+          "windows": 99238,
+          "days": 344.5763888888889,
+          "hypo_rate": 0.03222555875773393,
+          "recall": 0.408692933083177,
+          "precision": 0.3707801418439716,
+          "false_alarms_per_day": 6.436889094903162,
+          "patients": 24
+        },
+        "months 2\u20133": {
+          "windows": 320753,
+          "days": 1113.7256944444443,
+          "hypo_rate": 0.02702702702702703,
+          "recall": 0.4324604914061599,
+          "precision": 0.4020806520806521,
+          "false_alarms_per_day": 5.005720912976653,
+          "patients": 23
+        },
+        "months 3\u20136": {
+          "windows": 394911,
+          "days": 1371.21875,
+          "hypo_rate": 0.024296613667383282,
+          "recall": 0.4349140177175612,
+          "precision": 0.3733894058697208,
+          "false_alarms_per_day": 5.107135531803368,
+          "patients": 19
+        },
+        "months 6\u201312": {
+          "windows": 591807,
+          "days": 2054.8854166666665,
+          "hypo_rate": 0.023563425238295594,
+          "recall": 0.44238078164216565,
+          "precision": 0.38672266800401206,
+          "false_alarms_per_day": 4.760849398537023,
+          "patients": 18
+        },
+        "year 2+": {
+          "windows": 1427050,
+          "days": 4955.034722222223,
+          "hypo_rate": 0.024373357625871554,
+          "recall": 0.48539474440802716,
+          "precision": 0.4271149564865412,
+          "false_alarms_per_day": 4.5700991556007144,
+          "patients": 13
+        }
+      }
+    }
+  }
+}

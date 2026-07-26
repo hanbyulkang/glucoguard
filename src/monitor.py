@@ -49,6 +49,12 @@ def should_alert(state: MonitorState, alarming: bool, now: datetime,
                  glucose: float) -> tuple[bool, str]:
     """Decide whether this tick is worth interrupting someone over.
 
+    ``now`` must be the timestamp *of the reading*, not wall-clock time. During
+    accelerated playback those differ by the speed multiplier, and measuring a
+    thirty-minute snooze against the wall clock means it never expires: the
+    trace advances four hours while twenty real seconds pass, so the second
+    alert never fires and the counter sits at one.
+
     Three rules, in order:
 
     * Nothing to say when the risk is below the wearer's own cutoff.

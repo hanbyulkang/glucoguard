@@ -1,0 +1,693 @@
+{
+  "external": {
+    "per_patient": {
+      "aaps_01177138": {
+        "shared": {
+          "rmse": 16.031051650893883,
+          "rmse_hypo": 26.217895066644132,
+          "episode_recall": 0.7442528735632183,
+          "false_alarms_per_day": 4.543920595533499
+        },
+        "personal_once": {
+          "rmse": 15.844140007569196,
+          "rmse_hypo": 26.846033463429634,
+          "episode_recall": 0.7413793103448276,
+          "false_alarms_per_day": 4.688833746898263
+        },
+        "personal_rolling": {
+          "rmse": 15.766305143968735,
+          "rmse_hypo": 25.99335698411692,
+          "episode_recall": 0.7586206896551724,
+          "false_alarms_per_day": 4.571712158808933
+        },
+        "_coverage": 1.0,
+        "_refreshes": 6
+      },
+      "aaps_01919652": {
+        "shared": {
+          "rmse": 25.634182554978356,
+          "rmse_hypo": 29.96530736340524,
+          "episode_recall": 0.6,
+          "false_alarms_per_day": 5.745716862037872
+        },
+        "personal_once": {
+          "rmse": 25.602412189133883,
+          "rmse_hypo": 34.468144760641195,
+          "episode_recall": 0.6666666666666666,
+          "false_alarms_per_day": 5.940486925157799
+        },
+        "personal_rolling": {
+          "rmse": 25.611141755750566,
+          "rmse_hypo": 30.057976886783745,
+          "episode_recall": 0.6666666666666666,
+          "false_alarms_per_day": 6.654643823264202
+        },
+        "_coverage": 0.03550495942290355,
+        "_refreshes": 1
+      },
+      "aaps_01949240": {
+        "shared": {
+          "rmse": 20.00046794436703,
+          "rmse_hypo": 28.053194122306078,
+          "episode_recall": 0.7278911564625851,
+          "false_alarms_per_day": 6.142529432953533
+        },
+        "personal_once": {
+          "rmse": 19.461811512203347,
+          "rmse_hypo": 25.254524082996664,
+          "episode_recall": 0.7210884353741497,
+          "false_alarms_per_day": 6.218969799230289
+        },
+        "personal_rolling": {
+          "rmse": 19.409817503853414,
+          "rmse_hypo": 25.149130089436042,
+          "episode_recall": 0.7585034013605442,
+          "false_alarms_per_day": 6.208049746905037
+        },
+        "_coverage": 1.0,
+        "_refreshes": 4
+      },
+      "aaps_02050717": {
+        "shared": {
+          "rmse": 26.100922149100384,
+          "rmse_hypo": 39.072533911285454,
+          "episode_recall": 0.949685534591195,
+          "false_alarms_per_day": 10.755323911970336
+        },
+        "personal_once": {
+          "rmse": 25.60509888066276,
+          "rmse_hypo": 56.725249282162444,
+          "episode_recall": 0.949685534591195,
+          "false_alarms_per_day": 10.590009987716257
+        },
+        "personal_rolling": {
+          "rmse": 25.21769630296298,
+          "rmse_hypo": 52.17627582047614,
+          "episode_recall": 0.9559748427672956,
+          "false_alarms_per_day": 10.778467861365908
+        },
+        "_coverage": 0.9975776918043326,
+        "_refreshes": 4
+      },
+      "aaps_03403352": {
+        "shared": {
+          "rmse": 12.650779750026805,
+          "rmse_hypo": 25.40975673500517,
+          "episode_recall": 0.6666666666666666,
+          "false_alarms_per_day": 3.5031684683447453
+        },
+        "personal_once": {
+          "rmse": 12.048667229385748,
+          "rmse_hypo": 22.987534755918105,
+          "episode_recall": 0.6991869918699187,
+          "false_alarms_per_day": 4.215102705459968
+        },
+        "personal_rolling": {
+          "rmse": 12.105080364188849,
+          "rmse_hypo": 24.808566074117895,
+          "episode_recall": 0.7235772357723578,
+          "false_alarms_per_day": 4.520217378509349
+        },
+        "_coverage": 0.6916874301073159,
+        "_refreshes": 2
+      },
+      "aaps_14045962": {
+        "shared": {
+          "rmse": 19.417549066179642,
+          "rmse_hypo": 35.39278168416001,
+          "episode_recall": 0.5989847715736041,
+          "false_alarms_per_day": 6.927131064829366
+        },
+        "personal_once": {
+          "rmse": 18.732438489307736,
+          "rmse_hypo": 32.514985619825325,
+          "episode_recall": 0.6598984771573604,
+          "false_alarms_per_day": 6.922366875651354
+        },
+        "personal_rolling": {
+          "rmse": 18.593929274541182,
+          "rmse_hypo": 36.045702801668504,
+          "episode_recall": 0.5329949238578681,
+          "false_alarms_per_day": 5.412118906221568
+        },
+        "_coverage": 1.0,
+        "_refreshes": 3
+      },
+      "aaps_18001564": {
+        "shared": {
+          "rmse": 16.533495824094715,
+          "rmse_hypo": 33.054091746982465,
+          "episode_recall": 0.6129032258064516,
+          "false_alarms_per_day": 6.849711971710489
+        },
+        "personal_once": {
+          "rmse": 14.869245102019939,
+          "rmse_hypo": 30.65269870277142,
+          "episode_recall": 0.6129032258064516,
+          "false_alarms_per_day": 7.16180915986996
+        },
+        "personal_rolling": {
+          "rmse": 14.850377193859991,
+          "rmse_hypo": 30.498153859394552,
+          "episode_recall": 0.5967741935483871,
+          "false_alarms_per_day": 7.408201676837963
+        },
+        "_coverage": 1.0,
+        "_refreshes": 1
+      },
+      "aaps_24110807": {
+        "shared": {
+          "rmse": 17.728697410885065,
+          "rmse_hypo": 37.006638856391916,
+          "episode_recall": 0.7,
+          "false_alarms_per_day": 3.7708329523635364
+        },
+        "personal_once": {
+          "rmse": 17.26481587681323,
+          "rmse_hypo": 39.125699241355235,
+          "episode_recall": 0.72,
+          "false_alarms_per_day": 3.9446283258663253
+        },
+        "personal_rolling": {
+          "rmse": 17.29137977401239,
+          "rmse_hypo": 41.04669808875119,
+          "episode_recall": 0.7,
+          "false_alarms_per_day": 3.6497028435585626
+        },
+        "_coverage": 1.0,
+        "_refreshes": 3
+      },
+      "aaps_28761103": {
+        "shared": {
+          "rmse": 27.843849641393078,
+          "rmse_hypo": 35.22464247436631,
+          "episode_recall": 0.7155963302752294,
+          "false_alarms_per_day": 7.027097868403808
+        },
+        "personal_once": {
+          "rmse": 27.297632654927412,
+          "rmse_hypo": 30.644604337414897,
+          "episode_recall": 0.7064220183486238,
+          "false_alarms_per_day": 7.204718035693636
+        },
+        "personal_rolling": {
+          "rmse": 27.505815933588277,
+          "rmse_hypo": 32.24395949253459,
+          "episode_recall": 0.709480122324159,
+          "false_alarms_per_day": 7.615464672551362
+        },
+        "_coverage": 0.8294723046679259,
+        "_refreshes": 3
+      },
+      "aaps_35187603": {
+        "shared": {
+          "rmse": 20.247279372958673,
+          "rmse_hypo": 25.98407471663564,
+          "episode_recall": 0.7993197278911565,
+          "false_alarms_per_day": 5.5621605267328444
+        },
+        "personal_once": {
+          "rmse": 20.044543815759127,
+          "rmse_hypo": 26.9876560596177,
+          "episode_recall": 0.7925170068027211,
+          "false_alarms_per_day": 5.437680992378509
+        },
+        "personal_rolling": {
+          "rmse": 19.96029113350261,
+          "rmse_hypo": 23.625282789633342,
+          "episode_recall": 0.8072562358276644,
+          "false_alarms_per_day": 5.25511100865882
+        },
+        "_coverage": 0.6635450734054662,
+        "_refreshes": 5
+      },
+      "aaps_39182506": {
+        "shared": {
+          "rmse": 17.15280033952627,
+          "rmse_hypo": 27.370109045487524,
+          "episode_recall": 0.8135313531353136,
+          "false_alarms_per_day": 6.146223149443125
+        },
+        "personal_once": {
+          "rmse": 16.637756656284594,
+          "rmse_hypo": 23.696215587878836,
+          "episode_recall": 0.8077557755775577,
+          "false_alarms_per_day": 6.199750022070542
+        },
+        "personal_rolling": {
+          "rmse": 16.55412612441682,
+          "rmse_hypo": 25.23967156929845,
+          "episode_recall": 0.8135313531353136,
+          "false_alarms_per_day": 6.20911722478034
+        },
+        "_coverage": 0.8950325017772595,
+        "_refreshes": 9
+      },
+      "aaps_42360672": {
+        "shared": {
+          "rmse": 14.360468089250608,
+          "rmse_hypo": 23.042508934924363,
+          "episode_recall": 0.7844311377245509,
+          "false_alarms_per_day": 5.238976320658614
+        },
+        "personal_once": {
+          "rmse": 14.368548999316248,
+          "rmse_hypo": 23.40956797223019,
+          "episode_recall": 0.7514970059880239,
+          "false_alarms_per_day": 5.40662356291969
+        },
+        "personal_rolling": {
+          "rmse": 14.137623392391157,
+          "rmse_hypo": 22.59551948736723,
+          "episode_recall": 0.8203592814371258,
+          "false_alarms_per_day": 6.202947963659799
+        },
+        "_coverage": 0.7726554541485624,
+        "_refreshes": 4
+      },
+      "aaps_47631371": {
+        "shared": {
+          "rmse": 19.05186639912699,
+          "rmse_hypo": 26.877707506180514,
+          "episode_recall": 0.9,
+          "false_alarms_per_day": 7.345377258235919
+        },
+        "personal_once": {
+          "rmse": 18.58655515774714,
+          "rmse_hypo": 25.336918795533744,
+          "episode_recall": 0.8,
+          "false_alarms_per_day": 7.7534537725823585
+        },
+        "personal_rolling": {
+          "rmse": 18.58738828707601,
+          "rmse_hypo": 24.8483564965105,
+          "episode_recall": 0.8,
+          "false_alarms_per_day": 8.161530286928798
+        },
+        "_coverage": 1.0,
+        "_refreshes": 1
+      },
+      "aaps_49623237": {
+        "shared": {
+          "rmse": 22.468078671680075,
+          "rmse_hypo": 32.36165186053932,
+          "episode_recall": 0.7770345596432553,
+          "false_alarms_per_day": 5.877567684809513
+        },
+        "personal_once": {
+          "rmse": 22.164653516543446,
+          "rmse_hypo": 38.31867276268037,
+          "episode_recall": 0.7915273132664437,
+          "false_alarms_per_day": 6.025364260379188
+        },
+        "personal_rolling": {
+          "rmse": 21.93421219906862,
+          "rmse_hypo": 37.72148628705965,
+          "episode_recall": 0.7870680044593088,
+          "false_alarms_per_day": 6.167444946285948
+        },
+        "_coverage": 0.9737653139628184,
+        "_refreshes": 14
+      },
+      "aaps_50729763": {
+        "shared": {
+          "rmse": 14.944683095513522,
+          "rmse_hypo": 28.78212185541986,
+          "episode_recall": 0.7796610169491526,
+          "false_alarms_per_day": 6.443208895949166
+        },
+        "personal_once": {
+          "rmse": 14.218335677453776,
+          "rmse_hypo": 28.012297765927535,
+          "episode_recall": 0.7627118644067796,
+          "false_alarms_per_day": 6.455917394757744
+        },
+        "personal_rolling": {
+          "rmse": 14.265395570011602,
+          "rmse_hypo": 28.363901763660227,
+          "episode_recall": 0.7288135593220338,
+          "false_alarms_per_day": 5.985702938840349
+        },
+        "_coverage": 1.0,
+        "_refreshes": 1
+      },
+      "aaps_52345968": {
+        "shared": {
+          "rmse": 20.269287266297205,
+          "rmse_hypo": 33.7308534842931,
+          "episode_recall": 0.8146551724137931,
+          "false_alarms_per_day": 10.55137309118331
+        },
+        "personal_once": {
+          "rmse": 19.97239235671709,
+          "rmse_hypo": 37.481286509104,
+          "episode_recall": 0.7887931034482759,
+          "false_alarms_per_day": 9.815371080248854
+        },
+        "personal_rolling": {
+          "rmse": 19.86483734364219,
+          "rmse_hypo": 36.58533609983378,
+          "episode_recall": 0.7974137931034483,
+          "false_alarms_per_day": 10.002387984666626
+        },
+        "_coverage": 1.0,
+        "_refreshes": 2
+      },
+      "aaps_53013068": {
+        "shared": {
+          "rmse": 33.73251397093025,
+          "rmse_hypo": 30.699686237932344,
+          "episode_recall": 0.8084449021627188,
+          "false_alarms_per_day": 6.520397883724227
+        },
+        "personal_once": {
+          "rmse": 33.43409831785728,
+          "rmse_hypo": 33.930794234086605,
+          "episode_recall": 0.7754891864057673,
+          "false_alarms_per_day": 6.819124088680611
+        },
+        "personal_rolling": {
+          "rmse": 32.94998628413167,
+          "rmse_hypo": 31.774275722309458,
+          "episode_recall": 0.776519052523172,
+          "false_alarms_per_day": 6.2646538665313525
+        },
+        "_coverage": 0.9593907871859353,
+        "_refreshes": 6
+      },
+      "aaps_54165023": {
+        "shared": {
+          "rmse": 21.441367915006246,
+          "rmse_hypo": 35.82821844017282,
+          "episode_recall": 0.7115072933549432,
+          "false_alarms_per_day": 5.411747425935991
+        },
+        "personal_once": {
+          "rmse": 20.97677950279529,
+          "rmse_hypo": 37.87686993043093,
+          "episode_recall": 0.7374392220421394,
+          "false_alarms_per_day": 5.506220348692038
+        },
+        "personal_rolling": {
+          "rmse": 20.939550242334953,
+          "rmse_hypo": 38.12045296159223,
+          "episode_recall": 0.7196110210696921,
+          "false_alarms_per_day": 5.241132147525814
+        },
+        "_coverage": 0.9531894892998252,
+        "_refreshes": 9
+      },
+      "aaps_56052290": {
+        "shared": {
+          "rmse": 20.199719957836653,
+          "rmse_hypo": 32.49882384477872,
+          "episode_recall": 0.6677966101694915,
+          "false_alarms_per_day": 5.968652037617555
+        },
+        "personal_once": {
+          "rmse": 19.792970291013848,
+          "rmse_hypo": 32.7226835620482,
+          "episode_recall": 0.6644067796610169,
+          "false_alarms_per_day": 6.23448275862069
+        },
+        "personal_rolling": {
+          "rmse": 19.797592162934997,
+          "rmse_hypo": 33.386074405086696,
+          "episode_recall": 0.6610169491525424,
+          "false_alarms_per_day": 5.848275862068966
+        },
+        "_coverage": 1.0,
+        "_refreshes": 3
+      },
+      "aaps_63937017": {
+        "shared": {
+          "rmse": 18.47292458875105,
+          "rmse_hypo": 26.188079259178682,
+          "episode_recall": 0.9293103448275862,
+          "false_alarms_per_day": 7.700925640428651
+        },
+        "personal_once": {
+          "rmse": 17.99487802995328,
+          "rmse_hypo": 26.325920271821413,
+          "episode_recall": 0.9215517241379311,
+          "false_alarms_per_day": 8.086334375806238
+        },
+        "personal_rolling": {
+          "rmse": 17.753431810647896,
+          "rmse_hypo": 26.149012317763926,
+          "episode_recall": 0.9155172413793103,
+          "false_alarms_per_day": 7.354178596374208
+        },
+        "_coverage": 1.0,
+        "_refreshes": 20
+      },
+      "aaps_68659836": {
+        "shared": {
+          "rmse": 18.23242508333666,
+          "rmse_hypo": 28.716343559058448,
+          "episode_recall": 0.823943661971831,
+          "false_alarms_per_day": 6.3030031877411785
+        },
+        "personal_once": {
+          "rmse": 18.174485668483786,
+          "rmse_hypo": 26.823641842569344,
+          "episode_recall": 0.852112676056338,
+          "false_alarms_per_day": 6.6788210950170575
+        },
+        "personal_rolling": {
+          "rmse": 18.12455787616942,
+          "rmse_hypo": 28.043330024298537,
+          "episode_recall": 0.852112676056338,
+          "false_alarms_per_day": 7.178122028969297
+        },
+        "_coverage": 1.0,
+        "_refreshes": 3
+      },
+      "aaps_71422852": {
+        "shared": {
+          "rmse": 15.332494995474734,
+          "rmse_hypo": 24.756028844521513,
+          "episode_recall": 0.7142857142857143,
+          "false_alarms_per_day": 5.948925531281623
+        },
+        "personal_once": {
+          "rmse": 14.713684779858664,
+          "rmse_hypo": 25.221078588647885,
+          "episode_recall": 0.6122448979591837,
+          "false_alarms_per_day": 6.0517887969521995
+        },
+        "personal_rolling": {
+          "rmse": 14.719324033075798,
+          "rmse_hypo": 25.504696967824692,
+          "episode_recall": 0.6530612244897959,
+          "false_alarms_per_day": 5.708911244716947
+        },
+        "_coverage": 1.0,
+        "_refreshes": 1
+      },
+      "aaps_79751050": {
+        "shared": {
+          "rmse": 19.95214001356869,
+          "rmse_hypo": 36.070524234986934,
+          "episode_recall": 0.6474358974358975,
+          "false_alarms_per_day": 5.879095847205186
+        },
+        "personal_once": {
+          "rmse": 19.117713298243704,
+          "rmse_hypo": 35.813387557323594,
+          "episode_recall": 0.6378205128205128,
+          "false_alarms_per_day": 6.113755037673033
+        },
+        "personal_rolling": {
+          "rmse": 19.13318796773948,
+          "rmse_hypo": 37.1970381499184,
+          "episode_recall": 0.6378205128205128,
+          "false_alarms_per_day": 5.7125635184860695
+        },
+        "_coverage": 1.0,
+        "_refreshes": 5
+      },
+      "aaps_80901258": {
+        "shared": {
+          "rmse": 19.644604414624972,
+          "rmse_hypo": 22.26070924988021,
+          "episode_recall": 0.8165680473372781,
+          "false_alarms_per_day": 5.497405485544848
+        },
+        "personal_once": {
+          "rmse": 19.29956543357145,
+          "rmse_hypo": 23.004816005114193,
+          "episode_recall": 0.8619329388560157,
+          "false_alarms_per_day": 5.668961135232448
+        },
+        "personal_rolling": {
+          "rmse": 19.258121373147237,
+          "rmse_hypo": 21.487707014843117,
+          "episode_recall": 0.8520710059171598,
+          "false_alarms_per_day": 5.558403049878217
+        },
+        "_coverage": 1.0,
+        "_refreshes": 4
+      },
+      "aaps_84241955": {
+        "shared": {
+          "rmse": 15.598173785381181,
+          "rmse_hypo": 21.079237490876636,
+          "episode_recall": 0.7252964426877471,
+          "false_alarms_per_day": 6.354294478527607
+        },
+        "personal_once": {
+          "rmse": 15.141400940501239,
+          "rmse_hypo": 19.949574195800523,
+          "episode_recall": 0.7351778656126482,
+          "false_alarms_per_day": 6.188650306748466
+        },
+        "personal_rolling": {
+          "rmse": 15.101785208461651,
+          "rmse_hypo": 18.856067251403793,
+          "episode_recall": 0.7351778656126482,
+          "false_alarms_per_day": 6.059815950920245
+        },
+        "_coverage": 1.0,
+        "_refreshes": 3
+      },
+      "aaps_87635714": {
+        "shared": {
+          "rmse": 20.212860099270753,
+          "rmse_hypo": 29.836509122887854,
+          "episode_recall": 0.7582978723404256,
+          "false_alarms_per_day": 5.931506163170333
+        },
+        "personal_once": {
+          "rmse": 19.930189181405083,
+          "rmse_hypo": 30.69002538633108,
+          "episode_recall": 0.7625531914893617,
+          "false_alarms_per_day": 6.1334632600370655
+        },
+        "personal_rolling": {
+          "rmse": 19.760569953378315,
+          "rmse_hypo": 29.25831641816146,
+          "episode_recall": 0.7702127659574468,
+          "false_alarms_per_day": 6.505903620492598
+        },
+        "_coverage": 1.0,
+        "_refreshes": 11
+      },
+      "aaps_92229310": {
+        "shared": {
+          "rmse": 25.196655537516428,
+          "rmse_hypo": 40.018403966819236,
+          "episode_recall": 0.7213114754098361,
+          "false_alarms_per_day": 5.985086992543496
+        },
+        "personal_once": {
+          "rmse": 24.942185386726145,
+          "rmse_hypo": 41.405807341026545,
+          "episode_recall": 0.7213114754098361,
+          "false_alarms_per_day": 6.382767191383596
+        },
+        "personal_rolling": {
+          "rmse": 24.965033799987054,
+          "rmse_hypo": 42.22168080879679,
+          "episode_recall": 0.7377049180327869,
+          "false_alarms_per_day": 6.521955260977631
+        },
+        "_coverage": 1.0,
+        "_refreshes": 1
+      },
+      "aaps_93230373": {
+        "shared": {
+          "rmse": 11.951806644459511,
+          "rmse_hypo": 24.49685084746394,
+          "episode_recall": 0.9204892966360856,
+          "false_alarms_per_day": 7.037667932970794
+        },
+        "personal_once": {
+          "rmse": 11.652167410845252,
+          "rmse_hypo": 25.35146187684796,
+          "episode_recall": 0.9174311926605505,
+          "false_alarms_per_day": 7.063185991649038
+        },
+        "personal_rolling": {
+          "rmse": 11.59023105957741,
+          "rmse_hypo": 26.185318117783932,
+          "episode_recall": 0.9357798165137615,
+          "false_alarms_per_day": 8.844133836901506
+        },
+        "_coverage": 0.9061199777012334,
+        "_refreshes": 11
+      },
+      "aaps_94098083": {
+        "shared": {
+          "rmse": 17.296605942469856,
+          "rmse_hypo": 25.534910365007562,
+          "episode_recall": 0.7086092715231788,
+          "false_alarms_per_day": 5.883206862421643
+        },
+        "personal_once": {
+          "rmse": 16.510217162458602,
+          "rmse_hypo": 23.928928486318874,
+          "episode_recall": 0.7483443708609272,
+          "false_alarms_per_day": 5.843615968327285
+        },
+        "personal_rolling": {
+          "rmse": 16.509935733575485,
+          "rmse_hypo": 24.092827819490616,
+          "episode_recall": 0.7417218543046358,
+          "false_alarms_per_day": 5.653579676674365
+        },
+        "_coverage": 1.0,
+        "_refreshes": 2
+      },
+      "aaps_97385078": {
+        "shared": {
+          "rmse": 21.012858916277526,
+          "rmse_hypo": 31.827279349886236,
+          "episode_recall": 0.6144200626959248,
+          "false_alarms_per_day": 4.443872603147474
+        },
+        "personal_once": {
+          "rmse": 20.96715087837373,
+          "rmse_hypo": 32.61830902175108,
+          "episode_recall": 0.6112852664576802,
+          "false_alarms_per_day": 4.521301621746185
+        },
+        "personal_rolling": {
+          "rmse": 20.622864650052612,
+          "rmse_hypo": 33.367693966391954,
+          "episode_recall": 0.658307210031348,
+          "false_alarms_per_day": 5.126907160071822
+        },
+        "_coverage": 1.0,
+        "_refreshes": 5
+      }
+    },
+    "skipped": 3,
+    "summary": {
+      "shared": {
+        "wearers": 30,
+        "rmse_mean": 19.62375370303923,
+        "rmse_delta_vs_shared": 0.0,
+        "improved": 0.0,
+        "episode_recall": 0.7517443473178277,
+        "false_alarms_per_day": 6.243203604247342
+      },
+      "personal_once": {
+        "wearers": 30,
+        "rmse_mean": 19.178884480131067,
+        "rmse_delta_vs_shared": -0.44486922290815983,
+        "improved": 0.9666666666666667,
+        "episode_recall": 0.7510378010026303,
+        "false_alarms_per_day": 6.375785287448223
+      },
+      "personal_rolling": {
+        "wearers": 30,
+        "rmse_mean": 19.096052981734978,
+        "rmse_delta_vs_shared": -0.5277007213042478,
+        "improved": 1.0,
+        "episode_recall": 0.7534556139032832,
+        "false_alarms_per_day": 6.412711908081087
+      }
+    }
+  }
+}

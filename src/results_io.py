@@ -19,7 +19,10 @@ from src.config import ARTIFACTS_DIR
 def load(name: str) -> dict | None:
     path = ARTIFACTS_DIR / f"{name}.json"
     if not path.exists():
-        return None
+        bundled = ARTIFACTS_DIR.parent / "demo_data" / f"{name}.json"
+        if not bundled.exists():
+            return None
+        path = bundled
     try:
         return json.loads(path.read_text())
     except json.JSONDecodeError:

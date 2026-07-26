@@ -19,6 +19,20 @@ from src.config import (
 )
 from src.models.nets import build
 
+DEMO_BUNDLE = ARTIFACTS_DIR.parent / "demo_data"
+
+
+def demo_mode() -> bool:
+    """True when only the small shipped bundle is present.
+
+    A public deploy carries 4 MB of precomputed forecasts instead of the 110 MB
+    working set, so the app has to run without the raw archive or the full
+    cache. Detecting it here keeps every caller from having to know.
+    """
+    return not (CACHE_DIR / "cgm.parquet").exists() and DEMO_BUNDLE.exists()
+
+
+
 
 def _device() -> torch.device:
     """Use the GPU when there is one. Inference over a full patient record is
@@ -34,7 +48,7 @@ class Forecaster:
     """Thin wrapper: raw mg/dL windows in, forecast (and risk) out."""
 
     def __init__(self, checkpoint: str):
-        blob = torch.load(ARTIFACTS_DIR / f"{checkpoint}.pt", map_location="cpu",
+        blob = torch.load(checkpoint_path(checkpoint), map_location="cpu",
                           weights_only=False)
         cfg, norm = blob["config"], blob["norm"]
         self.name = checkpoint
@@ -89,8 +103,44 @@ class Forecaster:
         return {"mu": mu, "sigma": sigma, "hypo_prob": hypo_prob}
 
 
+@lru_cache(maxsize=1)
+def bundle_summary() -> dict:
+    """Per-wearer facts the deployed bundle carries instead of the raw table."""
+    path = DEMO_BUNDLE / "summary.json"
+    return json.loads(path.read_text()).get("wearers", {}) if path.exists() else {}
+
+
+def wearer_facts(patient_id: str) -> dict:
+    """Record length, reading count and time-below-70 — however they are available.
+
+    On a full checkout these come from the glucose table; on a deploy they come
+    from the bundle, which stores them precisely so the raw table can be left
+    out of the repository.
+    """
+    if demo_mode():
+        s = bundle_summary().get(patient_id, {})
+        return {"days": s.get("days", 0.0), "readings": s.get("windows", 0),
+                "time_below_70": s.get("time_below_70", 0.0)}
+    series = patient_series(patient_id)
+    from src.config import SAMPLE_MINUTES as _sm
+    return {
+        "days": len(series) * _sm / (60 * 24),
+        "readings": int(series["glucose"].notna().sum()),
+        "time_below_70": float((series["glucose"] < HYPO_THRESHOLD).mean()),
+    }
+
+
+def checkpoint_path(name: str):
+    """Where a checkpoint lives — artifacts normally, the bundle on a deploy."""
+    local = ARTIFACTS_DIR / f"{name}.pt"
+    return local if local.exists() else DEMO_BUNDLE / f"{name}.pt"
+
+
 def available_checkpoints() -> list[str]:
-    return sorted(p.stem for p in ARTIFACTS_DIR.glob("*.pt") if p.stem != "smoke")
+    found = {p.stem for p in ARTIFACTS_DIR.glob("*.pt")}
+    if DEMO_BUNDLE.exists():
+        found |= {p.stem for p in DEMO_BUNDLE.glob("*.pt")}
+    return sorted(n for n in found if n != "smoke")
 
 
 def best_checkpoint() -> str | None:
@@ -168,12 +218,26 @@ def tuned_threshold(forecaster: "Forecaster", budget: str) -> float | None:
 
 @lru_cache(maxsize=1)
 def load_cgm() -> pd.DataFrame:
+    if demo_mode():
+        raise FileNotFoundError(
+            "The raw glucose table is not part of the deployed bundle; the app "
+            "reads precomputed forecasts instead."
+        )
     return pd.read_parquet(CACHE_DIR / "cgm.parquet")
 
 
 @lru_cache(maxsize=1)
 def load_splits() -> dict:
-    return json.loads((ARTIFACTS_DIR / "splits.json").read_text())
+    """Patient split, restricted to what the deploy actually carries."""
+    path = ARTIFACTS_DIR / "splits.json"
+    if not path.exists() and (DEMO_BUNDLE / "splits.json").exists():
+        path = DEMO_BUNDLE / "splits.json"
+    splits = json.loads(path.read_text())
+    if demo_mode():
+        shipped = {p.stem for p in (DEMO_BUNDLE / "forecasts").glob("*.parquet")}
+        splits = {k: [p for p in v if p in shipped] if k == "test" else v
+                  for k, v in splits.items()}
+    return splits
 
 
 def patient_series(patient_id: str) -> pd.DataFrame:
@@ -183,6 +247,8 @@ def patient_series(patient_id: str) -> pd.DataFrame:
 
 
 def forecast_cache_path(patient_id: str, model_name: str):
+    if demo_mode():
+        return DEMO_BUNDLE / "forecasts" / f"{patient_id}.parquet"
     return CACHE_DIR / "forecasts" / model_name / f"{patient_id}.parquet"
 
 
@@ -196,6 +262,10 @@ def cached_forecast(patient_id: str, forecaster: Forecaster) -> pd.DataFrame:
     path = forecast_cache_path(patient_id, forecaster.name)
     if path.exists():
         return pd.read_parquet(path)
+    if demo_mode():
+        # Nothing to fall back on: the bundle is the whole dataset here.
+        return pd.DataFrame(columns=["issued_at", "target_time", "predicted",
+                                     "actual", "current"])
 
     frame = rolling_forecast(patient_series(patient_id), forecaster)
     path.parent.mkdir(parents=True, exist_ok=True)

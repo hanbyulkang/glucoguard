@@ -1,0 +1,98 @@
+{
+  "model": "tcn_prob",
+  "target": 6.0,
+  "refractory_minutes": 30,
+  "shared_threshold": 0.027193986024918387,
+  "results": {
+    "test": {
+      "shared": {
+        "wearers": 7,
+        "episodes": 8800,
+        "episode_recall": 0.9017045454545455,
+        "false_alarms_per_day": 9.287945936363677,
+        "alarms_per_day": 13.020308453280181,
+        "median_lead_minutes": 35.0,
+        "per_wearer_fa": {
+          "median": 8.481200854343909,
+          "min": 6.648677947103136,
+          "max": 12.795378365436598,
+          "within_2x": 0.8571428571428571
+        }
+      },
+      "fixed": {
+        "wearers": 7,
+        "episodes": 8800,
+        "episode_recall": 0.7631818181818182,
+        "false_alarms_per_day": 5.485850667796596,
+        "alarms_per_day": 8.656615488384361,
+        "median_lead_minutes": 25.0,
+        "per_wearer_fa": {
+          "median": 5.473133068099275,
+          "min": 4.673096700199334,
+          "max": 7.438582231446942,
+          "within_2x": 1.0
+        }
+      },
+      "rolling": {
+        "wearers": 7,
+        "episodes": 8800,
+        "episode_recall": 0.7820454545454546,
+        "false_alarms_per_day": 5.9216803656126915,
+        "alarms_per_day": 9.141839218619614,
+        "median_lead_minutes": 25.0,
+        "per_wearer_fa": {
+          "median": 6.015274387843477,
+          "min": 5.572953500462747,
+          "max": 6.1890772847136875,
+          "within_2x": 1.0
+        },
+        "refits_median": 146.0
+      }
+    },
+    "external": {
+      "shared": {
+        "wearers": 25,
+        "episodes": 12481,
+        "episode_recall": 0.882942071949363,
+        "false_alarms_per_day": 9.711278553234427,
+        "alarms_per_day": 12.048974770200042,
+        "median_lead_minutes": 30.0,
+        "per_wearer_fa": {
+          "median": 10.208510938331273,
+          "min": 5.450294421186254,
+          "max": 15.037310924369748,
+          "within_2x": 0.68
+        }
+      },
+      "fixed": {
+        "wearers": 25,
+        "episodes": 12481,
+        "episode_recall": 0.7649226824773656,
+        "false_alarms_per_day": 5.561072850996108,
+        "alarms_per_day": 7.5513681352261495,
+        "median_lead_minutes": 25.0,
+        "per_wearer_fa": {
+          "median": 5.2058411357312595,
+          "min": 2.485172581429266,
+          "max": 9.428884648178977,
+          "within_2x": 0.96
+        }
+      },
+      "rolling": {
+        "wearers": 25,
+        "episodes": 12481,
+        "episode_recall": 0.7660443874689528,
+        "false_alarms_per_day": 6.0498361355050685,
+        "alarms_per_day": 8.045939482934713,
+        "median_lead_minutes": 25.0,
+        "per_wearer_fa": {
+          "median": 6.018888234457827,
+          "min": 4.87424931756142,
+          "max": 6.455490418247204,
+          "within_2x": 1.0
+        },
+        "refits_median": 42.0
+      }
+    }
+  }
+}

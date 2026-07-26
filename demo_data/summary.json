@@ -1,0 +1,34 @@
+{
+  "model": "tcn_prob",
+  "slice_days": 60,
+  "wearers": {
+    "86323903": {
+      "windows": 10974,
+      "days": 38.1,
+      "time_below_70": 0.13923819938035356,
+      "lows_in_slice": 1528,
+      "starts": "2015-08-11"
+    },
+    "37948668": {
+      "windows": 8979,
+      "days": 31.2,
+      "time_below_70": 0.06749081189442031,
+      "lows_in_slice": 606,
+      "starts": "2017-08-20"
+    },
+    "01352464": {
+      "windows": 14008,
+      "days": 48.6,
+      "time_below_70": 0.053754997144488864,
+      "lows_in_slice": 753,
+      "starts": "2017-10-13"
+    },
+    "06593293": {
+      "windows": 16477,
+      "days": 57.2,
+      "time_below_70": 0.02257692541117922,
+      "lows_in_slice": 372,
+      "starts": "2018-11-20"
+    }
+  }
+}

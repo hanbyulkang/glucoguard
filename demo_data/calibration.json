@@ -1,0 +1,2687 @@
+{
+  "model": "tcn_prob",
+  "target_fa_per_day": 6.0,
+  "population_threshold": 0.19872696697711945,
+  "results": {
+    "test": {
+      "7d": {
+        "target_fa_per_day": 6.0,
+        "warmup_days": 7.0,
+        "patients": [
+          {
+            "patient_id": "00897741",
+            "fell_back": false,
+            "warmup_lows": 146,
+            "eval_windows": 172746,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8018762026940346,
+              "precision": 0.47746586460422036,
+              "f1": 0.5985397091387874,
+              "false_alarms_per_day": 18.247368969469626
+            },
+            "calibrated": {
+              "threshold": 0.43025028705596924,
+              "recall": 0.30043296985246953,
+              "precision": 0.6736785329018339,
+              "f1": 0.41554840856160585,
+              "false_alarms_per_day": 3.025945608002501
+            }
+          },
+          {
+            "patient_id": "01352464",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 118312,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6834959694526941,
+              "precision": 0.3171572005118614,
+              "f1": 0.4332683386001479,
+              "false_alarms_per_day": 16.886334437757792
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6834959694526941,
+              "precision": 0.3171572005118614,
+              "f1": 0.4332683386001479,
+              "false_alarms_per_day": 16.886334437757792
+            }
+          },
+          {
+            "patient_id": "06593293",
+            "fell_back": true,
+            "warmup_lows": 11,
+            "eval_windows": 139732,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6373220875065894,
+              "precision": 0.22897727272727272,
+              "f1": 0.3369095722446705,
+              "false_alarms_per_day": 8.390690750865943
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6373220875065894,
+              "precision": 0.22897727272727272,
+              "f1": 0.3369095722446705,
+              "false_alarms_per_day": 8.390690750865943
+            }
+          },
+          {
+            "patient_id": "14092221",
+            "fell_back": false,
+            "warmup_lows": 29,
+            "eval_windows": 260478,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5001604621309371,
+              "precision": 0.1604055166735282,
+              "f1": 0.2429083541147132,
+              "false_alarms_per_day": 18.03883629327621
+            },
+            "calibrated": {
+              "threshold": 0.3113638460636139,
+              "recall": 0.22881899871630296,
+              "precision": 0.20002805442558563,
+              "f1": 0.21345707656612528,
+              "false_alarms_per_day": 6.3055766705825445
+            }
+          },
+          {
+            "patient_id": "37948668",
+            "fell_back": true,
+            "warmup_lows": 9,
+            "eval_windows": 230109,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.681934384320409,
+              "precision": 0.31754377263032585,
+              "f1": 0.43331415614741614,
+              "false_alarms_per_day": 17.220499850071054
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.681934384320409,
+              "precision": 0.31754377263032585,
+              "f1": 0.43331415614741614,
+              "false_alarms_per_day": 17.220499850071054
+            }
+          },
+          {
+            "patient_id": "40997757",
+            "fell_back": false,
+            "warmup_lows": 65,
+            "eval_windows": 237906,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7456,
+              "precision": 0.40701059741469664,
+              "f1": 0.5265735055934311,
+              "false_alarms_per_day": 12.328364984489673
+            },
+            "calibrated": {
+              "threshold": 0.3329593241214752,
+              "recall": 0.45696,
+              "precision": 0.567191844300278,
+              "f1": 0.5061436672967864,
+              "false_alarms_per_day": 3.9573276840432774
+            }
+          },
+          {
+            "patient_id": "81195091",
+            "fell_back": true,
+            "warmup_lows": 13,
+            "eval_windows": 85736,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7421426157485637,
+              "precision": 0.3892236795462602,
+              "f1": 0.5106382978723404,
+              "false_alarms_per_day": 11.57562750769805
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7421426157485637,
+              "precision": 0.3892236795462602,
+              "f1": 0.5106382978723404,
+              "false_alarms_per_day": 11.57562750769805
+            }
+          },
+          {
+            "patient_id": "86323903",
+            "fell_back": false,
+            "warmup_lows": 101,
+            "eval_windows": 272657,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.862769873097841,
+              "precision": 0.5686302907418805,
+              "f1": 0.6854785910697918,
+              "false_alarms_per_day": 12.584426587250649
+            },
+            "calibrated": {
+              "threshold": 0.31828784942626953,
+              "recall": 0.6852167225182663,
+              "precision": 0.6898783185840708,
+              "f1": 0.6875396191053662,
+              "false_alarms_per_day": 5.922518035480476
+            }
+          }
+        ],
+        "population": {
+          "recall": 0.7486511342734519,
+          "precision": 0.3863684905824559,
+          "false_alarms_per_day": 14.720169522348645,
+          "per_patient_fa": {
+            "median": 14.735380512504221,
+            "iqr": [
+              12.140180615291767,
+              17.425083960872342
+            ],
+            "min": 8.390690750865943,
+            "max": 18.247368969469626,
+            "within_2x_of_target": 0.25
+          }
+        },
+        "calibrated": {
+          "recall": 0.5358522378908644,
+          "precision": 0.4393710881532313,
+          "false_alarms_per_day": 8.464794857400394,
+          "per_patient_fa": {
+            "median": 7.348133710724244,
+            "iqr": [
+              5.431220447621176,
+              12.903304240212986
+            ],
+            "min": 3.025945608002501,
+            "max": 17.220499850071054,
+            "within_2x_of_target": 0.75
+          }
+        }
+      },
+      "14d": {
+        "target_fa_per_day": 6.0,
+        "warmup_days": 14.0,
+        "patients": [
+          {
+            "patient_id": "00897741",
+            "fell_back": false,
+            "warmup_lows": 285,
+            "eval_windows": 171029,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8018324819589718,
+              "precision": 0.4769460789042153,
+              "f1": 0.5981189705748934,
+              "false_alarms_per_day": 18.262166065404113
+            },
+            "calibrated": {
+              "threshold": 0.39774078130722046,
+              "recall": 0.3699829725127706,
+              "precision": 0.6587267215244694,
+              "f1": 0.4738317757009346,
+              "false_alarms_per_day": 3.9807985780189323
+            }
+          },
+          {
+            "patient_id": "01352464",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 117830,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6834959694526941,
+              "precision": 0.31772014594221476,
+              "f1": 0.4337933355772467,
+              "false_alarms_per_day": 16.91141475006365
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6834959694526941,
+              "precision": 0.31772014594221476,
+              "f1": 0.4337933355772467,
+              "false_alarms_per_day": 16.91141475006365
+            }
+          },
+          {
+            "patient_id": "06593293",
+            "fell_back": false,
+            "warmup_lows": 29,
+            "eval_windows": 137794,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6381053751995742,
+              "precision": 0.229781525488693,
+              "f1": 0.3378892489784416,
+              "false_alarms_per_day": 8.400017417304092
+            },
+            "calibrated": {
+              "threshold": 0.21466438472270966,
+              "recall": 0.5960617349654072,
+              "precision": 0.2399828583672595,
+              "f1": 0.3421937060800489,
+              "false_alarms_per_day": 7.413501313555017
+            }
+          },
+          {
+            "patient_id": "14092221",
+            "fell_back": false,
+            "warmup_lows": 71,
+            "eval_windows": 258956,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5022617124394184,
+              "precision": 0.16096298213823454,
+              "f1": 0.24379533424818664,
+              "false_alarms_per_day": 18.023633358562844
+            },
+            "calibrated": {
+              "threshold": 0.31957265734672546,
+              "recall": 0.21066235864297253,
+              "precision": 0.20145218600339873,
+              "f1": 0.20595435520808655,
+              "false_alarms_per_day": 5.748744960533836
+            }
+          },
+          {
+            "patient_id": "37948668",
+            "fell_back": false,
+            "warmup_lows": 33,
+            "eval_windows": 228618,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6825074754378471,
+              "precision": 0.3182768924302789,
+              "f1": 0.434112213014536,
+              "false_alarms_per_day": 17.2446264073695
+            },
+            "calibrated": {
+              "threshold": 0.2793205976486206,
+              "recall": 0.4908158906450235,
+              "precision": 0.38373549302830423,
+              "f1": 0.43072020992455834,
+              "false_alarms_per_day": 9.298165498779623
+            }
+          },
+          {
+            "patient_id": "40997757",
+            "fell_back": false,
+            "warmup_lows": 149,
+            "eval_windows": 236287,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7444839091594015,
+              "precision": 0.40657144536530887,
+              "f1": 0.5259276155717761,
+              "false_alarms_per_day": 12.30557753917905
+            },
+            "calibrated": {
+              "threshold": 0.3167334198951721,
+              "recall": 0.49660962221504684,
+              "precision": 0.544939175623007,
+              "f1": 0.5196531140894246,
+              "false_alarms_per_day": 4.696254978056347
+            }
+          },
+          {
+            "patient_id": "81195091",
+            "fell_back": false,
+            "warmup_lows": 212,
+            "eval_windows": 83807,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7365942028985507,
+              "precision": 0.3778108158334882,
+              "f1": 0.49944724235351917,
+              "false_alarms_per_day": 11.505291920722613
+            },
+            "calibrated": {
+              "threshold": 0.27985087037086487,
+              "recall": 0.5844202898550724,
+              "precision": 0.4810617357590218,
+              "f1": 0.5277277932275478,
+              "false_alarms_per_day": 5.9794527903397094
+            }
+          },
+          {
+            "patient_id": "86323903",
+            "fell_back": false,
+            "warmup_lows": 255,
+            "eval_windows": 271207,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8625962657210926,
+              "precision": 0.5680458260361938,
+              "f1": 0.6849990100534571,
+              "false_alarms_per_day": 12.572064880331261
+            },
+            "calibrated": {
+              "threshold": 0.3351695239543915,
+              "recall": 0.653166380408887,
+              "precision": 0.7026044460337326,
+              "f1": 0.6769840358332376,
+              "false_alarms_per_day": 5.298978271209815
+            }
+          }
+        ],
+        "population": {
+          "recall": 0.7483586249612884,
+          "precision": 0.38573708995131295,
+          "false_alarms_per_day": 14.722255580766351,
+          "per_patient_fa": {
+            "median": 14.741739815197455,
+            "iqr": [
+              12.10550613456494,
+              17.439378145167836
+            ],
+            "min": 8.400017417304092,
+            "max": 18.262166065404113,
+            "within_2x_of_target": 0.25
+          }
+        },
+        "calibrated": {
+          "recall": 0.5082223598637349,
+          "precision": 0.4771603861363108,
+          "false_alarms_per_day": 6.879542592366267,
+          "per_patient_fa": {
+            "median": 5.864098875436772,
+            "iqr": [
+              5.148297447921448,
+              7.884667359861169
+            ],
+            "min": 3.9807985780189323,
+            "max": 16.91141475006365,
+            "within_2x_of_target": 0.875
+          }
+        }
+      },
+      "28d": {
+        "target_fa_per_day": 6.0,
+        "warmup_days": 28.0,
+        "patients": [
+          {
+            "patient_id": "00897741",
+            "fell_back": false,
+            "warmup_lows": 633,
+            "eval_windows": 167762,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8015853149770547,
+              "precision": 0.47477143563133184,
+              "f1": 0.5963376784605835,
+              "false_alarms_per_day": 18.245276045826827
+            },
+            "calibrated": {
+              "threshold": 0.3793589770793915,
+              "recall": 0.41118064246975383,
+              "precision": 0.642419502020597,
+              "f1": 0.5014245014245015,
+              "false_alarms_per_day": 4.7089567363288465
+            }
+          },
+          {
+            "patient_id": "01352464",
+            "fell_back": false,
+            "warmup_lows": 31,
+            "eval_windows": 117039,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.683326244151425,
+              "precision": 0.3177727227771734,
+              "f1": 0.43380814149733343,
+              "false_alarms_per_day": 16.97403429626022
+            },
+            "calibrated": {
+              "threshold": 0.2461749017238617,
+              "recall": 0.5750744364100383,
+              "precision": 0.35947886200478596,
+              "f1": 0.4424083769633508,
+              "false_alarms_per_day": 11.855740394227565
+            }
+          },
+          {
+            "patient_id": "06593293",
+            "fell_back": false,
+            "warmup_lows": 63,
+            "eval_windows": 133818,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6373983739837399,
+              "precision": 0.22906116088819634,
+              "f1": 0.3370110330992979,
+              "false_alarms_per_day": 8.518315921624893
+            },
+            "calibrated": {
+              "threshold": 0.19335965812206268,
+              "recall": 0.6525745257452574,
+              "precision": 0.2245430809399478,
+              "f1": 0.3341196059386708,
+              "false_alarms_per_day": 8.948751289064251
+            }
+          },
+          {
+            "patient_id": "14092221",
+            "fell_back": false,
+            "warmup_lows": 115,
+            "eval_windows": 255484,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5008135372600065,
+              "precision": 0.1610253727439184,
+              "f1": 0.24369581568425638,
+              "false_alarms_per_day": 18.07806359693758
+            },
+            "calibrated": {
+              "threshold": 0.30493617057800293,
+              "recall": 0.24292222583794337,
+              "precision": 0.19798435220792998,
+              "f1": 0.21816322057426757,
+              "false_alarms_per_day": 6.817742011241409
+            }
+          },
+          {
+            "patient_id": "37948668",
+            "fell_back": false,
+            "warmup_lows": 173,
+            "eval_windows": 226056,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6823503902862099,
+              "precision": 0.3185706331932986,
+              "f1": 0.4343535419757773,
+              "false_alarms_per_day": 17.15213929291857
+            },
+            "calibrated": {
+              "threshold": 0.3052559494972229,
+              "recall": 0.42324371205550737,
+              "precision": 0.4010272213662044,
+              "f1": 0.4118360673031278,
+              "false_alarms_per_day": 7.42881409916127
+            }
+          },
+          {
+            "patient_id": "40997757",
+            "fell_back": false,
+            "warmup_lows": 337,
+            "eval_windows": 232800,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7433813028671866,
+              "precision": 0.40598752099832014,
+              "f1": 0.525163943968026,
+              "false_alarms_per_day": 12.248659793814433
+            },
+            "calibrated": {
+              "threshold": 0.3214167356491089,
+              "recall": 0.4829177194331539,
+              "precision": 0.5510152920531461,
+              "f1": 0.5147239622972893,
+              "false_alarms_per_day": 4.431340206185567
+            }
+          },
+          {
+            "patient_id": "81195091",
+            "fell_back": false,
+            "warmup_lows": 327,
+            "eval_windows": 79897,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7319470699432892,
+              "precision": 0.37953342481866303,
+              "f1": 0.49987090111025057,
+              "false_alarms_per_day": 11.408688686684105
+            },
+            "calibrated": {
+              "threshold": 0.2845832407474518,
+              "recall": 0.5724007561436673,
+              "precision": 0.4891760904684976,
+              "f1": 0.5275261324041811,
+              "false_alarms_per_day": 5.698937381879169
+            }
+          },
+          {
+            "patient_id": "86323903",
+            "fell_back": false,
+            "warmup_lows": 690,
+            "eval_windows": 268023,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8624389690019303,
+              "precision": 0.5659625200253344,
+              "f1": 0.683432684737375,
+              "false_alarms_per_day": 12.518328650899363
+            },
+            "calibrated": {
+              "threshold": 0.37570157647132874,
+              "recall": 0.5701146815033497,
+              "precision": 0.7296904519691906,
+              "f1": 0.6401070882202958,
+              "false_alarms_per_day": 3.9972688911026295
+            }
+          }
+        ],
+        "population": {
+          "recall": 0.7470599393019727,
+          "precision": 0.3843626486231519,
+          "false_alarms_per_day": 14.722067096636524,
+          "per_patient_fa": {
+            "median": 14.746181473579792,
+            "iqr": [
+              12.038667017031852,
+              17.38362036892332
+            ],
+            "min": 8.518315921624893,
+            "max": 18.245276045826827,
+            "within_2x_of_target": 0.25
+          }
+        },
+        "calibrated": {
+          "recall": 0.4771275923115832,
+          "precision": 0.48168065617719336,
+          "false_alarms_per_day": 6.316875315268836,
+          "per_patient_fa": {
+            "median": 6.258339696560289,
+            "iqr": [
+              4.639552603793026,
+              7.808798396637016
+            ],
+            "min": 3.9972688911026295,
+            "max": 11.855740394227565,
+            "within_2x_of_target": 1.0
+          }
+        }
+      }
+    },
+    "external": {
+      "7d": {
+        "target_fa_per_day": 6.0,
+        "warmup_days": 7.0,
+        "patients": [
+          {
+            "patient_id": "aaps_01177138",
+            "fell_back": true,
+            "warmup_lows": 9,
+            "eval_windows": 156852,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6815446339017052,
+              "precision": 0.22541051584010616,
+              "f1": 0.33877601894553155,
+              "false_alarms_per_day": 8.574707367454671
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6815446339017052,
+              "precision": 0.22541051584010616,
+              "f1": 0.33877601894553155,
+              "false_alarms_per_day": 8.574707367454671
+            }
+          },
+          {
+            "patient_id": "aaps_01919652",
+            "fell_back": false,
+            "warmup_lows": 90,
+            "eval_windows": 22315,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5454545454545454,
+              "precision": 0.17689530685920576,
+              "f1": 0.26715129486597,
+              "false_alarms_per_day": 17.65556800358503
+            },
+            "calibrated": {
+              "threshold": 0.36143550276756287,
+              "recall": 0.15955473098330242,
+              "precision": 0.27129337539432175,
+              "f1": 0.20093457943925233,
+              "false_alarms_per_day": 2.981313018149227
+            }
+          },
+          {
+            "patient_id": "aaps_01949240",
+            "fell_back": false,
+            "warmup_lows": 63,
+            "eval_windows": 75654,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7552098620487232,
+              "precision": 0.39621188789651984,
+              "f1": 0.5197454802545197,
+              "false_alarms_per_day": 14.92648108493933
+            },
+            "calibrated": {
+              "threshold": 0.27150577306747437,
+              "recall": 0.6128558849427649,
+              "precision": 0.48044178554993094,
+              "f1": 0.5386302076615503,
+              "false_alarms_per_day": 8.59576492981204
+            }
+          },
+          {
+            "patient_id": "aaps_02050717",
+            "fell_back": true,
+            "warmup_lows": 2,
+            "eval_windows": 107074,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46987951807228917,
+              "precision": 0.0980603448275862,
+              "f1": 0.16225854383358096,
+              "false_alarms_per_day": 6.7539085118702955
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46987951807228917,
+              "precision": 0.0980603448275862,
+              "f1": 0.16225854383358096,
+              "false_alarms_per_day": 6.7539085118702955
+            }
+          },
+          {
+            "patient_id": "aaps_03403352",
+            "fell_back": false,
+            "warmup_lows": 78,
+            "eval_windows": 73217,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6604010025062657,
+              "precision": 0.16541117388575016,
+              "f1": 0.2645582329317269,
+              "false_alarms_per_day": 10.459210292691587
+            },
+            "calibrated": {
+              "threshold": 0.3310829997062683,
+              "recall": 0.2619047619047619,
+              "precision": 0.28396739130434784,
+              "f1": 0.27249022164276404,
+              "false_alarms_per_day": 2.0729611975360913
+            }
+          },
+          {
+            "patient_id": "aaps_10540336",
+            "fell_back": false,
+            "warmup_lows": 113,
+            "eval_windows": 18437,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8313648293963255,
+              "precision": 0.6138565891472868,
+              "f1": 0.7062430323299889,
+              "false_alarms_per_day": 12.44974778977057
+            },
+            "calibrated": {
+              "threshold": 0.39064446091651917,
+              "recall": 0.5426509186351706,
+              "precision": 0.7629151291512916,
+              "f1": 0.63420245398773,
+              "false_alarms_per_day": 4.0145359874166076
+            }
+          },
+          {
+            "patient_id": "aaps_14045962",
+            "fell_back": false,
+            "warmup_lows": 130,
+            "eval_windows": 84069,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5954022988505747,
+              "precision": 0.1627565982404692,
+              "f1": 0.2556341503536766,
+              "false_alarms_per_day": 13.692752381971951
+            },
+            "calibrated": {
+              "threshold": 0.370760977268219,
+              "recall": 0.2206896551724138,
+              "precision": 0.37209302325581395,
+              "f1": 0.27705627705627706,
+              "false_alarms_per_day": 1.6649181029868323
+            }
+          },
+          {
+            "patient_id": "aaps_18001564",
+            "fell_back": true,
+            "warmup_lows": 4,
+            "eval_windows": 40677,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.3968253968253968,
+              "precision": 0.09765625,
+              "f1": 0.15673981191222572,
+              "false_alarms_per_day": 9.813113061435208
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.3968253968253968,
+              "precision": 0.09765625,
+              "f1": 0.15673981191222572,
+              "false_alarms_per_day": 9.813113061435208
+            }
+          },
+          {
+            "patient_id": "aaps_24110807",
+            "fell_back": true,
+            "warmup_lows": 4,
+            "eval_windows": 77317,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.4896755162241888,
+              "precision": 0.15645617342130066,
+              "f1": 0.23714285714285713,
+              "false_alarms_per_day": 3.333807571426724
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.4896755162241888,
+              "precision": 0.15645617342130066,
+              "f1": 0.23714285714285713,
+              "false_alarms_per_day": 3.333807571426724
+            }
+          },
+          {
+            "patient_id": "aaps_28761103",
+            "fell_back": false,
+            "warmup_lows": 48,
+            "eval_windows": 46417,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6420793818054092,
+              "precision": 0.303150912106136,
+              "f1": 0.4118508505125606,
+              "false_alarms_per_day": 26.071827132300665
+            },
+            "calibrated": {
+              "threshold": 0.3156735897064209,
+              "recall": 0.34632946961714084,
+              "precision": 0.3895693401817463,
+              "f1": 0.36667906284864255,
+              "false_alarms_per_day": 9.586143007949675
+            }
+          },
+          {
+            "patient_id": "aaps_35187603",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 157876,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7877364321918655,
+              "precision": 0.4349191181489318,
+              "f1": 0.5604221635883904,
+              "false_alarms_per_day": 15.102688185664698
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7877364321918655,
+              "precision": 0.4349191181489318,
+              "f1": 0.5604221635883904,
+              "false_alarms_per_day": 15.102688185664698
+            }
+          },
+          {
+            "patient_id": "aaps_39038570",
+            "fell_back": false,
+            "warmup_lows": 35,
+            "eval_windows": 7415,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5611510791366906,
+              "precision": 0.1553784860557769,
+              "f1": 0.24336973478939158,
+              "false_alarms_per_day": 16.468240053944704
+            },
+            "calibrated": {
+              "threshold": 0.31972166895866394,
+              "recall": 0.16546762589928057,
+              "precision": 0.15753424657534246,
+              "f1": 0.1614035087719298,
+              "false_alarms_per_day": 4.777343223196223
+            }
+          },
+          {
+            "patient_id": "aaps_39182506",
+            "fell_back": false,
+            "warmup_lows": 135,
+            "eval_windows": 237927,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7063965589010684,
+              "precision": 0.31938519447929736,
+              "f1": 0.4398842182572255,
+              "false_alarms_per_day": 13.132229633459003
+            },
+            "calibrated": {
+              "threshold": 0.36906445026397705,
+              "recall": 0.290967115304565,
+              "precision": 0.49774507476857344,
+              "f1": 0.36725043782837125,
+              "false_alarms_per_day": 2.561323431136441
+            }
+          },
+          {
+            "patient_id": "aaps_42360672",
+            "fell_back": false,
+            "warmup_lows": 62,
+            "eval_windows": 100437,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6960179472798654,
+              "precision": 0.2504035512510089,
+              "f1": 0.36830390265618046,
+              "false_alarms_per_day": 10.652647928552227
+            },
+            "calibrated": {
+              "threshold": 0.2975701093673706,
+              "recall": 0.4441951766685362,
+              "precision": 0.34585152838427946,
+              "f1": 0.38890252884851456,
+              "false_alarms_per_day": 4.295468801338153
+            }
+          },
+          {
+            "patient_id": "aaps_47631371",
+            "fell_back": true,
+            "warmup_lows": 13,
+            "eval_windows": 28211,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7386363636363636,
+              "precision": 0.24344569288389514,
+              "f1": 0.36619718309859156,
+              "false_alarms_per_day": 6.18652298748715
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7386363636363636,
+              "precision": 0.24344569288389514,
+              "f1": 0.36619718309859156,
+              "false_alarms_per_day": 6.18652298748715
+            }
+          },
+          {
+            "patient_id": "aaps_49141524",
+            "fell_back": false,
+            "warmup_lows": 34,
+            "eval_windows": 11192,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7456140350877193,
+              "precision": 0.27375201288244766,
+              "f1": 0.4004711425206125,
+              "false_alarms_per_day": 11.60543245175125
+            },
+            "calibrated": {
+              "threshold": 0.2997126579284668,
+              "recall": 0.49122807017543857,
+              "precision": 0.3835616438356164,
+              "f1": 0.4307692307692308,
+              "false_alarms_per_day": 4.631879914224446
+            }
+          },
+          {
+            "patient_id": "aaps_49623237",
+            "fell_back": false,
+            "warmup_lows": 37,
+            "eval_windows": 375554,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6262430269221441,
+              "precision": 0.17626979792463135,
+              "f1": 0.2751052154919823,
+              "false_alarms_per_day": 9.253018207767726
+            },
+            "calibrated": {
+              "threshold": 0.3008975088596344,
+              "recall": 0.3609022556390977,
+              "precision": 0.25518778940147485,
+              "f1": 0.29897528631705844,
+              "false_alarms_per_day": 3.3305037358142906
+            }
+          },
+          {
+            "patient_id": "aaps_50729763",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 45892,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6829268292682927,
+              "precision": 0.29310344827586204,
+              "f1": 0.4101680310211116,
+              "false_alarms_per_day": 7.204392922513728
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6829268292682927,
+              "precision": 0.29310344827586204,
+              "f1": 0.4101680310211116,
+              "false_alarms_per_day": 7.204392922513728
+            }
+          },
+          {
+            "patient_id": "aaps_52345968",
+            "fell_back": true,
+            "warmup_lows": 4,
+            "eval_windows": 70526,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46449136276391556,
+              "precision": 0.14742613463295767,
+              "f1": 0.22381502890173413,
+              "false_alarms_per_day": 11.429997447749766
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46449136276391556,
+              "precision": 0.14742613463295767,
+              "f1": 0.22381502890173413,
+              "false_alarms_per_day": 11.429997447749766
+            }
+          },
+          {
+            "patient_id": "aaps_53013068",
+            "fell_back": false,
+            "warmup_lows": 51,
+            "eval_windows": 154928,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7060610062062591,
+              "precision": 0.35516439721022913,
+              "f1": 0.4726003181898532,
+              "false_alarms_per_day": 18.046473200454404
+            },
+            "calibrated": {
+              "threshold": 0.29109135270118713,
+              "recall": 0.5069325234385317,
+              "precision": 0.44795799299883315,
+              "f1": 0.4756241095211547,
+              "false_alarms_per_day": 8.794588453991532
+            }
+          },
+          {
+            "patient_id": "aaps_54165023",
+            "fell_back": false,
+            "warmup_lows": 58,
+            "eval_windows": 226247,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6087599881621781,
+              "precision": 0.23164414414414414,
+              "f1": 0.3355901786442614,
+              "false_alarms_per_day": 8.685304114529696
+            },
+            "calibrated": {
+              "threshold": 0.33221498131752014,
+              "recall": 0.32169280852323173,
+              "precision": 0.37703780783905655,
+              "f1": 0.3471734270201214,
+              "false_alarms_per_day": 2.2862093199025844
+            }
+          },
+          {
+            "patient_id": "aaps_56052290",
+            "fell_back": false,
+            "warmup_lows": 33,
+            "eval_windows": 80317,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.624296435272045,
+              "precision": 0.26535087719298245,
+              "f1": 0.37241186345831,
+              "false_alarms_per_day": 13.213640947744562
+            },
+            "calibrated": {
+              "threshold": 0.3349132537841797,
+              "recall": 0.31191369606003755,
+              "precision": 0.405982905982906,
+              "f1": 0.35278514588859416,
+              "false_alarms_per_day": 3.488974936812879
+            }
+          },
+          {
+            "patient_id": "aaps_63937017",
+            "fell_back": false,
+            "warmup_lows": 105,
+            "eval_windows": 498890,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8048647914118766,
+              "precision": 0.34736965573866635,
+              "f1": 0.48529291274068004,
+              "false_alarms_per_day": 6.4239892561486505
+            },
+            "calibrated": {
+              "threshold": 0.34001287817955017,
+              "recall": 0.4915069982334556,
+              "precision": 0.5316772012347494,
+              "f1": 0.5108035588193758,
+              "false_alarms_per_day": 1.8392190663272465
+            }
+          },
+          {
+            "patient_id": "aaps_68659836",
+            "fell_back": true,
+            "warmup_lows": 7,
+            "eval_windows": 75692,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.710298363811357,
+              "precision": 0.27222427148653633,
+              "f1": 0.3936,
+              "false_alarms_per_day": 7.507054906727263
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.710298363811357,
+              "precision": 0.27222427148653633,
+              "f1": 0.3936,
+              "false_alarms_per_day": 7.507054906727263
+            }
+          },
+          {
+            "patient_id": "aaps_71422852",
+            "fell_back": true,
+            "warmup_lows": 13,
+            "eval_windows": 40211,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6108490566037735,
+              "precision": 0.17175066312997347,
+              "f1": 0.2681159420289855,
+              "false_alarms_per_day": 8.945611897242049
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6108490566037735,
+              "precision": 0.17175066312997347,
+              "f1": 0.2681159420289855,
+              "false_alarms_per_day": 8.945611897242049
+            }
+          },
+          {
+            "patient_id": "aaps_79751050",
+            "fell_back": false,
+            "warmup_lows": 26,
+            "eval_windows": 136972,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5890348889895786,
+              "precision": 0.22819027558364052,
+              "f1": 0.3289473684210526,
+              "false_alarms_per_day": 9.245218000759278
+            },
+            "calibrated": {
+              "threshold": 0.18317857384681702,
+              "recall": 0.6144086995922066,
+              "precision": 0.21190811064228784,
+              "f1": 0.31512897978154775,
+              "false_alarms_per_day": 10.603510206465554
+            }
+          },
+          {
+            "patient_id": "aaps_80901258",
+            "fell_back": false,
+            "warmup_lows": 76,
+            "eval_windows": 98104,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8032587970185474,
+              "precision": 0.44036871614558587,
+              "f1": 0.5688681561502579,
+              "false_alarms_per_day": 17.288102421919593
+            },
+            "calibrated": {
+              "threshold": 0.31757932901382446,
+              "recall": 0.5567689374241637,
+              "precision": 0.5634099280827924,
+              "f1": 0.5600697471665214,
+              "false_alarms_per_day": 7.306858028214955
+            }
+          },
+          {
+            "patient_id": "aaps_84241955",
+            "fell_back": false,
+            "warmup_lows": 74,
+            "eval_windows": 85632,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7416443034886557,
+              "precision": 0.32138703879902736,
+              "f1": 0.4484437232630181,
+              "false_alarms_per_day": 21.588565022421527
+            },
+            "calibrated": {
+              "threshold": 0.3490610420703888,
+              "recall": 0.3649670651378385,
+              "precision": 0.47719298245614034,
+              "f1": 0.413602432955488,
+              "false_alarms_per_day": 5.512331838565022
+            }
+          },
+          {
+            "patient_id": "aaps_87635714",
+            "fell_back": false,
+            "warmup_lows": 28,
+            "eval_windows": 237927,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6264092927912538,
+              "precision": 0.280781010719755,
+              "f1": 0.3877551020408163,
+              "false_alarms_per_day": 11.369806705418048
+            },
+            "calibrated": {
+              "threshold": 0.24242208898067474,
+              "recall": 0.5199863341305091,
+              "precision": 0.3177453027139875,
+              "f1": 0.39445380329143453,
+              "false_alarms_per_day": 7.911535891260765
+            }
+          },
+          {
+            "patient_id": "aaps_92229310",
+            "fell_back": false,
+            "warmup_lows": 181,
+            "eval_windows": 35802,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6788482834994463,
+              "precision": 0.33736929003852506,
+              "f1": 0.45073529411764707,
+              "false_alarms_per_day": 9.685268979386626
+            },
+            "calibrated": {
+              "threshold": 0.3954179584980011,
+              "recall": 0.2912513842746401,
+              "precision": 0.5883668903803132,
+              "f1": 0.38962962962962966,
+              "false_alarms_per_day": 1.4801407742584214
+            }
+          },
+          {
+            "patient_id": "aaps_93230373",
+            "fell_back": true,
+            "warmup_lows": 12,
+            "eval_windows": 294007,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.623859649122807,
+              "precision": 0.1586366880799429,
+              "f1": 0.2529520557689572,
+              "false_alarms_per_day": 4.618665541976892
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.623859649122807,
+              "precision": 0.1586366880799429,
+              "f1": 0.2529520557689572,
+              "false_alarms_per_day": 4.618665541976892
+            }
+          },
+          {
+            "patient_id": "aaps_94098083",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 57072,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6624441132637854,
+              "precision": 0.23631047315257842,
+              "f1": 0.34835423197492166,
+              "false_alarms_per_day": 14.497897392767031
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6624441132637854,
+              "precision": 0.23631047315257842,
+              "f1": 0.34835423197492166,
+              "false_alarms_per_day": 14.497897392767031
+            }
+          },
+          {
+            "patient_id": "aaps_97385078",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 108740,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.606280193236715,
+              "precision": 0.2140724946695096,
+              "f1": 0.31641979199495746,
+              "false_alarms_per_day": 9.762442523450432
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.606280193236715,
+              "precision": 0.2140724946695096,
+              "f1": 0.31641979199495746,
+              "false_alarms_per_day": 9.762442523450432
+            }
+          }
+        ],
+        "population": {
+          "recall": 0.6985748074473892,
+          "precision": 0.29164620035548083,
+          "false_alarms_per_day": 10.416506360533665,
+          "per_patient_fa": {
+            "median": 10.652647928552227,
+            "iqr": [
+              8.685304114529696,
+              14.497897392767031
+            ],
+            "min": 3.333807571426724,
+            "max": 26.071827132300665,
+            "within_2x_of_target": 0.6060606060606061
+          }
+        },
+        "calibrated": {
+          "recall": 0.4952271211110437,
+          "precision": 0.34671365489130435,
+          "false_alarms_per_day": 5.728650325783432,
+          "per_patient_fa": {
+            "median": 6.18652298748715,
+            "iqr": [
+              3.333807571426724,
+              8.794588453991532
+            ],
+            "min": 1.4801407742584214,
+            "max": 15.102688185664698,
+            "within_2x_of_target": 0.7272727272727273
+          }
+        }
+      },
+      "14d": {
+        "target_fa_per_day": 6.0,
+        "warmup_days": 14.0,
+        "patients": [
+          {
+            "patient_id": "aaps_01177138",
+            "fell_back": true,
+            "warmup_lows": 14,
+            "eval_windows": 156592,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6807440925087984,
+              "precision": 0.2253286736561824,
+              "f1": 0.3385846461615404,
+              "false_alarms_per_day": 8.561356902012875
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6807440925087984,
+              "precision": 0.2253286736561824,
+              "f1": 0.3385846461615404,
+              "false_alarms_per_day": 8.561356902012875
+            }
+          },
+          {
+            "patient_id": "aaps_01919652",
+            "fell_back": false,
+            "warmup_lows": 116,
+            "eval_windows": 20299,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5497076023391813,
+              "precision": 0.18030690537084398,
+              "f1": 0.27154549831487723,
+              "false_alarms_per_day": 18.18887629932509
+            },
+            "calibrated": {
+              "threshold": 0.32049721479415894,
+              "recall": 0.2631578947368421,
+              "precision": 0.26264591439688717,
+              "f1": 0.2629016553067186,
+              "false_alarms_per_day": 5.377210700034484
+            }
+          },
+          {
+            "patient_id": "aaps_01949240",
+            "fell_back": false,
+            "warmup_lows": 135,
+            "eval_windows": 73656,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7577211394302849,
+              "precision": 0.4004119790841388,
+              "f1": 0.5239477503628446,
+              "false_alarms_per_day": 14.795698924731182
+            },
+            "calibrated": {
+              "threshold": 0.32280823588371277,
+              "recall": 0.4890554722638681,
+              "precision": 0.5402451142762504,
+              "f1": 0.5133774000629525,
+              "false_alarms_per_day": 5.427174975562072
+            }
+          },
+          {
+            "patient_id": "aaps_02050717",
+            "fell_back": true,
+            "warmup_lows": 2,
+            "eval_windows": 105307,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46987951807228917,
+              "precision": 0.0988056460369164,
+              "f1": 0.1632775119617225,
+              "false_alarms_per_day": 6.809803716751973
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46987951807228917,
+              "precision": 0.0988056460369164,
+              "f1": 0.1632775119617225,
+              "false_alarms_per_day": 6.809803716751973
+            }
+          },
+          {
+            "patient_id": "aaps_03403352",
+            "fell_back": false,
+            "warmup_lows": 88,
+            "eval_windows": 71400,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6586294416243654,
+              "precision": 0.1685612211757064,
+              "f1": 0.2684251357641583,
+              "false_alarms_per_day": 10.326050420168068
+            },
+            "calibrated": {
+              "threshold": 0.29985448718070984,
+              "recall": 0.3477157360406091,
+              "precision": 0.2589792060491493,
+              "f1": 0.2968580715059588,
+              "false_alarms_per_day": 3.162352941176471
+            }
+          },
+          {
+            "patient_id": "aaps_10540336",
+            "fell_back": false,
+            "warmup_lows": 425,
+            "eval_windows": 16456,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8184818481848185,
+              "precision": 0.5918854415274463,
+              "f1": 0.6869806094182825,
+              "false_alarms_per_day": 11.970831307729703
+            },
+            "calibrated": {
+              "threshold": 0.46227845549583435,
+              "recall": 0.3795379537953795,
+              "precision": 0.7796610169491526,
+              "f1": 0.5105438401775805,
+              "false_alarms_per_day": 2.275157997083131
+            }
+          },
+          {
+            "patient_id": "aaps_14045962",
+            "fell_back": false,
+            "warmup_lows": 232,
+            "eval_windows": 82088,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5893599334995844,
+              "precision": 0.15699734278122232,
+              "f1": 0.2479454450078685,
+              "false_alarms_per_day": 13.356592924666213
+            },
+            "calibrated": {
+              "threshold": 0.36790430545806885,
+              "recall": 0.2202826267664173,
+              "precision": 0.36054421768707484,
+              "f1": 0.2734778121775026,
+              "false_alarms_per_day": 1.6489620894649644
+            }
+          },
+          {
+            "patient_id": "aaps_18001564",
+            "fell_back": true,
+            "warmup_lows": 13,
+            "eval_windows": 38679,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.3956639566395664,
+              "precision": 0.09864864864864865,
+              "f1": 0.15792320173066524,
+              "false_alarms_per_day": 9.932831769177072
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.3956639566395664,
+              "precision": 0.09864864864864865,
+              "f1": 0.15792320173066524,
+              "false_alarms_per_day": 9.932831769177072
+            }
+          },
+          {
+            "patient_id": "aaps_24110807",
+            "fell_back": true,
+            "warmup_lows": 4,
+            "eval_windows": 75416,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.4896755162241888,
+              "precision": 0.15704824976348156,
+              "f1": 0.2378223495702006,
+              "false_alarms_per_day": 3.402567094515753
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.4896755162241888,
+              "precision": 0.15704824976348156,
+              "f1": 0.2378223495702006,
+              "false_alarms_per_day": 3.402567094515753
+            }
+          },
+          {
+            "patient_id": "aaps_28761103",
+            "fell_back": false,
+            "warmup_lows": 151,
+            "eval_windows": 44863,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6417638483965015,
+              "precision": 0.3031502840420038,
+              "f1": 0.4117853384777271,
+              "false_alarms_per_day": 25.986313888950807
+            },
+            "calibrated": {
+              "threshold": 0.3545260727405548,
+              "recall": 0.2598396501457726,
+              "precision": 0.42314540059347183,
+              "f1": 0.32196884172499435,
+              "false_alarms_per_day": 6.239796714441745
+            }
+          },
+          {
+            "patient_id": "aaps_35187603",
+            "fell_back": false,
+            "warmup_lows": 30,
+            "eval_windows": 156011,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.78781876702154,
+              "precision": 0.43571135149938384,
+              "f1": 0.5611003350379122,
+              "false_alarms_per_day": 15.214927152572576
+            },
+            "calibrated": {
+              "threshold": 0.24054758250713348,
+              "recall": 0.7104481307254271,
+              "precision": 0.4904289864980345,
+              "f1": 0.5802831142568251,
+              "false_alarms_per_day": 11.007839190826289
+            }
+          },
+          {
+            "patient_id": "aaps_39038570",
+            "fell_back": false,
+            "warmup_lows": 87,
+            "eval_windows": 5495,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5287356321839081,
+              "precision": 0.14153846153846153,
+              "f1": 0.22330097087378642,
+              "false_alarms_per_day": 14.622747952684259
+            },
+            "calibrated": {
+              "threshold": 0.3180171549320221,
+              "recall": 0.12643678160919541,
+              "precision": 0.11458333333333333,
+              "f1": 0.12021857923497269,
+              "false_alarms_per_day": 4.454959053685169
+            }
+          },
+          {
+            "patient_id": "aaps_39182506",
+            "fell_back": false,
+            "warmup_lows": 284,
+            "eval_windows": 236029,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7058656843298384,
+              "precision": 0.3181963339081561,
+              "f1": 0.4386528725511777,
+              "false_alarms_per_day": 13.025518050748001
+            },
+            "calibrated": {
+              "threshold": 0.39181023836135864,
+              "recall": 0.24426183054689715,
+              "precision": 0.5195901145268234,
+              "f1": 0.33230531996915963,
+              "false_alarms_per_day": 1.9449813370390925
+            }
+          },
+          {
+            "patient_id": "aaps_42360672",
+            "fell_back": false,
+            "warmup_lows": 109,
+            "eval_windows": 98474,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7021889400921659,
+              "precision": 0.25030800821355237,
+              "f1": 0.3690584317287315,
+              "false_alarms_per_day": 10.677823587952151
+            },
+            "calibrated": {
+              "threshold": 0.27662408351898193,
+              "recall": 0.5005760368663594,
+              "precision": 0.32197110040755833,
+              "f1": 0.3918827508455468,
+              "false_alarms_per_day": 5.3520726283079805
+            }
+          },
+          {
+            "patient_id": "aaps_47631371",
+            "fell_back": false,
+            "warmup_lows": 55,
+            "eval_windows": 26497,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7297297297297297,
+              "precision": 0.22625698324022347,
+              "f1": 0.34541577825159914,
+              "false_alarms_per_day": 6.021511869268219
+            },
+            "calibrated": {
+              "threshold": 0.21029983460903168,
+              "recall": 0.6981981981981982,
+              "precision": 0.23773006134969324,
+              "f1": 0.3546910755148741,
+              "false_alarms_per_day": 5.401970034343511
+            }
+          },
+          {
+            "patient_id": "aaps_49141524",
+            "fell_back": false,
+            "warmup_lows": 49,
+            "eval_windows": 9312,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.755868544600939,
+              "precision": 0.2819614711033275,
+              "f1": 0.41071428571428575,
+              "false_alarms_per_day": 12.68041237113402
+            },
+            "calibrated": {
+              "threshold": 0.2632249891757965,
+              "recall": 0.6056338028169014,
+              "precision": 0.35537190082644626,
+              "f1": 0.44791666666666663,
+              "false_alarms_per_day": 7.237113402061855
+            }
+          },
+          {
+            "patient_id": "aaps_49623237",
+            "fell_back": false,
+            "warmup_lows": 48,
+            "eval_windows": 373597,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6269455252918288,
+              "precision": 0.17681755829903978,
+              "f1": 0.27583993152150654,
+              "false_alarms_per_day": 9.252151382371913
+            },
+            "calibrated": {
+              "threshold": 0.2833474576473236,
+              "recall": 0.4080739299610895,
+              "precision": 0.2391335328487958,
+              "f1": 0.30155449725941236,
+              "false_alarms_per_day": 4.11575039414128
+            }
+          },
+          {
+            "patient_id": "aaps_50729763",
+            "fell_back": false,
+            "warmup_lows": 65,
+            "eval_windows": 43935,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.685099846390169,
+              "precision": 0.2940013183915623,
+              "f1": 0.4114391143911439,
+              "false_alarms_per_day": 7.020553089791737
+            },
+            "calibrated": {
+              "threshold": 0.2646065950393677,
+              "recall": 0.5422427035330261,
+              "precision": 0.37875536480686695,
+              "f1": 0.4459886291850915,
+              "false_alarms_per_day": 3.795425059747354
+            }
+          },
+          {
+            "patient_id": "aaps_52345968",
+            "fell_back": true,
+            "warmup_lows": 13,
+            "eval_windows": 68635,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46563407550822844,
+              "precision": 0.14905484970560892,
+              "f1": 0.22582159624413148,
+              "false_alarms_per_day": 11.522517665913892
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46563407550822844,
+              "precision": 0.14905484970560892,
+              "f1": 0.22582159624413148,
+              "false_alarms_per_day": 11.522517665913892
+            }
+          },
+          {
+            "patient_id": "aaps_53013068",
+            "fell_back": false,
+            "warmup_lows": 129,
+            "eval_windows": 153504,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7075383589059373,
+              "precision": 0.3558821555600295,
+              "f1": 0.47356670834077513,
+              "false_alarms_per_day": 18.00750469043152
+            },
+            "calibrated": {
+              "threshold": 0.3404841125011444,
+              "recall": 0.38452301534356237,
+              "precision": 0.4978407324235619,
+              "f1": 0.43390545016561277,
+              "false_alarms_per_day": 5.454033771106942
+            }
+          },
+          {
+            "patient_id": "aaps_54165023",
+            "fell_back": false,
+            "warmup_lows": 62,
+            "eval_windows": 224289,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6088888888888889,
+              "precision": 0.23228212953543573,
+              "f1": 0.33627884143348064,
+              "false_alarms_per_day": 8.721319369206693
+            },
+            "calibrated": {
+              "threshold": 0.2626493573188782,
+              "recall": 0.4797037037037037,
+              "precision": 0.29479242534595773,
+              "f1": 0.3651742415698657,
+              "false_alarms_per_day": 4.973155170338269
+            }
+          },
+          {
+            "patient_id": "aaps_56052290",
+            "fell_back": false,
+            "warmup_lows": 90,
+            "eval_windows": 78354,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6236144578313253,
+              "precision": 0.2630081300813008,
+              "f1": 0.3699785561115082,
+              "false_alarms_per_day": 13.327819894325753
+            },
+            "calibrated": {
+              "threshold": 0.29640433192253113,
+              "recall": 0.41012048192771083,
+              "precision": 0.36243611584327085,
+              "f1": 0.3848066922903007,
+              "false_alarms_per_day": 5.502412129565816
+            }
+          },
+          {
+            "patient_id": "aaps_63937017",
+            "fell_back": false,
+            "warmup_lows": 164,
+            "eval_windows": 497077,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8035616438356165,
+              "precision": 0.3467722865925751,
+              "f1": 0.48447307565246117,
+              "false_alarms_per_day": 6.402227421506124
+            },
+            "calibrated": {
+              "threshold": 0.32264280319213867,
+              "recall": 0.5364383561643835,
+              "precision": 0.5118285191478238,
+              "f1": 0.5238445588923817,
+              "false_alarms_per_day": 2.164010807178767
+            }
+          },
+          {
+            "patient_id": "aaps_68659836",
+            "fell_back": false,
+            "warmup_lows": 31,
+            "eval_windows": 73887,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7103448275862069,
+              "precision": 0.2696335078534031,
+              "f1": 0.3908918406072106,
+              "false_alarms_per_day": 7.6124893418327995
+            },
+            "calibrated": {
+              "threshold": 0.13832272589206696,
+              "recall": 0.8246305418719212,
+              "precision": 0.2056005895357406,
+              "f1": 0.3291388124262682,
+              "false_alarms_per_day": 12.60562751228227
+            }
+          },
+          {
+            "patient_id": "aaps_71422852",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 38286,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6100478468899522,
+              "precision": 0.17610497237569062,
+              "f1": 0.2733118971061093,
+              "false_alarms_per_day": 8.974141984015045
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6100478468899522,
+              "precision": 0.17610497237569062,
+              "f1": 0.2733118971061093,
+              "false_alarms_per_day": 8.974141984015045
+            }
+          },
+          {
+            "patient_id": "aaps_79751050",
+            "fell_back": false,
+            "warmup_lows": 68,
+            "eval_windows": 135021,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5921478060046189,
+              "precision": 0.23028561164002156,
+              "f1": 0.33160889808587685,
+              "false_alarms_per_day": 9.13991156931144
+            },
+            "calibrated": {
+              "threshold": 0.26091912388801575,
+              "recall": 0.45542725173210163,
+              "precision": 0.2938021454112038,
+              "f1": 0.3571816699873211,
+              "false_alarms_per_day": 5.055213633434799
+            }
+          },
+          {
+            "patient_id": "aaps_80901258",
+            "fell_back": false,
+            "warmup_lows": 185,
+            "eval_windows": 96174,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8042402826855124,
+              "precision": 0.4409570861183764,
+              "f1": 0.5696052055308765,
+              "false_alarms_per_day": 17.281676960509078
+            },
+            "calibrated": {
+              "threshold": 0.31488290429115295,
+              "recall": 0.5627208480565371,
+              "precision": 0.5599507735583685,
+              "f1": 0.5613323933732816,
+              "false_alarms_per_day": 7.495414561107991
+            }
+          },
+          {
+            "patient_id": "aaps_84241955",
+            "fell_back": false,
+            "warmup_lows": 122,
+            "eval_windows": 83685,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7415452974574179,
+              "precision": 0.3230454887622325,
+              "f1": 0.45003745318352056,
+              "false_alarms_per_day": 21.664097508514068
+            },
+            "calibrated": {
+              "threshold": 0.33445578813552856,
+              "recall": 0.40607257467292024,
+              "precision": 0.46390298928369994,
+              "f1": 0.4330656838225615,
+              "false_alarms_per_day": 6.542247714644201
+            }
+          },
+          {
+            "patient_id": "aaps_87635714",
+            "fell_back": false,
+            "warmup_lows": 75,
+            "eval_windows": 236287,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6251076287239539,
+              "precision": 0.28002777134922474,
+              "f1": 0.38678742674480554,
+              "false_alarms_per_day": 11.375589854710586
+            },
+            "calibrated": {
+              "threshold": 0.2635057270526886,
+              "recall": 0.4635784398140176,
+              "precision": 0.33046894181193226,
+              "f1": 0.38586683867268684,
+              "false_alarms_per_day": 6.6476446016920105
+            }
+          },
+          {
+            "patient_id": "aaps_92229310",
+            "fell_back": false,
+            "warmup_lows": 229,
+            "eval_windows": 33833,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6795321637426901,
+              "precision": 0.3433806146572104,
+              "f1": 0.4562230074597566,
+              "false_alarms_per_day": 9.457275441137352
+            },
+            "calibrated": {
+              "threshold": 0.339649498462677,
+              "recall": 0.40350877192982454,
+              "precision": 0.5029154518950437,
+              "f1": 0.4477611940298507,
+              "false_alarms_per_day": 2.9027281056956227
+            }
+          },
+          {
+            "patient_id": "aaps_93230373",
+            "fell_back": true,
+            "warmup_lows": 17,
+            "eval_windows": 292142,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6232394366197183,
+              "precision": 0.15902964959568733,
+              "f1": 0.2534001431639227,
+              "false_alarms_per_day": 4.6136467882057355
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6232394366197183,
+              "precision": 0.15902964959568733,
+              "f1": 0.2534001431639227,
+              "false_alarms_per_day": 4.6136467882057355
+            }
+          },
+          {
+            "patient_id": "aaps_94098083",
+            "fell_back": false,
+            "warmup_lows": 117,
+            "eval_windows": 55365,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6527331189710611,
+              "precision": 0.22796181920269512,
+              "f1": 0.3379109446525177,
+              "false_alarms_per_day": 14.305066377675425
+            },
+            "calibrated": {
+              "threshold": 0.31489309668540955,
+              "recall": 0.32395498392282956,
+              "precision": 0.3188291139240506,
+              "f1": 0.32137161084529503,
+              "false_alarms_per_day": 4.478786236792197
+            }
+          },
+          {
+            "patient_id": "aaps_97385078",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 108503,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.606280193236715,
+              "precision": 0.21452991452991452,
+              "f1": 0.3169191919191919,
+              "false_alarms_per_day": 9.757223302581496
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.606280193236715,
+              "precision": 0.21452991452991452,
+              "f1": 0.3169191919191919,
+              "false_alarms_per_day": 9.757223302581496
+            }
+          }
+        ],
+        "population": {
+          "recall": 0.6981769576356143,
+          "precision": 0.29124890288605504,
+          "false_alarms_per_day": 10.379240712096248,
+          "per_patient_fa": {
+            "median": 10.677823587952151,
+            "iqr": [
+              8.721319369206693,
+              14.305066377675425
+            ],
+            "min": 3.402567094515753,
+            "max": 25.986313888950807,
+            "within_2x_of_target": 0.6060606060606061
+          }
+        },
+        "calibrated": {
+          "recall": 0.4710578101214124,
+          "precision": 0.35032122673637317,
+          "false_alarms_per_day": 5.336752470631228,
+          "per_patient_fa": {
+            "median": 5.401970034343511,
+            "iqr": [
+              4.11575039414128,
+              7.237113402061855
+            ],
+            "min": 1.6489620894649644,
+            "max": 12.60562751228227,
+            "within_2x_of_target": 0.8181818181818182
+          }
+        }
+      },
+      "28d": {
+        "target_fa_per_day": 6.0,
+        "warmup_days": 28.0,
+        "patients": [
+          {
+            "patient_id": "aaps_01177138",
+            "fell_back": true,
+            "warmup_lows": 17,
+            "eval_windows": 156012,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6812688821752266,
+              "precision": 0.2265193370165746,
+              "f1": 0.33999246136449307,
+              "false_alarms_per_day": 8.528574725021151
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6812688821752266,
+              "precision": 0.2265193370165746,
+              "f1": 0.33999246136449307,
+              "false_alarms_per_day": 8.528574725021151
+            }
+          },
+          {
+            "patient_id": "aaps_01919652",
+            "fell_back": false,
+            "warmup_lows": 165,
+            "eval_windows": 16577,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5668103448275862,
+              "precision": 0.19197080291970803,
+              "f1": 0.28680479825517996,
+              "false_alarms_per_day": 19.23243047596067
+            },
+            "calibrated": {
+              "threshold": 0.30604490637779236,
+              "recall": 0.3017241379310345,
+              "precision": 0.26717557251908397,
+              "f1": 0.2834008097165992,
+              "false_alarms_per_day": 6.671412197623213
+            }
+          },
+          {
+            "patient_id": "aaps_01949240",
+            "fell_back": false,
+            "warmup_lows": 464,
+            "eval_windows": 69708,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7541583499667333,
+              "precision": 0.3940552755084304,
+              "f1": 0.5176389998858317,
+              "false_alarms_per_day": 14.402478912033052
+            },
+            "calibrated": {
+              "threshold": 0.35163867473602295,
+              "recall": 0.41783100465735196,
+              "precision": 0.575091575091575,
+              "f1": 0.48400770712909447,
+              "false_alarms_per_day": 3.834050611120675
+            }
+          },
+          {
+            "patient_id": "aaps_02050717",
+            "fell_back": true,
+            "warmup_lows": 2,
+            "eval_windows": 101330,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46987951807228917,
+              "precision": 0.09970781592403213,
+              "f1": 0.16450738174148838,
+              "false_alarms_per_day": 7.006019934866279
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46987951807228917,
+              "precision": 0.09970781592403213,
+              "f1": 0.16450738174148838,
+              "false_alarms_per_day": 7.006019934866279
+            }
+          },
+          {
+            "patient_id": "aaps_03403352",
+            "fell_back": false,
+            "warmup_lows": 110,
+            "eval_windows": 67706,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6592689295039165,
+              "precision": 0.17159361196058442,
+              "f1": 0.27231059584793743,
+              "false_alarms_per_day": 10.37048415206924
+            },
+            "calibrated": {
+              "threshold": 0.26288869976997375,
+              "recall": 0.4765013054830287,
+              "precision": 0.23747560182173064,
+              "f1": 0.31697785497177594,
+              "false_alarms_per_day": 4.985318878681357
+            }
+          },
+          {
+            "patient_id": "aaps_10540336",
+            "fell_back": false,
+            "warmup_lows": 641,
+            "eval_windows": 12666,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.821285140562249,
+              "precision": 0.604135893648449,
+              "f1": 0.6961702127659575,
+              "false_alarms_per_day": 12.187588820464235
+            },
+            "calibrated": {
+              "threshold": 0.36403459310531616,
+              "recall": 0.5863453815261044,
+              "precision": 0.7535483870967742,
+              "f1": 0.6595143986448333,
+              "false_alarms_per_day": 4.342965419232591
+            }
+          },
+          {
+            "patient_id": "aaps_14045962",
+            "fell_back": false,
+            "warmup_lows": 405,
+            "eval_windows": 78089,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5650485436893203,
+              "precision": 0.13950143815915628,
+              "f1": 0.223760092272203,
+              "false_alarms_per_day": 13.240277119696758
+            },
+            "calibrated": {
+              "threshold": 0.34875166416168213,
+              "recall": 0.23883495145631067,
+              "precision": 0.30407911001236093,
+              "f1": 0.26753670473083196,
+              "false_alarms_per_day": 2.076400005122361
+            }
+          },
+          {
+            "patient_id": "aaps_18001564",
+            "fell_back": false,
+            "warmup_lows": 40,
+            "eval_windows": 34797,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.4093567251461988,
+              "precision": 0.10355029585798817,
+              "f1": 0.16528925619834714,
+              "false_alarms_per_day": 10.031209587033365
+            },
+            "calibrated": {
+              "threshold": 0.20825724303722382,
+              "recall": 0.391812865497076,
+              "precision": 0.11101905550952776,
+              "f1": 0.17301484828921884,
+              "false_alarms_per_day": 8.880765583239935
+            }
+          },
+          {
+            "patient_id": "aaps_24110807",
+            "fell_back": true,
+            "warmup_lows": 5,
+            "eval_windows": 71553,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.4881656804733728,
+              "precision": 0.1624015748031496,
+              "f1": 0.2437223042836041,
+              "false_alarms_per_day": 3.42526518804243
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.4881656804733728,
+              "precision": 0.1624015748031496,
+              "f1": 0.2437223042836041,
+              "false_alarms_per_day": 3.42526518804243
+            }
+          },
+          {
+            "patient_id": "aaps_28761103",
+            "fell_back": false,
+            "warmup_lows": 331,
+            "eval_windows": 41216,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6431357254290172,
+              "precision": 0.30531383077207924,
+              "f1": 0.414061519146265,
+              "false_alarms_per_day": 26.217391304347824
+            },
+            "calibrated": {
+              "threshold": 0.35280200839042664,
+              "recall": 0.26365054602184085,
+              "precision": 0.42382445141065833,
+              "f1": 0.3250781437845636,
+              "false_alarms_per_day": 6.421583850931677
+            }
+          },
+          {
+            "patient_id": "aaps_35187603",
+            "fell_back": false,
+            "warmup_lows": 176,
+            "eval_windows": 152142,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7894604135148765,
+              "precision": 0.4379939847520459,
+              "f1": 0.5634081605110441,
+              "false_alarms_per_day": 15.210001183105256
+            },
+            "calibrated": {
+              "threshold": 0.28736406564712524,
+              "recall": 0.6098083711548159,
+              "precision": 0.5436664044059796,
+              "f1": 0.5748410481906233,
+              "false_alarms_per_day": 7.685451749023938
+            }
+          },
+          {
+            "patient_id": "aaps_39038570",
+            "fell_back": false,
+            "warmup_lows": 134,
+            "eval_windows": 1849,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.425,
+              "precision": 0.11486486486486487,
+              "f1": 0.18085106382978725,
+              "false_alarms_per_day": 20.40454299621417
+            },
+            "calibrated": {
+              "threshold": 0.29807695746421814,
+              "recall": 0.1,
+              "precision": 0.06779661016949153,
+              "f1": 0.0808080808080808,
+              "false_alarms_per_day": 8.566792861005949
+            }
+          },
+          {
+            "patient_id": "aaps_39182506",
+            "fell_back": false,
+            "warmup_lows": 487,
+            "eval_windows": 232055,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7025528811086797,
+              "precision": 0.3148535564853556,
+              "f1": 0.43483364182203954,
+              "false_alarms_per_day": 13.0065717179117
+            },
+            "calibrated": {
+              "threshold": 0.3539194166660309,
+              "recall": 0.3261852662290299,
+              "precision": 0.48503253796095447,
+              "f1": 0.39005669428696027,
+              "false_alarms_per_day": 2.9463359979315245
+            }
+          },
+          {
+            "patient_id": "aaps_42360672",
+            "fell_back": false,
+            "warmup_lows": 117,
+            "eval_windows": 96202,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7037037037037037,
+              "precision": 0.25202072538860104,
+              "f1": 0.3711277277582786,
+              "false_alarms_per_day": 10.804266023575392
+            },
+            "calibrated": {
+              "threshold": 0.2431035190820694,
+              "recall": 0.5983796296296297,
+              "precision": 0.29824055379290454,
+              "f1": 0.3980750721847931,
+              "false_alarms_per_day": 7.2836739360928044
+            }
+          },
+          {
+            "patient_id": "aaps_47631371",
+            "fell_back": false,
+            "warmup_lows": 98,
+            "eval_windows": 22579,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7262569832402235,
+              "precision": 0.22336769759450173,
+              "f1": 0.3416557161629435,
+              "false_alarms_per_day": 5.7653571903095795
+            },
+            "calibrated": {
+              "threshold": 0.21965135633945465,
+              "recall": 0.6703910614525139,
+              "precision": 0.2459016393442623,
+              "f1": 0.35982008995502246,
+              "false_alarms_per_day": 4.69391912839364
+            }
+          },
+          {
+            "patient_id": "aaps_49141524",
+            "fell_back": false,
+            "warmup_lows": 104,
+            "eval_windows": 5448,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7151898734177216,
+              "precision": 0.275609756097561,
+              "f1": 0.397887323943662,
+              "false_alarms_per_day": 15.70044052863436
+            },
+            "calibrated": {
+              "threshold": 0.24560056626796722,
+              "recall": 0.620253164556962,
+              "precision": 0.3181818181818182,
+              "f1": 0.4206008583690987,
+              "false_alarms_per_day": 11.101321585903083
+            }
+          },
+          {
+            "patient_id": "aaps_49623237",
+            "fell_back": false,
+            "warmup_lows": 78,
+            "eval_windows": 369761,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6273885350318471,
+              "precision": 0.1774160027710426,
+              "f1": 0.2766106820759302,
+              "false_alarms_per_day": 9.248438856450518
+            },
+            "calibrated": {
+              "threshold": 0.26572898030281067,
+              "recall": 0.45149436550710437,
+              "precision": 0.22627378759975444,
+              "f1": 0.3014639731741229,
+              "false_alarms_per_day": 4.90851117343365
+            }
+          },
+          {
+            "patient_id": "aaps_50729763",
+            "fell_back": false,
+            "warmup_lows": 219,
+            "eval_windows": 39973,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6559356136820925,
+              "precision": 0.2674323215750615,
+              "f1": 0.37995337995337997,
+              "false_alarms_per_day": 6.433942911465239
+            },
+            "calibrated": {
+              "threshold": 0.28072625398635864,
+              "recall": 0.48088531187122735,
+              "precision": 0.38057324840764334,
+              "f1": 0.42488888888888887,
+              "false_alarms_per_day": 2.802691816976459
+            }
+          },
+          {
+            "patient_id": "aaps_52345968",
+            "fell_back": true,
+            "warmup_lows": 17,
+            "eval_windows": 64935,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46647230320699706,
+              "precision": 0.15099087763447624,
+              "f1": 0.22813688212927752,
+              "false_alarms_per_day": 11.97061677061677
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.46647230320699706,
+              "precision": 0.15099087763447624,
+              "f1": 0.22813688212927752,
+              "false_alarms_per_day": 11.97061677061677
+            }
+          },
+          {
+            "patient_id": "aaps_53013068",
+            "fell_back": false,
+            "warmup_lows": 296,
+            "eval_windows": 150098,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7085152838427947,
+              "precision": 0.3553973577931412,
+              "f1": 0.47335551807448595,
+              "false_alarms_per_day": 18.06883502778185
+            },
+            "calibrated": {
+              "threshold": 0.32040464878082275,
+              "recall": 0.43463427947598254,
+              "precision": 0.4754440961337513,
+              "f1": 0.4541241890639481,
+              "false_alarms_per_day": 6.74247491638796
+            }
+          },
+          {
+            "patient_id": "aaps_54165023",
+            "fell_back": false,
+            "warmup_lows": 178,
+            "eval_windows": 220814,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6078551702976374,
+              "precision": 0.22997446018110054,
+              "f1": 0.33369830708329823,
+              "false_alarms_per_day": 8.651190594799242
+            },
+            "calibrated": {
+              "threshold": 0.2772431969642639,
+              "recall": 0.44154648665234736,
+              "precision": 0.30833511892007714,
+              "f1": 0.36310875599293474,
+              "false_alarms_per_day": 4.210167833561277
+            }
+          },
+          {
+            "patient_id": "aaps_56052290",
+            "fell_back": false,
+            "warmup_lows": 172,
+            "eval_windows": 74406,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6191670847967887,
+              "precision": 0.2632814166844463,
+              "f1": 0.3694610778443113,
+              "false_alarms_per_day": 13.36537376018063
+            },
+            "calibrated": {
+              "threshold": 0.29057547450065613,
+              "recall": 0.4199698946312092,
+              "precision": 0.35738684884713917,
+              "f1": 0.386159169550173,
+              "false_alarms_per_day": 5.82533666639787
+            }
+          },
+          {
+            "patient_id": "aaps_63937017",
+            "fell_back": false,
+            "warmup_lows": 230,
+            "eval_windows": 493340,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.804534144318496,
+              "precision": 0.3465110740652536,
+              "f1": 0.484394506866417,
+              "false_alarms_per_day": 6.40752422264564
+            },
+            "calibrated": {
+              "threshold": 0.2731912136077881,
+              "recall": 0.6571744539673763,
+              "precision": 0.4478990013190126,
+              "f1": 0.532720753025549,
+              "false_alarms_per_day": 3.420926744233186
+            }
+          },
+          {
+            "patient_id": "aaps_68659836",
+            "fell_back": false,
+            "warmup_lows": 75,
+            "eval_windows": 70390,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.709577754891864,
+              "precision": 0.26935105551211885,
+              "f1": 0.39047888920374046,
+              "false_alarms_per_day": 7.646995311834067
+            },
+            "calibrated": {
+              "threshold": 0.18819251656532288,
+              "recall": 0.7384140061791967,
+              "precision": 0.25689716947330704,
+              "f1": 0.38118022328548645,
+              "false_alarms_per_day": 8.485750816877397
+            }
+          },
+          {
+            "patient_id": "aaps_71422852",
+            "fell_back": false,
+            "warmup_lows": 56,
+            "eval_windows": 34308,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6167979002624672,
+              "precision": 0.1828793774319066,
+              "f1": 0.28211284513805523,
+              "false_alarms_per_day": 8.814270724029381
+            },
+            "calibrated": {
+              "threshold": 0.23303695023059845,
+              "recall": 0.5196850393700787,
+              "precision": 0.2053941908713693,
+              "f1": 0.29442379182156136,
+              "false_alarms_per_day": 6.430220356768101
+            }
+          },
+          {
+            "patient_id": "aaps_79751050",
+            "fell_back": false,
+            "warmup_lows": 158,
+            "eval_windows": 131168,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.5903614457831325,
+              "precision": 0.22858742302668408,
+              "f1": 0.32956685499058375,
+              "false_alarms_per_day": 9.076848011710172
+            },
+            "calibrated": {
+              "threshold": 0.2686220109462738,
+              "recall": 0.44,
+              "precision": 0.302317880794702,
+              "f1": 0.35839057899901866,
+              "false_alarms_per_day": 4.6262503049524275
+            }
+          },
+          {
+            "patient_id": "aaps_80901258",
+            "fell_back": false,
+            "warmup_lows": 440,
+            "eval_windows": 92553,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.8035152636447733,
+              "precision": 0.44028791565287917,
+              "f1": 0.5688650206300347,
+              "false_alarms_per_day": 17.179864510064505
+            },
+            "calibrated": {
+              "threshold": 0.3275626599788666,
+              "recall": 0.5258094357076781,
+              "precision": 0.5696532371216677,
+              "f1": 0.5468539542043487,
+              "false_alarms_per_day": 6.680885546659752
+            }
+          },
+          {
+            "patient_id": "aaps_84241955",
+            "fell_back": false,
+            "warmup_lows": 199,
+            "eval_windows": 79936,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.7420734776044288,
+              "precision": 0.3257123923127899,
+              "f1": 0.4527172244396684,
+              "false_alarms_per_day": 21.995596477181746
+            },
+            "calibrated": {
+              "threshold": 0.3169238865375519,
+              "recall": 0.45168595873175643,
+              "precision": 0.45021319287684974,
+              "f1": 0.4509483733199347,
+              "false_alarms_per_day": 7.89751801441153
+            }
+          },
+          {
+            "patient_id": "aaps_87635714",
+            "fell_back": false,
+            "warmup_lows": 110,
+            "eval_windows": 233260,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6256063756063756,
+              "precision": 0.2801396431342126,
+              "f1": 0.38698960454399317,
+              "false_alarms_per_day": 11.456537769013119
+            },
+            "calibrated": {
+              "threshold": 0.22178733348846436,
+              "recall": 0.5703395703395704,
+              "precision": 0.29973595556769556,
+              "f1": 0.3929573261712922,
+              "false_alarms_per_day": 9.495875846694675
+            }
+          },
+          {
+            "patient_id": "aaps_92229310",
+            "fell_back": false,
+            "warmup_lows": 335,
+            "eval_windows": 29960,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6769025367156208,
+              "precision": 0.35679099225897254,
+              "f1": 0.4672811059907834,
+              "false_alarms_per_day": 8.78611481975968
+            },
+            "calibrated": {
+              "threshold": 0.31466370820999146,
+              "recall": 0.4539385847797063,
+              "precision": 0.4781997187060478,
+              "f1": 0.4657534246575343,
+              "false_alarms_per_day": 3.566355140186916
+            }
+          },
+          {
+            "patient_id": "aaps_93230373",
+            "fell_back": true,
+            "warmup_lows": 19,
+            "eval_windows": 288165,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6227080394922426,
+              "precision": 0.1598768785080572,
+              "f1": 0.25443019737789946,
+              "false_alarms_per_day": 4.637343188798084
+            },
+            "calibrated": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6227080394922426,
+              "precision": 0.1598768785080572,
+              "f1": 0.25443019737789946,
+              "false_alarms_per_day": 4.637343188798084
+            }
+          },
+          {
+            "patient_id": "aaps_94098083",
+            "fell_back": false,
+            "warmup_lows": 231,
+            "eval_windows": 51832,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6522123893805309,
+              "precision": 0.22572741194486984,
+              "f1": 0.3353811149032992,
+              "false_alarms_per_day": 14.046612131501774
+            },
+            "calibrated": {
+              "threshold": 0.3153116703033447,
+              "recall": 0.3274336283185841,
+              "precision": 0.32229965156794427,
+              "f1": 0.324846356453029,
+              "false_alarms_per_day": 4.322889334773885
+            }
+          },
+          {
+            "patient_id": "aaps_97385078",
+            "fell_back": false,
+            "warmup_lows": 30,
+            "eval_windows": 107913,
+            "population": {
+              "threshold": 0.19872696697711945,
+              "recall": 0.6085106382978723,
+              "precision": 0.2156398104265403,
+              "f1": 0.3184348655956736,
+              "false_alarms_per_day": 9.717161046398488
+            },
+            "calibrated": {
+              "threshold": 0.23905548453330994,
+              "recall": 0.521580547112462,
+              "precision": 0.25213047311196,
+              "f1": 0.3399366085578447,
+              "false_alarms_per_day": 6.792138111256289
+            }
+          }
+        ],
+        "population": {
+          "recall": 0.6975368067054308,
+          "precision": 0.2905576645457948,
+          "false_alarms_per_day": 10.348371575477403,
+          "per_patient_fa": {
+            "median": 10.804266023575392,
+            "iqr": [
+              8.651190594799242,
+              14.402478912033052
+            ],
+            "min": 3.42526518804243,
+            "max": 26.217391304347824,
+            "within_2x_of_target": 0.5757575757575758
+          }
+        },
+        "calibrated": {
+          "recall": 0.494255971863889,
+          "precision": 0.3501182033096927,
+          "false_alarms_per_day": 5.574317830576257,
+          "per_patient_fa": {
+            "median": 6.421583850931677,
+            "iqr": [
+              4.322889334773885,
+              7.685451749023938
+            ],
+            "min": 2.076400005122361,
+            "max": 11.97061677061677,
+            "within_2x_of_target": 0.9090909090909091
+          }
+        }
+      }
+    }
+  }
+}

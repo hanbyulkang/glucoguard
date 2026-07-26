@@ -31,7 +31,7 @@ from src.predictor import (
     best_checkpoint,
     cached_forecast,
     load_splits,
-    patient_series,
+    wearer_facts,
 )
 
 STEPS = ["1 · Connect", "2 · Calibrate", "3 · Monitor"]
@@ -121,12 +121,11 @@ if step_index == 0:
         patients = load_splits()["test"]
         state.patient = st.selectbox("Wearer", patients,
                                      index=patients.index(state.patient))
-        series = patient_series(state.patient)
-        days = len(series) * SAMPLE_MINUTES / (60 * 24)
+        facts = wearer_facts(state.patient)
         ui.tiles([
-            ("Record length", f"{days:,.0f} days", "of continuous wear"),
-            ("Readings", f"{int(series['glucose'].notna().sum()):,}", "every 5 minutes"),
-            ("Time below 70", f"{(series['glucose'] < HYPO_THRESHOLD).mean():.1%}",
+            ("Record shown", f"{facts['days']:,.0f} days", "of continuous wear"),
+            ("Readings", f"{facts['readings']:,}", "every 5 minutes"),
+            ("Time below 70", f"{facts['time_below_70']:.1%}",
              "clinical target is under 4%"),
             ("Seen in training", "No", "held-out wearer"),
         ])
@@ -300,6 +299,8 @@ else:
             state.monitor.ticks += 1
 
         row = frame.iloc[state.cursor]
+        # The clock that matters is the trace's, not the wall's — see should_alert.
+        sim_now = times.iloc[state.cursor].to_pydatetime()
         now_g = float(row["current"])
         predicted = float(row["predicted"])
         risk = float(row["hypo_prob"]) if "hypo_prob" in frame.columns else None
@@ -307,16 +308,15 @@ else:
                     and risk >= threshold)
 
         if advance:
-            fire, kind = should_alert(state.monitor, alarming, utc_now(), now_g)
+            fire, kind = should_alert(state.monitor, alarming, sim_now, now_g)
             if fire:
-                title, body = alert_text(kind, now_g, predicted, risk or 0.0)
                 delivered = send_alert(state.topic, now_g, risk or 0.0, predicted,
                                        dry_run=not (live_send and state.topic))
                 state.monitor.log.append(AlertRecord(
-                    at=utc_now(), glucose=now_g, predicted=predicted,
+                    at=sim_now, glucose=now_g, predicted=predicted,
                     risk=risk or 0.0, delivered=delivered, kind=kind,
                 ))
-                state.monitor.last_alert_at = utc_now()
+                state.monitor.last_alert_at = sim_now
                 state.monitor.last_state = kind
             elif not alarming and state.monitor.last_state != "ok":
                 state.monitor.last_state = "ok"
@@ -332,9 +332,10 @@ else:
         ].to_numpy(dtype=float)
         delta = float(recent[-1] - recent[-2]) if len(recent) > 1 else 0.0
 
+        sim_now = picked.to_pydatetime()
         snoozed = (state.monitor.last_alert_at is not None
                    and alarming
-                   and (utc_now() - state.monitor.last_alert_at).total_seconds()
+                   and (sim_now - state.monitor.last_alert_at).total_seconds()
                    < SNOOZE_MINUTES * 60)
 
         st.markdown(
@@ -347,8 +348,8 @@ else:
         st.caption(
             f"{picked.strftime('%a %d %b %Y, %H:%M')} UTC · "
             + ("running" if state.running else "paused")
-            + (f" · snoozed for another "
-               f"{SNOOZE_MINUTES - (utc_now() - state.monitor.last_alert_at).total_seconds() / 60:.0f} min"
+            + (f" · quiet for another "
+               f"{SNOOZE_MINUTES - (sim_now - state.monitor.last_alert_at).total_seconds() / 60:.0f} min"
                if snoozed else "")
         )
 

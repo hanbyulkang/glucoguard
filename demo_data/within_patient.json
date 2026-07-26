@@ -1,0 +1,1208 @@
+{
+  "test": {
+    "per_patient": {
+      "00897741": {
+        "month 1": {
+          "rmse": 16.812828063964844,
+          "windows": 7311,
+          "glucose_sd": 42.18366241455078,
+          "calendar_year": 2016.0
+        },
+        "months 1\u20133": {
+          "rmse": 16.004669189453125,
+          "windows": 13581,
+          "glucose_sd": 45.81013107299805,
+          "calendar_year": 2016.0
+        },
+        "months 3\u20136": {
+          "rmse": 17.33591651916504,
+          "windows": 22089,
+          "glucose_sd": 43.82783508300781,
+          "calendar_year": 2016.0
+        },
+        "months 6\u201312": {
+          "rmse": 16.618438720703125,
+          "windows": 46932,
+          "glucose_sd": 42.960182189941406,
+          "calendar_year": 2016.4483934202676
+        },
+        "year 1\u20132": {
+          "rmse": 13.327115058898926,
+          "windows": 81116,
+          "glucose_sd": 32.0521240234375,
+          "calendar_year": 2017.1024705360226
+        }
+      },
+      "01352464": {
+        "months 1\u20133": {
+          "rmse": 16.701526641845703,
+          "windows": 3427,
+          "glucose_sd": 45.51276397705078,
+          "calendar_year": 2016.0
+        },
+        "months 3\u20136": {
+          "rmse": 15.436384201049805,
+          "windows": 15527,
+          "glucose_sd": 38.949581146240234,
+          "calendar_year": 2016.0
+        },
+        "months 6\u201312": {
+          "rmse": 16.352567672729492,
+          "windows": 35742,
+          "glucose_sd": 36.67318344116211,
+          "calendar_year": 2016.6022326674502
+        },
+        "year 1\u20132": {
+          "rmse": 16.471832275390625,
+          "windows": 61830,
+          "glucose_sd": 41.17859649658203,
+          "calendar_year": 2017.0064208313117
+        }
+      },
+      "06593293": {
+        "month 1": {
+          "rmse": 14.164874076843262,
+          "windows": 8527,
+          "glucose_sd": 41.33017349243164,
+          "calendar_year": 2018.0
+        },
+        "months 1\u20133": {
+          "rmse": 12.85319709777832,
+          "windows": 16836,
+          "glucose_sd": 36.12883377075195,
+          "calendar_year": 2018.0
+        },
+        "months 3\u20136": {
+          "rmse": 14.626873016357422,
+          "windows": 24789,
+          "glucose_sd": 37.20368576049805,
+          "calendar_year": 2018.2873048529589
+        },
+        "months 6\u201312": {
+          "rmse": 13.223371505737305,
+          "windows": 52094,
+          "glucose_sd": 29.462329864501953,
+          "calendar_year": 2019.0
+        },
+        "year 1\u20132": {
+          "rmse": 14.603353500366211,
+          "windows": 35548,
+          "glucose_sd": 32.955284118652344,
+          "calendar_year": 2019.0
+        }
+      },
+      "14092221": {
+        "month 1": {
+          "rmse": 17.757713317871094,
+          "windows": 6953,
+          "glucose_sd": 39.09688186645508,
+          "calendar_year": 2017.0
+        },
+        "months 1\u20133": {
+          "rmse": 18.97089195251465,
+          "windows": 14989,
+          "glucose_sd": 38.7025032043457,
+          "calendar_year": 2017.0
+        },
+        "months 3\u20136": {
+          "rmse": 20.580493927001953,
+          "windows": 20990,
+          "glucose_sd": 49.007537841796875,
+          "calendar_year": 2017.706002858504
+        },
+        "months 6\u201312": {
+          "rmse": 18.99458885192871,
+          "windows": 47277,
+          "glucose_sd": 42.14140319824219,
+          "calendar_year": 2018.0
+        },
+        "year 1\u20132": {
+          "rmse": 20.739458084106445,
+          "windows": 68459,
+          "glucose_sd": 44.31707000732422,
+          "calendar_year": 2018.5877678610555
+        },
+        "year 2+": {
+          "rmse": 24.20878791809082,
+          "windows": 100288,
+          "glucose_sd": 50.87787628173828,
+          "calendar_year": 2019.6912791161456
+        }
+      },
+      "37948668": {
+        "month 1": {
+          "rmse": 19.837108612060547,
+          "windows": 5504,
+          "glucose_sd": 39.4880256652832,
+          "calendar_year": 2015.0
+        },
+        "months 1\u20133": {
+          "rmse": 22.350736618041992,
+          "windows": 10735,
+          "glucose_sd": 48.43003845214844,
+          "calendar_year": 2015.0
+        },
+        "months 3\u20136": {
+          "rmse": 25.913806915283203,
+          "windows": 13031,
+          "glucose_sd": 67.39646911621094,
+          "calendar_year": 2015.0
+        },
+        "months 6\u201312": {
+          "rmse": 21.991249084472656,
+          "windows": 38635,
+          "glucose_sd": 56.82985305786133,
+          "calendar_year": 2015.567050601786
+        },
+        "year 1\u20132": {
+          "rmse": 22.303285598754883,
+          "windows": 79772,
+          "glucose_sd": 55.83904266357422,
+          "calendar_year": 2016.2663215163216
+        },
+        "year 2+": {
+          "rmse": 22.21182632446289,
+          "windows": 80941,
+          "glucose_sd": 62.10983657836914,
+          "calendar_year": 2017.3615720092414
+        }
+      },
+      "40997757": {
+        "month 1": {
+          "rmse": 16.75109100341797,
+          "windows": 7513,
+          "glucose_sd": 45.90336608886719,
+          "calendar_year": 2016.0
+        },
+        "months 1\u20133": {
+          "rmse": 17.42644500732422,
+          "windows": 13750,
+          "glucose_sd": 49.24470138549805,
+          "calendar_year": 2016.2981818181818
+        },
+        "months 3\u20136": {
+          "rmse": 17.634767532348633,
+          "windows": 20430,
+          "glucose_sd": 46.22357940673828,
+          "calendar_year": 2017.0
+        },
+        "months 6\u201312": {
+          "rmse": 18.023048400878906,
+          "windows": 42490,
+          "glucose_sd": 51.56938171386719,
+          "calendar_year": 2017.0
+        },
+        "year 1\u20132": {
+          "rmse": 18.586828231811523,
+          "windows": 70442,
+          "glucose_sd": 54.611289978027344,
+          "calendar_year": 2017.731878708725
+        },
+        "year 2+": {
+          "rmse": 20.310916900634766,
+          "windows": 81662,
+          "glucose_sd": 59.76397705078125,
+          "calendar_year": 2018.7830692366094
+        }
+      },
+      "81195091": {
+        "month 1": {
+          "rmse": 16.41037368774414,
+          "windows": 7740,
+          "glucose_sd": 53.033939361572266,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 16.941696166992188,
+          "windows": 16537,
+          "glucose_sd": 58.654937744140625,
+          "calendar_year": 2020.0
+        },
+        "months 3\u20136": {
+          "rmse": 18.146799087524414,
+          "windows": 25602,
+          "glucose_sd": 55.71853256225586,
+          "calendar_year": 2020.0
+        },
+        "months 6\u201312": {
+          "rmse": 16.008769989013672,
+          "windows": 33928,
+          "glucose_sd": 37.350162506103516,
+          "calendar_year": 2020.0
+        }
+      },
+      "86323903": {
+        "month 1": {
+          "rmse": 19.017654418945312,
+          "windows": 6640,
+          "glucose_sd": 55.78524398803711,
+          "calendar_year": 2015.0
+        },
+        "months 1\u20133": {
+          "rmse": 18.078889846801758,
+          "windows": 14084,
+          "glucose_sd": 64.47636413574219,
+          "calendar_year": 2015.0
+        },
+        "months 3\u20136": {
+          "rmse": 22.488759994506836,
+          "windows": 17003,
+          "glucose_sd": 67.15437316894531,
+          "calendar_year": 2015.11186261248
+        },
+        "months 6\u201312": {
+          "rmse": 21.275955200195312,
+          "windows": 28805,
+          "glucose_sd": 64.18667602539062,
+          "calendar_year": 2016.0
+        },
+        "year 1\u20132": {
+          "rmse": 17.592655181884766,
+          "windows": 71170,
+          "glucose_sd": 58.84028625488281,
+          "calendar_year": 2016.5297316284953
+        },
+        "year 2+": {
+          "rmse": 17.82406997680664,
+          "windows": 133505,
+          "glucose_sd": 57.32933044433594,
+          "calendar_year": 2017.798599303397
+        }
+      }
+    },
+    "centred": {
+      "month 1": {
+        "wearers": 7,
+        "mean_delta": -0.8835093407403853,
+        "median_delta": -0.4665360450744629,
+        "share_worse": 0.2857142857142857
+      },
+      "months 1\u20133": {
+        "wearers": 8,
+        "mean_delta": -0.4810917178789773,
+        "median_delta": -0.38983503977457623,
+        "share_worse": 0.25
+      },
+      "months 3\u20136": {
+        "wearers": 8,
+        "mean_delta": 1.1233768661816916,
+        "median_delta": 1.0012142658233643,
+        "share_worse": 0.75
+      },
+      "months 6\u201312": {
+        "wearers": 8,
+        "mean_delta": -0.08609960476557399,
+        "median_delta": -0.27127710978190045,
+        "share_worse": 0.375
+      },
+      "year 1\u20132": {
+        "wearers": 7,
+        "mean_delta": -0.38219265710739847,
+        "median_delta": 0.23125457763671875,
+        "share_worse": 0.5714285714285714
+      },
+      "year 2+": {
+        "wearers": 4,
+        "mean_delta": 1.1026074091593427,
+        "median_delta": 0.9829457600911464,
+        "share_worse": 0.5
+      }
+    }
+  },
+  "external": {
+    "per_patient": {
+      "aaps_01177138": {
+        "months 1\u20133": {
+          "rmse": 16.621065139770508,
+          "windows": 12138,
+          "glucose_sd": 37.43476867675781,
+          "calendar_year": 2020.0
+        },
+        "months 3\u20136": {
+          "rmse": 15.906749725341797,
+          "windows": 24421,
+          "glucose_sd": 37.41307067871094,
+          "calendar_year": 2020.1702223496172
+        },
+        "months 6\u201312": {
+          "rmse": 16.16664695739746,
+          "windows": 51218,
+          "glucose_sd": 35.600772857666016,
+          "calendar_year": 2021.0
+        },
+        "year 1\u20132": {
+          "rmse": 16.033090591430664,
+          "windows": 67265,
+          "glucose_sd": 38.51773452758789,
+          "calendar_year": 2021.3237790827325
+        }
+      },
+      "aaps_01919652": {
+        "month 1": {
+          "rmse": 26.70227813720703,
+          "windows": 8328,
+          "glucose_sd": 46.57625961303711,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 26.081090927124023,
+          "windows": 3099,
+          "glucose_sd": 47.1761360168457,
+          "calendar_year": 2020.0
+        },
+        "year 1\u20132": {
+          "rmse": 25.63418197631836,
+          "windows": 8872,
+          "glucose_sd": 50.85188674926758,
+          "calendar_year": 2021.8224752028855
+        }
+      },
+      "aaps_01949240": {
+        "month 1": {
+          "rmse": 18.082948684692383,
+          "windows": 8493,
+          "glucose_sd": 40.97855758666992,
+          "calendar_year": 2020.7333097845285
+        },
+        "months 1\u20133": {
+          "rmse": 16.61591911315918,
+          "windows": 16373,
+          "glucose_sd": 39.528629302978516,
+          "calendar_year": 2021.0
+        },
+        "months 3\u20136": {
+          "rmse": 19.631799697875977,
+          "windows": 25378,
+          "glucose_sd": 45.207210540771484,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 20.858179092407227,
+          "windows": 13332,
+          "glucose_sd": 42.865665435791016,
+          "calendar_year": 2021.0
+        },
+        "year 1\u20132": {
+          "rmse": 21.31221580505371,
+          "windows": 10080,
+          "glucose_sd": 44.81637954711914,
+          "calendar_year": 2022.0
+        }
+      },
+      "aaps_02050717": {
+        "month 1": {
+          "rmse": 27.120887756347656,
+          "windows": 8413,
+          "glucose_sd": 72.4974365234375,
+          "calendar_year": 2022.0
+        },
+        "months 1\u20133": {
+          "rmse": 29.40282440185547,
+          "windows": 12982,
+          "glucose_sd": 80.38973236083984,
+          "calendar_year": 2022.0
+        },
+        "months 3\u20136": {
+          "rmse": 26.991756439208984,
+          "windows": 25265,
+          "glucose_sd": 76.89669036865234,
+          "calendar_year": 2022.0
+        },
+        "months 6\u201312": {
+          "rmse": 25.73579978942871,
+          "windows": 51541,
+          "glucose_sd": 67.20353698730469,
+          "calendar_year": 2022.820861062067
+        },
+        "year 1\u20132": {
+          "rmse": 25.670835494995117,
+          "windows": 7106,
+          "glucose_sd": 73.3824691772461,
+          "calendar_year": 2023.0296932169997
+        }
+      },
+      "aaps_03403352": {
+        "month 1": {
+          "rmse": 15.958785057067871,
+          "windows": 8067,
+          "glucose_sd": 27.379911422729492,
+          "calendar_year": 2021.0
+        },
+        "months 1\u20133": {
+          "rmse": 15.070898056030273,
+          "windows": 15977,
+          "glucose_sd": 23.999876022338867,
+          "calendar_year": 2021.0
+        },
+        "months 3\u20136": {
+          "rmse": 11.535815238952637,
+          "windows": 24916,
+          "glucose_sd": 20.911951065063477,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 11.076977729797363,
+          "windows": 6725,
+          "glucose_sd": 19.530141830444336,
+          "calendar_year": 2021.0
+        },
+        "year 2+": {
+          "rmse": 14.391531944274902,
+          "windows": 15715,
+          "glucose_sd": 21.960670471191406,
+          "calendar_year": 2024.0
+        }
+      },
+      "aaps_10540336": {
+        "month 1": {
+          "rmse": 22.763954162597656,
+          "windows": 7991,
+          "glucose_sd": 61.31092071533203,
+          "calendar_year": 2021.0
+        },
+        "months 1\u20133": {
+          "rmse": 20.53946876525879,
+          "windows": 8465,
+          "glucose_sd": 59.22968292236328,
+          "calendar_year": 2021.0
+        }
+      },
+      "aaps_14045962": {
+        "month 1": {
+          "rmse": 17.887693405151367,
+          "windows": 8573,
+          "glucose_sd": 42.09336471557617,
+          "calendar_year": 2024.9169485594307
+        },
+        "months 1\u20133": {
+          "rmse": 19.515066146850586,
+          "windows": 16279,
+          "glucose_sd": 37.00606155395508,
+          "calendar_year": 2025.0
+        },
+        "months 3\u20136": {
+          "rmse": 18.767539978027344,
+          "windows": 23858,
+          "glucose_sd": 31.317928314208984,
+          "calendar_year": 2025.0
+        },
+        "months 6\u201312": {
+          "rmse": 19.239089965820312,
+          "windows": 33378,
+          "glucose_sd": 33.24923324584961,
+          "calendar_year": 2025.0
+        }
+      },
+      "aaps_18001564": {
+        "month 1": {
+          "rmse": 15.575798988342285,
+          "windows": 8271,
+          "glucose_sd": 17.76528549194336,
+          "calendar_year": 2022.0
+        },
+        "months 1\u20133": {
+          "rmse": 15.605189323425293,
+          "windows": 16712,
+          "glucose_sd": 20.940486907958984,
+          "calendar_year": 2022.0
+        },
+        "months 3\u20136": {
+          "rmse": 16.013376235961914,
+          "windows": 13696,
+          "glucose_sd": 22.379438400268555,
+          "calendar_year": 2022.0
+        }
+      },
+      "aaps_24110807": {
+        "month 1": {
+          "rmse": 19.21075439453125,
+          "windows": 7975,
+          "glucose_sd": 41.01559829711914,
+          "calendar_year": 2023.0
+        },
+        "months 1\u20133": {
+          "rmse": 19.845409393310547,
+          "windows": 16287,
+          "glucose_sd": 44.66872787475586,
+          "calendar_year": 2023.0
+        },
+        "months 3\u20136": {
+          "rmse": 18.720855712890625,
+          "windows": 23995,
+          "glucose_sd": 42.765438079833984,
+          "calendar_year": 2023.0
+        },
+        "months 6\u201312": {
+          "rmse": 16.14426612854004,
+          "windows": 27159,
+          "glucose_sd": 45.406410217285156,
+          "calendar_year": 2023.0025405942781
+        }
+      },
+      "aaps_28761103": {
+        "month 1": {
+          "rmse": 20.040950775146484,
+          "windows": 7887,
+          "glucose_sd": 33.62137985229492,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 20.227819442749023,
+          "windows": 12285,
+          "glucose_sd": 40.434574127197266,
+          "calendar_year": 2020.0255596255597
+        },
+        "year 2+": {
+          "rmse": 28.169309616088867,
+          "windows": 24691,
+          "glucose_sd": 45.5344123840332,
+          "calendar_year": 2022.8208254019682
+        }
+      },
+      "aaps_35187603": {
+        "month 1": {
+          "rmse": 19.073789596557617,
+          "windows": 8086,
+          "glucose_sd": 52.00218200683594,
+          "calendar_year": 2021.0
+        },
+        "months 1\u20133": {
+          "rmse": 19.3737850189209,
+          "windows": 9107,
+          "glucose_sd": 52.986053466796875,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 18.92531967163086,
+          "windows": 6704,
+          "glucose_sd": 51.570030212402344,
+          "calendar_year": 2022.0
+        },
+        "year 1\u20132": {
+          "rmse": 19.452972412109375,
+          "windows": 73847,
+          "glucose_sd": 55.96529769897461,
+          "calendar_year": 2022.3661760125665
+        },
+        "year 2+": {
+          "rmse": 21.351268768310547,
+          "windows": 58267,
+          "glucose_sd": 68.59661865234375,
+          "calendar_year": 2023.240221737862
+        }
+      },
+      "aaps_39182506": {
+        "month 1": {
+          "rmse": 16.619401931762695,
+          "windows": 8435,
+          "glucose_sd": 36.821285247802734,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 16.64980697631836,
+          "windows": 16117,
+          "glucose_sd": 33.65331268310547,
+          "calendar_year": 2020.0556555190171
+        },
+        "months 3\u20136": {
+          "rmse": 15.484500885009766,
+          "windows": 24511,
+          "glucose_sd": 28.47089195251465,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 15.995677947998047,
+          "windows": 50255,
+          "glucose_sd": 35.22927474975586,
+          "calendar_year": 2021.0
+        },
+        "year 1\u20132": {
+          "rmse": 15.669713973999023,
+          "windows": 40917,
+          "glucose_sd": 31.97679328918457,
+          "calendar_year": 2021.716645892905
+        },
+        "year 2+": {
+          "rmse": 18.677528381347656,
+          "windows": 95794,
+          "glucose_sd": 34.45198440551758,
+          "calendar_year": 2022.754076455728
+        }
+      },
+      "aaps_42360672": {
+        "month 1": {
+          "rmse": 13.844271659851074,
+          "windows": 2272,
+          "glucose_sd": 33.33796691894531,
+          "calendar_year": 2022.0
+        },
+        "months 6\u201312": {
+          "rmse": 13.965227127075195,
+          "windows": 51804,
+          "glucose_sd": 33.40749740600586,
+          "calendar_year": 2022.2019342135743
+        },
+        "year 1\u20132": {
+          "rmse": 14.888484001159668,
+          "windows": 43056,
+          "glucose_sd": 36.399169921875,
+          "calendar_year": 2023.0
+        }
+      },
+      "aaps_47631371": {
+        "month 1": {
+          "rmse": 19.4623966217041,
+          "windows": 8238,
+          "glucose_sd": 48.5861701965332,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 18.76154327392578,
+          "windows": 16528,
+          "glucose_sd": 45.702362060546875,
+          "calendar_year": 2020.0
+        }
+      },
+      "aaps_49623237": {
+        "month 1": {
+          "rmse": 18.847532272338867,
+          "windows": 8333,
+          "glucose_sd": 37.59387969970703,
+          "calendar_year": 2021.0
+        },
+        "months 1\u20133": {
+          "rmse": 20.838348388671875,
+          "windows": 16428,
+          "glucose_sd": 41.960838317871094,
+          "calendar_year": 2021.0
+        },
+        "months 3\u20136": {
+          "rmse": 20.793537139892578,
+          "windows": 24958,
+          "glucose_sd": 41.74837875366211,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 18.943485260009766,
+          "windows": 51403,
+          "glucose_sd": 34.757301330566406,
+          "calendar_year": 2021.8338812909753
+        },
+        "year 1\u20132": {
+          "rmse": 21.2907657623291,
+          "windows": 100976,
+          "glucose_sd": 41.99538040161133,
+          "calendar_year": 2022.4248039138013
+        },
+        "year 2+": {
+          "rmse": 24.32797622680664,
+          "windows": 171499,
+          "glucose_sd": 46.7615852355957,
+          "calendar_year": 2024.6522545320963
+        }
+      },
+      "aaps_50729763": {
+        "month 1": {
+          "rmse": 16.32488441467285,
+          "windows": 8295,
+          "glucose_sd": 30.19055938720703,
+          "calendar_year": 2023.0
+        },
+        "months 1\u20133": {
+          "rmse": 13.457291603088379,
+          "windows": 16867,
+          "glucose_sd": 23.607147216796875,
+          "calendar_year": 2023.0
+        },
+        "months 3\u20136": {
+          "rmse": 15.070324897766113,
+          "windows": 18773,
+          "glucose_sd": 23.864181518554688,
+          "calendar_year": 2023.8950620572098
+        }
+      },
+      "aaps_52345968": {
+        "month 1": {
+          "rmse": 16.91141700744629,
+          "windows": 8264,
+          "glucose_sd": 35.095458984375,
+          "calendar_year": 2023.0
+        },
+        "months 1\u20133": {
+          "rmse": 18.2364559173584,
+          "windows": 16599,
+          "glucose_sd": 38.03854751586914,
+          "calendar_year": 2023.0
+        },
+        "months 3\u20136": {
+          "rmse": 20.735733032226562,
+          "windows": 24711,
+          "glucose_sd": 45.43315505981445,
+          "calendar_year": 2023.0
+        },
+        "months 6\u201312": {
+          "rmse": 19.982778549194336,
+          "windows": 19061,
+          "glucose_sd": 38.002567291259766,
+          "calendar_year": 2023.749173705472
+        }
+      },
+      "aaps_53013068": {
+        "month 1": {
+          "rmse": 30.477876663208008,
+          "windows": 7066,
+          "glucose_sd": 106.06175994873047,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 37.12443542480469,
+          "windows": 16398,
+          "glucose_sd": 89.46931457519531,
+          "calendar_year": 2020.7432003902916
+        },
+        "months 3\u20136": {
+          "rmse": 35.37743377685547,
+          "windows": 24039,
+          "glucose_sd": 89.59551239013672,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 35.94581604003906,
+          "windows": 47208,
+          "glucose_sd": 92.31681823730469,
+          "calendar_year": 2021.0
+        },
+        "year 1\u20132": {
+          "rmse": 34.73488998413086,
+          "windows": 7228,
+          "glucose_sd": 90.2539291381836,
+          "calendar_year": 2021.0
+        },
+        "year 2+": {
+          "rmse": 30.243925094604492,
+          "windows": 51565,
+          "glucose_sd": 61.432918548583984,
+          "calendar_year": 2025.4567439154466
+        }
+      },
+      "aaps_54165023": {
+        "month 1": {
+          "rmse": 22.76334571838379,
+          "windows": 7523,
+          "glucose_sd": 40.302085876464844,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 20.93186378479004,
+          "windows": 16402,
+          "glucose_sd": 40.63954544067383,
+          "calendar_year": 2020.0934032435068
+        },
+        "months 3\u20136": {
+          "rmse": 20.461551666259766,
+          "windows": 22433,
+          "glucose_sd": 42.640316009521484,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 21.986024856567383,
+          "windows": 48839,
+          "glucose_sd": 43.53858947753906,
+          "calendar_year": 2021.0
+        },
+        "year 1\u20132": {
+          "rmse": 21.060834884643555,
+          "windows": 26075,
+          "glucose_sd": 41.63207244873047,
+          "calendar_year": 2021.1141323106424
+        },
+        "year 2+": {
+          "rmse": 21.502504348754883,
+          "windows": 103017,
+          "glucose_sd": 40.46355056762695,
+          "calendar_year": 2025.1073026781987
+        }
+      },
+      "aaps_56052290": {
+        "month 1": {
+          "rmse": 21.453969955444336,
+          "windows": 8370,
+          "glucose_sd": 39.94399642944336,
+          "calendar_year": 2025.0
+        },
+        "months 1\u20133": {
+          "rmse": 21.918960571289062,
+          "windows": 16428,
+          "glucose_sd": 41.80503463745117,
+          "calendar_year": 2025.0
+        },
+        "months 3\u20136": {
+          "rmse": 20.73037338256836,
+          "windows": 25060,
+          "glucose_sd": 39.24943542480469,
+          "calendar_year": 2025.0
+        },
+        "months 6\u201312": {
+          "rmse": 19.447723388671875,
+          "windows": 28496,
+          "glucose_sd": 38.46742630004883,
+          "calendar_year": 2025.0
+        }
+      },
+      "aaps_63937017": {
+        "month 1": {
+          "rmse": 18.386579513549805,
+          "windows": 7987,
+          "glucose_sd": 71.6415023803711,
+          "calendar_year": 2019.0
+        },
+        "months 1\u20133": {
+          "rmse": 16.020973205566406,
+          "windows": 16202,
+          "glucose_sd": 67.98003387451172,
+          "calendar_year": 2019.0
+        },
+        "months 3\u20136": {
+          "rmse": 19.818029403686523,
+          "windows": 24242,
+          "glucose_sd": 71.88832092285156,
+          "calendar_year": 2019.0
+        },
+        "months 6\u201312": {
+          "rmse": 18.68109703063965,
+          "windows": 49076,
+          "glucose_sd": 76.39732360839844,
+          "calendar_year": 2019.3794115249816
+        },
+        "year 1\u20132": {
+          "rmse": 18.767030715942383,
+          "windows": 89453,
+          "glucose_sd": 70.2995376586914,
+          "calendar_year": 2020.2108816920618
+        },
+        "year 2+": {
+          "rmse": 18.29113006591797,
+          "windows": 310117,
+          "glucose_sd": 60.177040100097656,
+          "calendar_year": 2022.2273109826292
+        }
+      },
+      "aaps_68659836": {
+        "month 1": {
+          "rmse": 15.70801830291748,
+          "windows": 7809,
+          "glucose_sd": 48.2213134765625,
+          "calendar_year": 2022.0
+        },
+        "months 1\u20133": {
+          "rmse": 16.924503326416016,
+          "windows": 16429,
+          "glucose_sd": 38.733882904052734,
+          "calendar_year": 2022.0
+        },
+        "months 3\u20136": {
+          "rmse": 18.75030517578125,
+          "windows": 25090,
+          "glucose_sd": 45.498538970947266,
+          "calendar_year": 2022.0
+        },
+        "months 6\u201312": {
+          "rmse": 17.674514770507812,
+          "windows": 24559,
+          "glucose_sd": 44.04877471923828,
+          "calendar_year": 2022.0
+        }
+      },
+      "aaps_71422852": {
+        "month 1": {
+          "rmse": 17.500303268432617,
+          "windows": 8470,
+          "glucose_sd": 31.84657096862793,
+          "calendar_year": 2022.0
+        },
+        "months 1\u20133": {
+          "rmse": 15.123828887939453,
+          "windows": 17009,
+          "glucose_sd": 30.550949096679688,
+          "calendar_year": 2022.0335704626962
+        },
+        "months 3\u20136": {
+          "rmse": 15.80042839050293,
+          "windows": 12807,
+          "glucose_sd": 27.667774200439453,
+          "calendar_year": 2023.0
+        }
+      },
+      "aaps_79751050": {
+        "month 1": {
+          "rmse": 20.49474334716797,
+          "windows": 8298,
+          "glucose_sd": 36.05523681640625,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 17.011489868164062,
+          "windows": 16506,
+          "glucose_sd": 35.07826232910156,
+          "calendar_year": 2020.3058281836907
+        },
+        "months 3\u20136": {
+          "rmse": 19.262346267700195,
+          "windows": 25264,
+          "glucose_sd": 34.44286346435547,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 20.62993049621582,
+          "windows": 51257,
+          "glucose_sd": 38.125099182128906,
+          "calendar_year": 2021.0
+        },
+        "year 1\u20132": {
+          "rmse": 19.694141387939453,
+          "windows": 33696,
+          "glucose_sd": 37.48325729370117,
+          "calendar_year": 2021.40900997151
+        }
+      },
+      "aaps_80901258": {
+        "month 1": {
+          "rmse": 22.14279556274414,
+          "windows": 7919,
+          "glucose_sd": 56.01142120361328,
+          "calendar_year": 2022.0
+        },
+        "months 1\u20133": {
+          "rmse": 21.209943771362305,
+          "windows": 16342,
+          "glucose_sd": 55.48262023925781,
+          "calendar_year": 2022.0
+        },
+        "months 3\u20136": {
+          "rmse": 20.66863441467285,
+          "windows": 24299,
+          "glucose_sd": 49.820858001708984,
+          "calendar_year": 2022.0
+        },
+        "months 6\u201312": {
+          "rmse": 19.00168228149414,
+          "windows": 47614,
+          "glucose_sd": 48.55632019042969,
+          "calendar_year": 2022.2231066493048
+        }
+      },
+      "aaps_84241955": {
+        "month 1": {
+          "rmse": 19.320415496826172,
+          "windows": 8195,
+          "glucose_sd": 43.35838317871094,
+          "calendar_year": 2023.0
+        },
+        "months 1\u20133": {
+          "rmse": 16.062301635742188,
+          "windows": 16780,
+          "glucose_sd": 40.24259948730469,
+          "calendar_year": 2023.0
+        },
+        "months 3\u20136": {
+          "rmse": 15.806913375854492,
+          "windows": 25129,
+          "glucose_sd": 33.9261474609375,
+          "calendar_year": 2023.0
+        },
+        "months 6\u201312": {
+          "rmse": 15.327147483825684,
+          "windows": 33581,
+          "glucose_sd": 35.981109619140625,
+          "calendar_year": 2023.0
+        }
+      },
+      "aaps_87635714": {
+        "month 1": {
+          "rmse": 15.548569679260254,
+          "windows": 6490,
+          "glucose_sd": 39.11826705932617,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 20.225683212280273,
+          "windows": 13061,
+          "glucose_sd": 39.02641677856445,
+          "calendar_year": 2020.0
+        },
+        "months 3\u20136": {
+          "rmse": 21.504220962524414,
+          "windows": 19045,
+          "glucose_sd": 37.72661590576172,
+          "calendar_year": 2020.8424783407718
+        },
+        "months 6\u201312": {
+          "rmse": 20.204734802246094,
+          "windows": 35506,
+          "glucose_sd": 44.66155242919922,
+          "calendar_year": 2021.0
+        },
+        "year 1\u20132": {
+          "rmse": 19.95667266845703,
+          "windows": 83703,
+          "glucose_sd": 40.60676574707031,
+          "calendar_year": 2021.7330322688554
+        },
+        "year 2+": {
+          "rmse": 20.198484420776367,
+          "windows": 78482,
+          "glucose_sd": 43.67392349243164,
+          "calendar_year": 2022.6593613822279
+        }
+      },
+      "aaps_92229310": {
+        "month 1": {
+          "rmse": 27.765546798706055,
+          "windows": 7804,
+          "glucose_sd": 62.59261703491211,
+          "calendar_year": 2021.0
+        },
+        "months 1\u20133": {
+          "rmse": 25.994613647460938,
+          "windows": 12652,
+          "glucose_sd": 57.86834716796875,
+          "calendar_year": 2021.6965697122985
+        },
+        "months 3\u20136": {
+          "rmse": 25.151716232299805,
+          "windows": 13377,
+          "glucose_sd": 52.11688232421875,
+          "calendar_year": 2022.0
+        }
+      },
+      "aaps_93230373": {
+        "month 1": {
+          "rmse": 8.723024368286133,
+          "windows": 8468,
+          "glucose_sd": 22.563720703125,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 11.410467147827148,
+          "windows": 16671,
+          "glucose_sd": 27.635234832763672,
+          "calendar_year": 2020.0
+        },
+        "months 3\u20136": {
+          "rmse": 10.79534912109375,
+          "windows": 25011,
+          "glucose_sd": 24.422277450561523,
+          "calendar_year": 2020.6074927032105
+        },
+        "months 6\u201312": {
+          "rmse": 10.868889808654785,
+          "windows": 52118,
+          "glucose_sd": 25.512577056884766,
+          "calendar_year": 2021.0
+        },
+        "year 1\u20132": {
+          "rmse": 11.926736831665039,
+          "windows": 73331,
+          "glucose_sd": 25.68726921081543,
+          "calendar_year": 2021.5225757183184
+        },
+        "year 2+": {
+          "rmse": 12.622257232666016,
+          "windows": 116543,
+          "glucose_sd": 25.866239547729492,
+          "calendar_year": 2022.6975622731525
+        }
+      },
+      "aaps_94098083": {
+        "month 1": {
+          "rmse": 17.435026168823242,
+          "windows": 7288,
+          "glucose_sd": 30.677379608154297,
+          "calendar_year": 2020.0
+        },
+        "months 1\u20133": {
+          "rmse": 17.556806564331055,
+          "windows": 15087,
+          "glucose_sd": 32.88999938964844,
+          "calendar_year": 2020.2546563266387
+        },
+        "months 3\u20136": {
+          "rmse": 17.323904037475586,
+          "windows": 21466,
+          "glucose_sd": 29.6475772857666,
+          "calendar_year": 2021.0
+        },
+        "months 6\u201312": {
+          "rmse": 17.153179168701172,
+          "windows": 11524,
+          "glucose_sd": 30.978849411010742,
+          "calendar_year": 2021.0
+        }
+      },
+      "aaps_97385078": {
+        "months 1\u20133": {
+          "rmse": 18.509342193603516,
+          "windows": 6237,
+          "glucose_sd": 32.449886322021484,
+          "calendar_year": 2020.0
+        },
+        "months 3\u20136": {
+          "rmse": 19.781204223632812,
+          "windows": 24959,
+          "glucose_sd": 38.95384979248047,
+          "calendar_year": 2020.0
+        },
+        "months 6\u201312": {
+          "rmse": 21.559053421020508,
+          "windows": 41852,
+          "glucose_sd": 44.45901870727539,
+          "calendar_year": 2020.3354200516105
+        },
+        "year 1\u20132": {
+          "rmse": 21.180252075195312,
+          "windows": 34865,
+          "glucose_sd": 45.30004119873047,
+          "calendar_year": 2021.0
+        }
+      }
+    },
+    "centred": {
+      "month 1": {
+        "wearers": 29,
+        "mean_delta": -0.1675890319648832,
+        "median_delta": 0.10329691569010535,
+        "share_worse": 0.5862068965517241
+      },
+      "months 1\u20133": {
+        "wearers": 30,
+        "mean_delta": -0.21158455530802425,
+        "median_delta": -0.19395380020141673,
+        "share_worse": 0.4
+      },
+      "months 3\u20136": {
+        "wearers": 25,
+        "mean_delta": 0.040826123555501255,
+        "median_delta": -0.0848073959350586,
+        "share_worse": 0.4
+      },
+      "months 6\u201312": {
+        "wearers": 23,
+        "mean_delta": -0.22134021814318672,
+        "median_delta": -0.18889760971069336,
+        "share_worse": 0.43478260869565216
+      },
+      "year 1\u20132": {
+        "wearers": 15,
+        "mean_delta": 0.22266095479329415,
+        "median_delta": 0.350278377532959,
+        "share_worse": 0.6
+      },
+      "year 2+": {
+        "wearers": 10,
+        "mean_delta": 1.1937876192728678,
+        "median_delta": 1.1746000766754152,
+        "share_worse": 0.8
+      }
+    }
+  }
+}
