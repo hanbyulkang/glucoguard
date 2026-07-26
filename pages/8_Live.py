@@ -41,7 +41,8 @@ from src.predictor import (
     load_splits,
     patient_series,
 )
-from src.theme import ACTUAL, CRITICAL, CSS, INK_MUTED, PREDICTED, WARNING, style
+from src import ui
+from src.theme import ACTUAL, CRITICAL, INK_MUTED, PREDICTED, WARNING, style
 
 
 def as_utc(value) -> pd.Timestamp:
@@ -49,8 +50,6 @@ def as_utc(value) -> pd.Timestamp:
     ts = pd.Timestamp(value)
     return ts.tz_localize("UTC") if ts.tzinfo is None else ts.tz_convert("UTC")
 
-st.set_page_config(page_title="GlucoGuard live", page_icon="🩸", layout="wide")
-st.markdown(CSS, unsafe_allow_html=True)
 
 
 @st.cache_resource(show_spinner=False)
@@ -144,13 +143,11 @@ with st.sidebar:
 # --------------------------------------------------------------------------- #
 # header
 # --------------------------------------------------------------------------- #
-st.markdown('<div class="gg-title">GlucoGuard live</div>', unsafe_allow_html=True)
-st.markdown(
-    f'<div class="gg-sub">Runs the {HORIZON_MINUTES}-minute forecast against a '
-    f"CGM feed and raises a low-glucose alarm using a threshold fitted to this "
-    f"wearer. <b>Research demonstration — not a medical device. It does not "
-    f"recommend insulin.</b></div>",
-    unsafe_allow_html=True,
+ui.page(
+    "Live",
+    f"Runs the {HORIZON_MINUTES}-minute forecast against a CGM feed rather than a "
+    "saved file, with the alarm threshold fitted to this wearer.",
+    pills=["not a medical device", "no dose calculation"],
 )
 
 # --------------------------------------------------------------------------- #
@@ -312,18 +309,4 @@ with right:
         unsafe_allow_html=True,
     )
 
-with st.expander("What this is not"):
-    st.markdown(
-        f"""
-- **Not a medical device, and not tested on anyone.** Everything in this project
-  is a retrospective replay of recorded traces.
-- **It does not recommend insulin.** The output is a glucose forecast and a
-  low-glucose warning; nothing computes a dose.
-- **It sees CGM only** — no meals, no insulin — which is why it is weakest right
-  after eating and correcting.
-- **It refuses rather than guesses.** A gap longer than 15 minutes in the last
-  two hours produces no forecast at all.
-- **The alarm is a trade-off, not a setting with a right answer.** Every extra
-  low it catches costs false alarms; that is what the target-rate slider is.
-"""
-    )
+ui.disclaimer()

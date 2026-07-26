@@ -23,18 +23,45 @@ import torch.nn as nn
 
 
 class _GlucoseFeatures(nn.Module):
-    """Normalise a raw mg/dL window into (value, rate-of-change) channels."""
+    """Normalise the input window into per-timestep channels.
 
-    def __init__(self, mean: float, std: float):
+    Glucose always contributes two channels — its level and its rate of change.
+    Any further channels (insulin given, carbohydrates eaten, the loop's own
+    estimate of insulin on board) arrive already stacked and are standardised
+    with statistics measured on the training split, so a channel that is mostly
+    zero does not swamp the ones that are not.
+    """
+
+    def __init__(self, mean: float, std: float,
+                 aux_mean: torch.Tensor | None = None,
+                 aux_std: torch.Tensor | None = None):
         super().__init__()
         self.register_buffer("mean", torch.tensor(float(mean)))
         self.register_buffer("std", torch.tensor(float(std)))
+        self.n_aux = 0 if aux_mean is None else int(len(aux_mean))
+        if self.n_aux:
+            self.register_buffer("aux_mean", torch.as_tensor(aux_mean, dtype=torch.float32))
+            self.register_buffer("aux_std", torch.as_tensor(aux_std, dtype=torch.float32))
+
+    @property
+    def out_channels(self) -> int:
+        return 2 + self.n_aux
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # x: (B, T) in mg/dL  ->  (B, T, 2)
-        value = (x - self.mean) / self.std
+        # x: (B, T) or (B, T, 1 + n_aux)  ->  (B, T, 2 + n_aux)
+        glucose = x if x.ndim == 2 else x[..., 0]
+        value = (glucose - self.mean) / self.std
         delta = torch.diff(value, dim=1, prepend=value[:, :1])
-        return torch.stack([value, delta], dim=-1)
+        channels = [value, delta]
+        if self.n_aux and x.ndim == 3:
+            aux = (x[..., 1:] - self.aux_mean) / torch.clamp(self.aux_std, min=1e-6)
+            channels.extend(aux.unbind(dim=-1))
+        return torch.stack(channels, dim=-1)
+
+
+def glucose_of(x: torch.Tensor) -> torch.Tensor:
+    """The glucose channel, whichever shape the caller passed."""
+    return x if x.ndim == 2 else x[..., 0]
 
 
 class _DeltaHead(nn.Module):
@@ -100,11 +127,13 @@ class LSTMForecaster(nn.Module):
         dropout: float = 0.1,
         heteroscedastic: bool = False,
         classify: bool = False,
+        aux_mean=None,
+        aux_std=None,
     ):
         super().__init__()
-        self.features = _GlucoseFeatures(mean, std)
+        self.features = _GlucoseFeatures(mean, std, aux_mean, aux_std)
         self.rnn = nn.LSTM(
-            input_size=2,
+            input_size=self.features.out_channels,
             hidden_size=hidden,
             num_layers=layers,
             batch_first=True,
@@ -114,7 +143,7 @@ class LSTMForecaster(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         out, _ = self.rnn(self.features(x))
-        return self.head(out[:, -1], x[:, -1])
+        return self.head(out[:, -1], glucose_of(x)[:, -1])
 
 
 class _TCNBlock(nn.Module):
@@ -148,10 +177,12 @@ class TCNForecaster(nn.Module):
         dropout: float = 0.1,
         heteroscedastic: bool = False,
         classify: bool = False,
+        aux_mean=None,
+        aux_std=None,
     ):
         super().__init__()
-        self.features = _GlucoseFeatures(mean, std)
-        self.stem = nn.Conv1d(2, channels, 1)
+        self.features = _GlucoseFeatures(mean, std, aux_mean, aux_std)
+        self.stem = nn.Conv1d(self.features.out_channels, channels, 1)
         # Dilations double each level, so the receptive field covers the window.
         self.blocks = nn.Sequential(
             *[_TCNBlock(channels, 2**i, kernel, dropout) for i in range(levels)]
@@ -161,7 +192,7 @@ class TCNForecaster(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         h = self.features(x).transpose(1, 2)     # (B, 2, T)
         h = self.blocks(self.stem(h))
-        return self.head(h[:, :, -1], x[:, -1])
+        return self.head(h[:, :, -1], glucose_of(x)[:, -1])
 
 
 class TransformerForecaster(nn.Module):
@@ -176,10 +207,12 @@ class TransformerForecaster(nn.Module):
         max_len: int = 64,
         heteroscedastic: bool = False,
         classify: bool = False,
+        aux_mean=None,
+        aux_std=None,
     ):
         super().__init__()
-        self.features = _GlucoseFeatures(mean, std)
-        self.proj = nn.Linear(2, d_model)
+        self.features = _GlucoseFeatures(mean, std, aux_mean, aux_std)
+        self.proj = nn.Linear(self.features.out_channels, d_model)
         self.pos = nn.Parameter(torch.randn(1, max_len, d_model) * 0.02)
         encoder = nn.TransformerEncoderLayer(
             d_model=d_model,
@@ -198,7 +231,7 @@ class TransformerForecaster(nn.Module):
         h = self.proj(self.features(x))
         h = h + self.pos[:, : h.size(1)]
         h = self.norm(self.encoder(h))
-        return self.head(h[:, -1], x[:, -1])
+        return self.head(h[:, -1], glucose_of(x)[:, -1])
 
 
 REGISTRY = {

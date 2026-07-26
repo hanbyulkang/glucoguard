@@ -28,6 +28,7 @@ PREDICTED = "#eb6834"   # slot 2, orange
 CRITICAL = "#d03b3b"    # hypoglycaemia
 WARNING = "#fab219"     # hyperglycaemia
 GOOD = "#0ca30c"
+MUTED_LINE = "#b5b4ae"   # de-emphasised series (baselines, context)
 
 FONT = 'system-ui, -apple-system, "Segoe UI", sans-serif'
 
@@ -72,7 +73,7 @@ def style(fig: go.Figure, height: int = 420, y_title: str = "", x_title: str = "
 
 CSS = f"""
 <style>
-  .block-container {{ padding-top: 2.2rem; max-width: 1180px; }}
+  .block-container {{ padding-top: 2.2rem; max-width: 1440px; }}
   #MainMenu, footer, header {{ visibility: hidden; }}
 
   .gg-title {{
@@ -117,5 +118,31 @@ CSS = f"""
     font-family: {FONT}; font-size: 1.12rem; font-weight: 650; color: {INK};
     margin: 1.9rem 0 .35rem 0;
   }}
+  .gg-h3 {{
+    font-family: {FONT}; font-size: .95rem; font-weight: 650; color: {INK};
+    margin: 1.3rem 0 .3rem 0;
+  }}
+  .gg-lead {{
+    font-family: {FONT}; font-size: 1.02rem; color: {INK_SECONDARY};
+    line-height: 1.62; margin: 0 0 1.1rem 0; max-width: 62ch;
+  }}
+  .gg-note {{
+    font-family: {FONT}; font-size: .88rem; color: {INK_SECONDARY};
+    line-height: 1.55; border-left: 3px solid {AXIS}; padding: .1rem 0 .1rem .8rem;
+    margin: .9rem 0 1.2rem 0;
+  }}
+  .gg-note b {{ color: {INK}; }}
+  .gg-pill {{
+    display: inline-block; font-family: {FONT}; font-size: .74rem;
+    letter-spacing: .05em; text-transform: uppercase; padding: .2rem .55rem;
+    border-radius: 999px; border: 1px solid {BORDER}; color: {INK_MUTED};
+    margin-right: .4rem;
+  }}
+  .gg-hero {{
+    font-family: {FONT}; font-size: 2.6rem; font-weight: 680; color: {INK};
+    line-height: 1; letter-spacing: -0.03em;
+  }}
+  .gg-hero-unit {{ font-size: 1rem; font-weight: 400; color: {INK_MUTED}; }}
+  div[data-testid="stMetricValue"] {{ font-family: {FONT}; }}
 </style>
 """
