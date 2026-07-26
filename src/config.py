@@ -6,12 +6,31 @@ DATA_DIR = ROOT / "data"
 CACHE_DIR = DATA_DIR / "cache"
 ARTIFACTS_DIR = ROOT / "artifacts"
 
-OPENAPS_ZIP = (
-    ROOT.parent
-    / "dataset"
-    / "OpenAPS"
-    / "n=240-April-2026-OpenAPS-Data-Commons-unzipped-JSON.zip"
-)
+ARCHIVE_NAME = "n=240-April-2026-OpenAPS-Data-Commons-unzipped-JSON.zip"
+
+
+def _find_archive():
+    """Locate the OpenAPS archive without assuming where this repo sits.
+
+    The project moved into a competition folder partway through, which silently
+    broke a hard-coded relative path. Walking up from here and looking for
+    `dataset/OpenAPS/` survives that, and an explicit `GLUCOGUARD_ARCHIVE`
+    environment variable overrides it for anyone whose copy lives elsewhere.
+    """
+    import os
+
+    override = os.environ.get("GLUCOGUARD_ARCHIVE")
+    if override:
+        return Path(override)
+
+    for base in [ROOT, *ROOT.parents]:
+        candidate = base / "dataset" / "OpenAPS" / ARCHIVE_NAME
+        if candidate.exists():
+            return candidate
+    return ROOT.parent / "dataset" / "OpenAPS" / ARCHIVE_NAME
+
+
+OPENAPS_ZIP = _find_archive()
 
 # --- CGM signal ---------------------------------------------------------------
 SAMPLE_MINUTES = 5          # OpenAPS/Dexcom native cadence

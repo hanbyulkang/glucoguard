@@ -18,7 +18,8 @@ import streamlit as st
 st.set_page_config(page_title="GlucoGuard", page_icon="\U0001FA78", layout="wide")
 
 PAGES = [
-    ("views/1_Overview.py", "Overview", ":material/home:"),
+    ("views/0_The_app.py", "The app", ":material/smartphone:"),
+    ("views/1_Overview.py", "How it works", ":material/home:"),
     ("views/2_Patient_explorer.py", "Patient explorer", ":material/monitoring:"),
     ("views/3_Models.py", "Models", ":material/network_node:"),
     ("views/4_Alarm.py", "Alarm", ":material/notifications_active:"),
