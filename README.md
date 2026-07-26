@@ -145,6 +145,16 @@ who rarely go low get almost no warnings. Pooling hides that and rewards it.
 Equalising gives some back. What it buys is that the number on the dial is true
 for the person reading it. Full tables in [`CALIBRATION.md`](CALIBRATION.md).
 
+**And it lasts.** A threshold fitted on a fortnight and then left alone for years
+had every reason to rot, so the plan was to measure how fast and schedule
+recalibration around it. Splitting the evaluation period by time since
+calibration, the requested six false alarms a day is delivered as 6.5 in weeks
+3–4 and 6.2 past the two-year mark, never leaving 5.6–6.5 in between; the
+external cohort holds 4.6–6.4 across 10,000 wearer-days. Its slow decline tracks
+those wearers going low less often over the same period, which is an alarm
+behaving correctly rather than decaying. [`DRIFT.md`](DRIFT.md) has the table and
+the three reasons not to over-read it.
+
 ## Running it against a live feed
 
 `streamlit run live_app.py` drives the same forecast from a CGM feed rather than
