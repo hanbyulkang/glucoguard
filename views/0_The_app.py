@@ -101,8 +101,14 @@ step_index = STEPS.index(state.step_label)
 
 
 def go_to(index: int) -> None:
+    """Move to another step. Must be used as a button `on_click` handler.
+
+    Streamlit runs click handlers before it re-runs the script, which is the
+    only moment this assignment is legal. Called from the script body instead,
+    it raises: the radio above has already claimed `step_label` for this run,
+    and Streamlit refuses to let a widget's value be reassigned underneath it.
+    """
     state.step_label = STEPS[index]
-    st.rerun()
 
 # --------------------------------------------------------------------------- #
 # 1 · Connect
@@ -167,8 +173,7 @@ if step_index == 0:
             "stored or sent anywhere else."
         )
 
-    if st.button("Next, calibrate", type="primary"):
-        go_to(1)
+    st.button("Next, calibrate", type="primary", on_click=go_to, args=(1,))
 
 # --------------------------------------------------------------------------- #
 # 2 · Calibrate
@@ -234,10 +239,8 @@ elif step_index == 1:
                   "a shared one.")
 
     left, right = st.columns(2)
-    if left.button("Back"):
-        go_to(0)
-    if right.button("Next, monitor", type="primary"):
-        go_to(2)
+    left.button("Back", on_click=go_to, args=(0,))
+    right.button("Next, monitor", type="primary", on_click=go_to, args=(2,))
 
 # --------------------------------------------------------------------------- #
 # 3 · Monitor
@@ -390,7 +393,7 @@ else:
                 )
             else:
                 ui.caption(
-                    "Nothing yet. Press **Start monitoring** and let it run, the "
+                    "Nothing yet. Press <b>Start monitoring</b> and let it run, the "
                     "playback opens shortly before a real low, so you should not "
                     "have to wait long."
                 )
@@ -400,7 +403,6 @@ else:
         live_panel()
 
     # ----------------------------------------------------------------- #
-    if st.button("Back to calibration"):
-        go_to(1)
+    st.button("Back to calibration", on_click=go_to, args=(1,))
 
 ui.disclaimer()

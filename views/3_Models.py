@@ -63,7 +63,9 @@ if sweep:
     )
 
 # --------------------------------------------------------------------------- #
-ui.h2("Training curves")
+# Per-epoch histories are a build artefact and are not carried in the deploy
+# bundle. Announcing their absence under a heading reads as a broken page, so
+# the whole section stands down when there is nothing to draw.
 curves = {}
 for stem in ("tcn", "transformer", "lstm", "tcn_hypo3", "tcn_prob", "tcn_cls", "tcn_mt"):
     blob = rio._metrics_file(stem)
@@ -71,6 +73,7 @@ for stem in ("tcn", "transformer", "lstm", "tcn_hypo3", "tcn_prob", "tcn_cls", "
         curves[stem] = blob["history"]
 
 if curves:
+    ui.h2("Training curves")
     picked = st.multiselect("Show", sorted(curves), default=["tcn", "transformer", "lstm"])
     fig = go.Figure()
     palette = [ACTUAL, PREDICTED, "#1baf7a", "#eda100", "#e87ba4", "#4a3aa7", "#e34948"]
@@ -88,8 +91,7 @@ if curves:
         "Validation RMSE per epoch. Model selection used this curve; the test "
         "split was scored once afterwards and never used to choose anything."
     )
-else:
-    st.info("No training histories on disk yet.")
+
 
 # --------------------------------------------------------------------------- #
 ui.h2("Which one ships")

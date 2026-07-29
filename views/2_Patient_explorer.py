@@ -26,6 +26,7 @@ from src.config import (
 from src.metrics import evaluate
 from src.models.baselines import persistence
 from src.predictor import (
+    artifact_path,
     Forecaster,
     alarm_flags,
     available_checkpoints,
@@ -35,7 +36,6 @@ from src.predictor import (
     alarm_budgets,
     cached_forecast,
     load_splits,
-    patient_series,
     tuned_threshold,
 )
 from src import ui
@@ -61,11 +61,6 @@ def get_forecaster(name: str) -> Forecaster:
     return Forecaster(name)
 
 
-@st.cache_data(show_spinner=False)
-def get_series(patient_id: str) -> pd.DataFrame:
-    return patient_series(patient_id)
-
-
 @st.cache_data(show_spinner="Running the model over this patient's record...")
 def get_forecast(patient_id: str, model_name: str) -> pd.DataFrame:
     return cached_forecast(patient_id, get_forecaster(model_name))
@@ -73,7 +68,7 @@ def get_forecast(patient_id: str, model_name: str) -> pd.DataFrame:
 
 @st.cache_data(show_spinner=False)
 def get_sweep() -> dict | None:
-    path = ARTIFACTS_DIR / "sweep.json"
+    path = artifact_path("sweep.json")
     return json.loads(path.read_text()) if path.exists() else None
 
 
@@ -116,7 +111,6 @@ with st.sidebar:
         help="These patients were never used for training or model selection.",
     )
 
-    series = get_series(patient_id)
     forecast = get_forecast(patient_id, model_name)
 
     if forecast.empty:

@@ -157,7 +157,7 @@ def best_checkpoint() -> str | None:
     if not names:
         return None
 
-    alarm = ARTIFACTS_DIR / "alarm.json"
+    alarm = artifact_path("alarm.json")
     if alarm.exists():
         report = json.loads(alarm.read_text())
         ranked = [
@@ -167,7 +167,7 @@ def best_checkpoint() -> str | None:
         if ranked:
             return max(ranked)[1]
 
-    sweep = ARTIFACTS_DIR / "sweep.json"
+    sweep = artifact_path("sweep.json")
     if sweep.exists():
         results = json.loads(sweep.read_text())["results"]
         on_disk = [r for r in results if r["name"] in names]
@@ -177,9 +177,22 @@ def best_checkpoint() -> str | None:
     return sorted(names)[0]
 
 
+def artifact_path(name: str):
+    """A result file, wherever this copy keeps it.
+
+    A full checkout writes results to `artifacts/`; a deploy carries the same
+    files inside `demo_data/` and has no `artifacts/` at all. Callers that
+    reached for `ARTIFACTS_DIR` directly silently found nothing on the deploy,
+    which is how the alarm budgets vanished and the explorer offered to tune a
+    threshold to "None" false alarms.
+    """
+    local = ARTIFACTS_DIR / name
+    return local if local.exists() else DEMO_BUNDLE / name
+
+
 @lru_cache(maxsize=1)
 def load_alarm_report() -> dict:
-    path = ARTIFACTS_DIR / "alarm.json"
+    path = artifact_path("alarm.json")
     return json.loads(path.read_text()) if path.exists() else {}
 
 
@@ -229,9 +242,7 @@ def load_cgm() -> pd.DataFrame:
 @lru_cache(maxsize=1)
 def load_splits() -> dict:
     """Patient split, restricted to what the deploy actually carries."""
-    path = ARTIFACTS_DIR / "splits.json"
-    if not path.exists() and (DEMO_BUNDLE / "splits.json").exists():
-        path = DEMO_BUNDLE / "splits.json"
+    path = artifact_path("splits.json")
     splits = json.loads(path.read_text())
     if demo_mode():
         shipped = {p.stem for p in (DEMO_BUNDLE / "forecasts").glob("*.parquet")}
